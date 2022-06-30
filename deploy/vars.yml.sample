@@ -1,0 +1,15 @@
+SCENARIO: <<Placeholder azureprivatecloud or onpremise >>
+BTP_LANDSCAPE: <<Placeholder e.g. eu20 >>
+BTP_ACCOUNT_NAME: <<Placeholder e.g. teams-app >>
+XSUAA_CS_URL_SUFFIX: <<Placeholder e.g. azure-live-eu20 >>
+BTP_SCOPES: <<Placeholder e.g. api://teams-app-sfsf-leaverequest.cfapps.eu20.hana.ondemand.com/botid-123asdf-sd32d-asd32-12df-dlkjadsuo19/access_as_user >>
+CONNECTION_NAME_GRAPH: <<Placeholder e.g. GraphConnection >>
+CONNECTION_NAME_BTP: <<Placeholder e.g. BTPConnection >>
+MICROSOFT_BLOB_CONTAINER_NAME: <<Placeholder e.g. conversationreferences >>
+MICROSOFT_BLOB_CONNECTION_STRING: <<Placeholder e.g. DefaultEndpointsProtocol=https;AccountName=sfsffeedback;AccountKey=jaaldsjf012jölasdkjf0981hföajhf9120ur/AQ==;EndpointSuffix=core.windows.net >>
+DOMAIN: <<Placeholder e.g. btp-extendworkflow-s4-msteams.cfapps.eu20.hana.ondemand.com >>
+MICROSOFT_APP_ID: <<Placeholder e.g. 123asdf-sd32d-asd32-12df-dlkjadsuo19 >>
+MICROSOFT_APP_PASSWORD: <<Placeholder e.g. A%D*G-KaPaj28adsfSA5v8y/B?E(H+MbQ >>
+MICROSOFT_AD_TENANT_ID: <<Placeholder e.g. ad084394-1234-asdf-5678-adsf243113d6c >>
+SAP_CLIENT: <<Placeholder e.g. 100>>
+

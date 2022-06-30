@@ -1,0 +1,37 @@
+_Archive/
+.vscode/
+node_modules/
+bin/
+obj/
+
+client/node_modules/
+client/build/
+client/package-lock.json
+client/.env.development
+teamsAppManifest
+
+
+server/client
+
+text.js
+.env
+.env.development
+config.ts
+manifest.json
+default.json
+package-lock.json
+*.zip
+appsettings.json
+
+deploy/vars.yml
+deploy/manifest.yml
+deploy/msteamsfiles/manifest.json
+deploy/msteamsfiles/deploy.zip
+deploy/msteamsfiles/manifest.json
+!deploy/cloudintegration/*.zip
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride

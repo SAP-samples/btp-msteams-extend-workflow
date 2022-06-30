@@ -1,0 +1,25 @@
+applications:
+- name: msteamsprapp
+  instances: 1
+  memory: 128M
+  path: ../
+  buildpack: nodejs_buildpack
+  services:
+      - wftaskdec-uaa-service
+      - wftaskdec-conn-service
+      - wftaskdec-dest-service
+  env:
+    SCENARIO: ((SCENARIO))
+    BTP_LANDSCAPE: ((BTP_LANDSCAPE))
+    BTP_ACCOUNT_NAME: ((BTP_ACCOUNT_NAME))
+    XSUAA_CS_URL_SUFFIX: ((XSUAA_CS_URL_SUFFIX))
+    BTP_SCOPES: ((BTP_SCOPES))
+    CONNECTION_NAME_BTP: ((CONNECTION_NAME_BTP))
+    CONNECTION_NAME_GRAPH: ((CONNECTION_NAME_GRAPH))
+    MICROSOFT_BLOB_CONTAINER_NAME: ((MICROSOFT_BLOB_CONTAINER_NAME))
+    MICROSOFT_BLOB_CONNECTION_STRING: ((MICROSOFT_BLOB_CONNECTION_STRING))
+    DOMAIN: ((DOMAIN))
+    MICROSOFT_APP_ID: ((MICROSOFT_APP_ID))
+    MICROSOFT_APP_PASSWORD: ((MICROSOFT_APP_PASSWORD))
+    MICROSOFT_AD_TENANT_ID: ((MICROSOFT_AD_TENANT_ID))
+    SAP_CLIENT: ((SAP_CLIENT))

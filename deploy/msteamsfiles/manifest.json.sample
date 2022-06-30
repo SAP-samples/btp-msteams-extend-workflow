@@ -1,0 +1,63 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.11",
+    "version": "1.1.1",
+    "id": "<msteamsappguid-placeholder>",
+    "packageName": "com.sap.s4hana.event",
+    "developer": {
+        "name": "SAP",
+        "websiteUrl": "https://www.sap.com",
+        "privacyUrl": "https://www.sap.com",
+        "termsOfUseUrl": "https://www.sap.com"
+    },
+    "icons": {
+        "color": "s4hana-color.png",
+        "outline": "s4hana-outline.png"
+    },
+    "name": {
+        "short": "SAP S/4HANA Business Events",
+        "full": "SAP S/4HANA Business Events"
+    },
+    "description": {
+        "short": "SAP S/4HANA Business Events",
+        "full": "SAP S/4HANA Business Events"
+    },
+    "accentColor": "#FDA402",
+    "staticTabs": [
+        {
+            "entityId": "conversations",
+            "scopes": [
+                "personal"
+            ]
+        },
+        {
+            "entityId": "about",
+            "scopes": [
+                "personal"
+            ]
+        }
+    ],
+    "bots": [
+        {
+            "botId": "<msappid-placeholder>",
+            "scopes": [
+                "personal"
+            ],
+            "supportsFiles": false,
+            "isNotificationOnly": false
+        }
+    ],
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": [
+        "*.botframework.com",
+        "*.hana.ondemand.com"
+
+    ],
+    "webApplicationInfo": {
+        "id": "<msappid-placeholder>",
+        "resource": "api://<domain-placeholder>/botid-<msappid-placeholder>"
+    }
+}
