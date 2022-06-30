@@ -142,10 +142,9 @@ Below are the technical prerequistics for a successful Microsoft Teams - SAP S/4
     > - A trust between SAP BTP and Azure AD (vice versa) has to be established
 
 - Admin users in all landscapes
-    > - The implementation requires admin users in all landscapes (SAP BTP, Cloud Integration, SAP SuccessFactors, Azure, MS Teams)
+    > - The implementation requires admin users in all landscapes (SAP BTP, Microsfot Azure, MS Teams)
 
 - Mapping based on an email address
-    > - This scenario requires Azure AD users to be available in SAP SuccessFactors
     > - The users in both systems need the same email address
 
 Let us get started with development!
