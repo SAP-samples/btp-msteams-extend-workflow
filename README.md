@@ -1,5 +1,6 @@
-# Extend your SAP S/4HANA Business Scenarios into Microsoft Azure Ecosystem
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/btp-msteams-extend-workflow)](https://api.reuse.software/info/github.com/SAP-samples/btp-msteams-extend-workflow)
 
+# Extend your SAP S/4HANA Business Scenarios into Microsoft Azure Ecosystem
 
 This repository contains code samples and instructions for developing a native Microsoft Teams application and SAP BTP Extension application for extending the SAP S/4HANA Business scenarios into the Microsoft Azure ecosystem. 
 
