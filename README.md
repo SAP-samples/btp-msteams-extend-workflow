@@ -24,7 +24,7 @@ This repository contains code samples and instructions for developing a native M
 [Solution Architecture](#solution-architecture)\
 &emsp;&emsp;[Connect to SAP S/4HANA using SAP BTP Connectivity Service.](#recommended-architecture-connect-to-s4-hana-on-azure-private-cloud-using-btp-connectivity-service)\
 &emsp;&emsp;[Connect to SAP S/4HANA on Azure using SAP BTP Private Link Service and Azure Private Link](#recommended-architecture-to-connect-to-s4-hana-on-azure-private-cloud-using-btp-private-link-service-and-azure-private-link)\
-[Prerequisites](#prerequisites)\
+[Requirements](#requirements)\
 [Implementation : Configuration and Development](#implementation--configuration-and-development)\
 [Additional Resources](#additional-resources)\
 [Known Issues](#known-issues)\
@@ -35,6 +35,7 @@ This repository contains code samples and instructions for developing a native M
 &emsp;&emsp;[Adaptive Cards](#adaptive-cards)\
 [Disclaimer](#disclaimer)\
 [How to obtain support](#how-to-obtain-support)\
+[Code of Conduct](#codeofconduct)\
 [Contributing](#contributing)\
 [License](#license)
 
@@ -98,8 +99,8 @@ Please look for detailed documentation in the tutorials folder - Azure-Private-C
 Note: Principal propagation configurations should be set up, which is not optional. We will be updating the codebase to support Basic Authentication for testing purposes; however, this is not recommended.
 
 
-## Prerequisites
-Below are the technical requirements for a successful Microsoft Teams - SAP S/4HANA integration. Primarily, we will need SAP S/4HANA configured for Purchase Requisitions and Approvals, SAP Business Technology Platform and Microsoft Azure. Below is the list of configurations and services required to implement the end-to-end business flow.
+## Requirements 
+Below are the technical prerequistics for a successful Microsoft Teams - SAP S/4HANA integration. Primarily, we will need SAP S/4HANA configured for Purchase Requisitions and Approvals, SAP Business Technology Platform and Microsoft Azure. Below is the list of configurations and services required to implement the end-to-end business flow.
 
 **SAP S/4HANA On-Premise**
 - 2 business users ( 1st  for the requestor, 2nd for the approver) 
@@ -217,11 +218,21 @@ This project has been a PoC, including several limitations and prerequisites. Th
 
 ## How to obtain support
 [Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug or have questions about the content.
+<<<<<<< HEAD
  
 For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
 ## Contributing
 If you wish to contribute code, offer fixes or improvements, please send a pull request. Due to legal reasons, contributors will be asked to accept a DCO when they create the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
+=======
+ For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
+
+## Code of Conduct
+Refer to [CODE OF CONDUCT](CODE_OF_CONDUCT.md) file.
+
+## Contributing
+Refer to [CONTRIBUTING](CONTRIBUTING.md) file for guidelines to contributions from external parties.
+>>>>>>> 9e769d8026f2d715fe949469bffd208154864fda
 
 ## License
 Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSE) file.
