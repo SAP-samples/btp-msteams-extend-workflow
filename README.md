@@ -1,5 +1,6 @@
-# Extend your SAP S/4HANA Business Scenarios into Microsoft Azure Ecosystem
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/btp-msteams-extend-workflow)](https://api.reuse.software/info/github.com/SAP-samples/btp-msteams-extend-workflow)
 
+# Extend your SAP S/4HANA Business Scenarios into Microsoft Azure Ecosystem
 
 This repository contains code samples and instructions for developing a native Microsoft Teams application and SAP BTP Extension application for extending the SAP S/4HANA Business scenarios into the Microsoft Azure ecosystem. 
 
@@ -142,10 +143,9 @@ Below are the technical prerequistics for a successful Microsoft Teams - SAP S/4
     > - A trust between SAP BTP and Azure AD (vice versa) has to be established
 
 - Admin users in all landscapes
-    > - The implementation requires admin users in all landscapes (SAP BTP, Cloud Integration, SAP SuccessFactors, Azure, MS Teams)
+    > - The implementation requires admin users in all landscapes (SAP BTP, Microsfot Azure, MS Teams)
 
 - Mapping based on an email address
-    > - This scenario requires Azure AD users to be available in SAP SuccessFactors
     > - The users in both systems need the same email address
 
 Let us get started with development!
