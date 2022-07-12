@@ -113,25 +113,13 @@ class ApprovalDialog extends CancelAndHelpDialog {
         const replyToId = stepContext.context.activity.replyToId
         const scenario = process.env.SCENARIO;
         let responseStatus;
+        const btpOAuthToken = await authClient.getAccessTokenForBtpDestinationAccess('', stepContext.result.token);
         if(scenario === "azureprivatecloud"){
             //call wf via private link for action
-
-            //Uncomment the below 2 lines if we are using principal propogation with private link
-            //const btpOAuthToken = await authClient.getAccessTokenForBtpDestinationAccess('', stepContext.result.token);
-            //responseStatus = await s4HANAClient.callWFActionUsingPrivateLinkPP(wfId,decisionKey,btpOAuthToken);
-
-            //Uncomment the below line if we are using basic authentication
-            responseStatus = await s4HANAClient.callWFActionUsingCloudSdkPL(wfId,decisionKey);
-
+            responseStatus = await s4HANAClient.callWFActionUsingPrivateLinkPP(wfId,decisionKey,btpOAuthToken);
         } else {
             //call wf via Cloud Sdk for action
-
-            //Uncomment the below 2 lines if we are using principal propogation
-            //const btpOAuthToken = await authClient.getAccessTokenForBtpAccess('', stepContext.result.token);
-            //responseStatus = await s4HANAClient.callWFActionUsingCloudSdk(wfId,decisionKey,btpOAuthToken);
-
-            //Uncomment the below if we are using basic authentication
-            responseStatus = await s4HANAClient.callWFActionUsingCloudSdk(wfId,decisionKey,'');
+            responseStatus = await s4HANAClient.callWFActionUsingCloudSdk(wfId,decisionKey,btpOAuthToken);
         }
         if(responseStatus == 200){
                 // Update the original adaptive card
