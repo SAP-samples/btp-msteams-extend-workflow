@@ -217,7 +217,7 @@ User and admin consent
 This project has been a PoC, including several limitations and prerequisites. The objective was to build a Microsoft Teams extension for an existing SAP S/4HANA system. For this reason, the coding should not be seen as any recommendation for productive implementation. It fulfils the purpose and requirements of a PoC scope and is not intended for productive usage! It has been declared as pure PoC only to give potential development teams some first ideas for solving potential challenges when integrating Microsoft Teams and SAP S/4HANA using the SAP Business Technology Platform. We do not recommend using any parts of this coding within a productive implementation without further review or validation!
 
 ## How to obtain support
-[Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug or have questions about the content.
+[Create an issue](https://github.com/SAP-samples/btp-msteams-extend-workflow/issues) in this repository if you find a bug or have questions about the content.
  For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
 ## Code of Conduct
