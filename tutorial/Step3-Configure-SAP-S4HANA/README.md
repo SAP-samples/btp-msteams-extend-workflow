@@ -1,8 +1,8 @@
 ## Configure SAP S/4HANA On-Premise System
-In this section, you will configure the Purchase Requisition Flexible workflow and create a background job that reads all the generated workflow instances and sends them to the event mesh. After this step, the event mesh webhook subscription will send the Team's message to the approver.
+In this section, you will create an OData service based on the SAP RAP framework to read, create, update & delete the Purchase order supplier confirmations. Then we will create a background job that reads all the pending supplier confirmations & send them to the event mesh. After this step, the event mesh webhook subscription will send the Team's user a message with all the Purchase orders with pending supplier confirmations.
 
 ### Prerequisites
-Moderate knowledge of SAP ABAP, assigning user roles & navigating through SAP.
+Moderate knowledge of SAP ABAP, RAP framework, assigning user roles & navigating through SAP.
 
 ### Flexible Workflow Activation
 In this step, you will create a Flexible workflow, which will send a request(Workflow instance/Workitem) to an approver when you create a purchase requisition with a net amount greater than or equal to 500 USD in your SAP S/4HANA system.
