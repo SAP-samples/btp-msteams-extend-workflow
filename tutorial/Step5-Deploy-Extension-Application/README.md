@@ -52,16 +52,7 @@ Let us clone the codebase and deploy the extension application.
     Provide your application name in:
     /deploy/manifest.yml
     ```
-5. Changes required in the code based on the type of authentication mechanism configured. If you have selected Basic Authentication in the Destination configured, then ensure the below changes are updated before you build and deploy.
-
-    Open the S4HANAClient.js file from the services folder and ensure the declaration is updated correctly, as shown below.
-    ![plot](./images/s4clientdest.png) 
-
-    Once this is done, go to ApprovalDialog.js and make the below changes.
-     ![plot](./images/approvaldialog.png) 
-
-
-6. Build and deploy.
+5. Build and deploy.
     Once you're ready, please execute the following steps manually or by running the respective npm command.
 
     a) Build your server application

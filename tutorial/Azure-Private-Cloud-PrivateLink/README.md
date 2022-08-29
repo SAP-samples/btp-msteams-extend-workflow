@@ -36,7 +36,9 @@ The target application will provide the SAP Business User to be able to perform 
 - Private Link Service
     >
     > - Required to connect to SAP S/4HANA instance using Azure Private Link
-    >
+    > - SAP BTP Private Link Service is currently only available on SAP BTP Enterprise Accounts and not available with SAP BTP trial account or as Free Tier service.
+
+
 - Destination Service
     >
     > - Required to connect to SAP S/4HANA instance using SAP BTP Private Link Service
