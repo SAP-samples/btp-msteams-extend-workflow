@@ -2,14 +2,12 @@
 To get started with end-to-end implementation, we will need to perform the below configurations and deployments in different systems.
 
 ## Setup the SAP BTP Subaccount and Initial configurations
-Based on your SAP BTP Subscription, you can get started with the setup and configuration. In case you want to use new trial accounts, please refer to the this tutorial 
-Tutorial to create a new trial account ( https://developers.sap.com/tutorials/hcp-create-trial-account.html )
+Based on your SAP BTP Subscription, you can get started with the setup and configuration. In case you want to use new trial accounts, please refer to the this [tutorial](https://developers.sap.com/tutorials/hcp-create-trial-account.html) to create a new trial account.
 
 Note: You should be a Global Account Administrator to perform the below steps.
 You can use an existing subaccount / can create a new subaccount. 
 
-If you are new to SAP BTP, follow this tutorial to setup SAP BTP and assign entitlements
-https://developers.sap.com/group.scp-1-get-ready.html
+If you are new to SAP BTP, follow this [tutorial](https://developers.sap.com/group.scp-1-get-ready.html) to setup SAP BTP and assign entitlements
 
 1. Log in to BTP Cockpit as Global Account Administrator to create a subaccount
 2. Assign the following entitlements
@@ -22,15 +20,13 @@ Destination Service | lite | Destination service lets you find the destination i
 Connectivity Service | lite | Connectivity service to connect extension application to an on-premise system through the Cloud Connector.|
 Event Mesh | default | Messaging bus for inter-app communication within the Cloud Foundry environment.|
 
-3. Follow this tutorial to setup SAP Event Mesh and test a sample application
-https://developers.sap.com/group.cp-enterprisemessaging-get-started.html
+3. Follow this [tutorial](https://developers.sap.com/group.cp-enterprisemessaging-get-started.html) to setup SAP Event Mesh and test a sample application
 
 Navigate to your subaccount, click on Instances and Subscriptions, and open the SAP Event Mesh application.
 Click on Message Clients -> Select your message client Queues
 Create queue "PRApproval" as shown in the below screenshot.
 
 ![plot](./images/em-create-queue.png)
-
 
 
 ### XSUAA instance
