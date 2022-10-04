@@ -50,7 +50,7 @@ Once the **trust is configured** in Azure AD and SAP BTP, you can disable the BT
 
 ![plot](./images/trust-config.png)
 
-Now that the trust is established between Azure AD( productive / trial account) to SAP BTP on Azure(productive/trial account )), let us proceed with mapping role collection mapping as the next step.
+Now that the trust is established between Azure AD(productive/trial account) to SAP BTP on Azure(productive/trial account), let us proceed with mapping role collection mapping as the next step.
 
 ## 3. Create Group and Test Users in Azure AD
 
@@ -126,7 +126,7 @@ c) Update the Redirect URI. Select Web and update the URL as https://localhost f
 d) Note down the Application Client ID and Directory(Tenant ID) of the app registration.
 ![plot](./images/appregistrationdetails.png)
 
-e) Create new Client Secret and Value and not down the Client Secret Value
+e) Create new Client Secret and Value and note down the Client Secret Value
 ![plot](./images/clientsecret.png)
 
 f) Expose an API by clicking on Set in the sub-menu. Follow the instructions and explanations for how to form this Application ID URI from Blog Post - Steps 4,5,6, and 7.
