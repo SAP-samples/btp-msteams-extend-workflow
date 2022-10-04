@@ -43,6 +43,30 @@ Plan: application
 ```
 ![plot](./images/btp-uaa-service.png)
 
+Click on Next and enter the following configuration parameters and click on "Create".
+
+    {
+        "xsappname": "teamsprapp",
+        "tenant-mode": "dedicated",
+        "description": "Security profile for Microsoft Teams extension",
+        "scopes": [
+            {
+                "name": "uaa.user",
+                "description": "UAA"
+            }
+        ],
+        "role-templates": [
+            {
+                "name": "Token_Exchange",
+                "description": "UAA",
+                "scope-references": [
+                    "uaa.user"
+                ]
+            }
+        ]
+    }
+
+![plot](./images/btp-uaa-config.png)
 
 ### Destination Service Configuration
 Create a new [Destination](https://help.sap.com/docs/CP_CONNECTIVITY) instance in your dedicated SAP BTP subaccount. This Destination instance lets you find the destination information required to access a remote service or system from your Cloud Foundry application.
