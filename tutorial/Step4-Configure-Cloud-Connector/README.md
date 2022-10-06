@@ -10,7 +10,7 @@
 
 **SAP S/4HANA on Azure**
 
-**SAP Business Technology Platform **
+**SAP Business Technology Platform**
 
 - Cloud Foundry Subaccount
     >
@@ -33,7 +33,7 @@
 For the above architecture, let us perform the below set of configurations.
 
 ### Download and install SAP Cloud Connector 
-The SAP Cloud Connector can be downloaded from this link https://tools.hana.ondemand.com/#cloud. If Java is not installed on the server, it is required to install Java.
+The SAP Cloud Connector can be downloaded from [this link](https://tools.hana.ondemand.com/#cloud). If Java is not installed on the server, it is required to install Java.
 
 ![plot](./images/scc_download.png)
 
@@ -41,7 +41,7 @@ You can download the zip archive for your operating system. You need administrat
 
 **Initial Configuration**
 
-To configure the SCC, enter https://hostname:8443 in a browser, where the <hostname> is the hostname of the machine on which the connector is installed, and the port number is the one configured during installation. The default port number is 8443.
+To configure the SCC, enter https://<hostname>:<port> in a browser, where the <hostname> is the hostname of the machine on which the connector is installed, and the <port> number is the one configured during installation. The default port number is 8443.
 
 ![plot](./images/scc_logon.png)
 
@@ -76,11 +76,15 @@ In the SCC admin cockpit firstly make sure you select the right one in case you 
 
 Follow the wizard which opens up to create a HTTPS mapping.
 
-**Internal Host** is the hostname or ip address of the backend system and the corresponding ICM port
+1. Select the **Back-end Type** as "ABAP System".
 
-**Virtual Host** is the host name you will be using in the SAP BTP, you can select the default value which are the same as the Internal Host or select another less revealing name.
+2. Select the **Protocol** as "HTTPS".
 
-The **Principal Type** we will change it to **Principal Propagation**.
+3. **Internal Host** is the hostname or ip address of the backend system and the corresponding ICM port
+
+4. **Virtual Host** is the host name you will be using in the SAP BTP, you can select the default value which are the same as the Internal Host or select another less revealing name.
+
+5. Select **Principal Type** as "X.509 Certificate (Strict Usage)".
 
 Lastly you get a summary of the entered data and if you like you can tick the **Check Internal Host** which will perform a simple check to verify that the mapping is working.
 
@@ -93,10 +97,10 @@ As soon as Cloud connector setup is complete you able to see it in your SAP BTP 
 
 ## Principal Propagation Setup
 
-Read the below blog post which explains how to setup Principal Propogation as well.\
-https://blogs.sap.com/2021/09/06/setting-up-principal-propagation/
+Read the below blog posts which explains how to setup Principal Propogation as well.
+[Setting up Principal Propagation](https://blogs.sap.com/2021/09/06/setting-up-principal-propagation/)
 
-https://blogs.sap.com/2020/10/01/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp-part-ii
+[Principal Propagation in multi-cloud solution](https://blogs.sap.com/2020/10/01/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp-part-ii)
 
 Principal propagation enables the transmission of the message's user context from the sender to the receiver while maintaining its integrity. 
 
@@ -121,7 +125,7 @@ Download the generated certificate
 
 The downloaded sys_cert.der certificate will be used in the steps below. It will be uploaded to  the SAP S/4HANA on-premise backend system (STRUST).
 
-![plot](./images/download_cert.png)
+![plot](./images/download_system_cert.png)
 
 
 **CA Certificate**
@@ -170,11 +174,6 @@ Go to Cloud To On-Premise → Principal Propagation tab. Click on the Synchroniz
 
 
 ![plot](./images/update_pp.png)
-
-**Configure Backend System details in Cloud Connector** <br/>
-Create a new System Mapping and provide the Internal and Virtual host details. Choose the Protocol as HTTPS and Principal Type as 509 Certificate (General Usage).
-
-![plot](./images/system_mapping.png)
 
 
 **Configure SAP S/4HANA On-Premise Backend System with Certificates for the Principal Propagation Setup**
@@ -278,7 +277,6 @@ Enter the following configuration values:<br/>
   | key | value |
   |  --- | --- |
   |  sap-client | your client no |
-  |  TrustAll | true |
   |  HTML5.DynamicDestination | true |
   |  WebIDEEnabled | true |
   | WebIDEUsage | odata_abap |
@@ -300,7 +298,6 @@ Enter the following configuration values:<br/>
    | key | value |
    | --- | --- |
    | sap-client | your client no |
-   | TrustAll | true |
    | HTML5.DynamicDestination | true |
    | WebIDEEnabled | true |
    | WebIDEUsage | odata_abap |
