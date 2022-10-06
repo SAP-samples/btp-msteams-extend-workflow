@@ -218,7 +218,6 @@ This project has been a PoC, including several limitations and prerequisites. Th
 
 ## How to obtain support
 [Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug or have questions about the content.
-<<<<<<< HEAD
 For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
 ## Contributing
