@@ -84,7 +84,7 @@ Please see the below screenshot for the same. For a trial account, the assignmen
 ![plot](./images/enterpriseapp-users.png)
 
 In case of paid subscription , the assignment will look at below 
-![plot](./images/enterprise app-users.png)
+![plot](./images/enterpriseapp-users-paid.png)
 
 The required Role Collection Mapping on the SAP BTP side will be done in one of the next steps.
 
