@@ -30,7 +30,7 @@ Let us clone the codebase and deploy the extension application.
 
     | key    | value    |
     | --------|---------|
-    |**SCENARIO**| For S/4HANA  on-premise, the value is "onpremise" and for S/4HANA on Azure Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for S/4HANA running on [Azure-Private-Cloud](./tutorial/Azure-Private-Cloud-PrivateLink/README.md)  |
+    |**SCENARIO**| For SAP S/4HANA  on-premise, the value is "onpremise" and for SAP S/4HANA on Azure Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for SAP S/4HANA running on [Azure-Private-Cloud](./tutorial/Azure-Private-Cloud-PrivateLink/README.md)  |
     |**BTP_LANDSCAPE**|The region of your BTP subaccount e.g. eu20|
     |**BTP_ACCOUNT_NAME**|The subdomain of your BTP subaccount|
     |**XSUAA_CS_URL_SUFFIX**|The audience which can be extracted from the metadata (https://.authentication./saml/metadata) of your BTP subaccount e.g. azure-live-eu20 or aws-live-eu10|
@@ -39,7 +39,7 @@ Let us clone the codebase and deploy the extension application.
     |**CONNECTION_NAME_BTP**|The name of the BTP connection creates in Step 2 Configure-Azure e.g. BTPConnection|
     |**MICROSOFT_BLOB_CONTAINER_NAME**|The respective values copied in Step 2 - Configure-Azure|
     |**MICROSOFT_BLOB_CONNECTION_STRING**|The respective values copied in Step 2 - Configure-Azure|
-    |**DOMAIN**| The CF domain of your MS Teams extension application e.g. btp-extendworkflow-s4-msteams.cfapps.eu20.hana.ondemand.com |
+    |**DOMAIN**| The CF domain of your MS Teams extension application e.g. btp-extendworkflow-s4-msteams.cfapps.region.hana.ondemand.com (check the region and update accordiingly) |
     |**MICROSOFT_APP_ID**| The Application Client Id of your Azure AD App Registraiton |
     |**MICROSOFT_APP_PASSWORD**|A Client Secret which you created for your Azure AD App Registration|
     |**MICROSOFT_AD_TENANT_ID**|The unique Id of your Azure Active Directory|
@@ -64,7 +64,7 @@ Let us clone the codebase and deploy the extension application.
     b) Login to your Cloud Foundry subaccount, which you would like to deploy to
 
     ```
-    cf7 login -a `<CF API endpoint e.g. https://api.cf.eu20.hana.ondemand.com/>`
+    cf7 login -a `<CF API endpoint e.g. https://api.cf.region.hana.ondemand.com/>` <Check your region and accordingly update the API endpoint url>
     ```
 
     c) Push the application to your dedicated subaccount
