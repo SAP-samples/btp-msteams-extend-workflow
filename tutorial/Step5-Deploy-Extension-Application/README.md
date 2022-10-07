@@ -2,7 +2,7 @@
 
 Let us clone the codebase and deploy the extension application. 
 
-1. Clone this GitHub Repository.
+1. Clone [this](https://github.com/SAP-samples/btp-msteams-extend-workflow) GitHub Repository.
 
     Before deployment to the SAP BTP environment, please make sure that you created an **XSUAA instance** in your BTP subaccount as described as mentioned under **XSUAA Instance** in Section **Step 1 - Configure SAP BTP**.
 
@@ -26,14 +26,14 @@ Let us clone the codebase and deploy the extension application.
     ### Environment variables
     The following environment variables need to be set before you deploy the application to SAP BTP or upload it to your MS Teams environment.
 
-    **/deploy/msteamsfiles/vars.yaml**
+    **/deploy/vars.yaml**
 
     | key    | value    |
     | --------|---------|
-    |**SCENARIO**| For S/4HANA  on-premise, the value is "onpremise" and for S/4HANA on Azure Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for S/4HANA running on [Azure-Private-Cloud](./tutorial/Azure-Private-Cloud-PrivateLink/README.md)  |
+    |**SCENARIO**| For S/4HANA  on-premise, the value is "onpremise" and for S/4HANA on Azure Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for S/4HANA running on [Azure-Private-Cloud](../Azure-Private-Cloud-PrivateLink/README.md)  |
     |**BTP_LANDSCAPE**|The region of your BTP subaccount e.g. eu20|
     |**BTP_ACCOUNT_NAME**|The subdomain of your BTP subaccount|
-    |**XSUAA_CS_URL_SUFFIX**|The audience which can be extracted from the metadata (https://.authentication./saml/metadata) of your BTP subaccount e.g. azure-live-eu20 or aws-live-eu10|
+    |**XSUAA_CS_URL_SUFFIX**|The audience value (e.g., azure-live-eu20 or aws-live-eu10 or aws-live) which can be extracted from the SAML metadata of your SAP BTP subaccount. Make sure you don’t include the subdomain of your SAP BTP subaccount but only use the value after the last period|
     |**BTP_SCOPES**|The full name of the custom scope created in Step 2 Configure-Azure from api:// to /access_as_user|
     |**CONNECTION_NAME_GRAPH**|The name of the Graph connection creates in Step 2 Configure-Azure e.g. GraphConnection|
     |**CONNECTION_NAME_BTP**|The name of the BTP connection creates in Step 2 Configure-Azure e.g. BTPConnection|
@@ -58,20 +58,20 @@ Let us clone the codebase and deploy the extension application.
     a) Build your server application
 
     ```console
-    npm run server
+    npm install
     ```
 
     b) Login to your Cloud Foundry subaccount, which you would like to deploy to
 
     ```
-    cf7 login -a `<CF API endpoint e.g. https://api.cf.eu20.hana.ondemand.com/>`
+    cf login -a `<CF API endpoint e.g. https://api.cf.eu20.hana.ondemand.com/>`
     ```
 
     c) Push the application to your dedicated subaccount
 
     ```
     cd deploy
-    cf7 push -f manifest.yml --vars-file vars.yml
+    cf push -f manifest.yml --vars-file vars.yml
     ```
 
     Once the application is deployed, note down the Extension Application URL as shown below
@@ -80,9 +80,8 @@ Let us clone the codebase and deploy the extension application.
     You can also check the status of your application in your SAP BTP Cockpit.
     ![plot](./images/SAPBTPCockpit.png) 
 
-<br>
 
-7. Microsoft Teams manifest upload.
+6. Microsoft Teams manifest upload.
 
     In this step, you will upload the manifest definition of the extension application to Microsoft Teams.
 
@@ -100,7 +99,6 @@ Let us clone the codebase and deploy the extension application.
     | --------|---------|
     |**msteamsappguid-placeholder**|A unique GUID for the MS Teams App. It can be generated using Windows PowerShell by invoking the command [guid]:: NewGUID. This GUID is for the MS Teams environment only and does not equal the Application Registration Client Id.|
     |**msappid-placeholder**|Azure App Registration Client ID of your extension application.|
-    |**msapppassword-placeholder**|Azure App Registration Client Secret, which you created for your extension application.|
     |**domain-placeholder:**|The CF domain of your MS Teams extension.|
 
     Your manifest.json file should reflect the below changes
@@ -111,30 +109,36 @@ Let us clone the codebase and deploy the extension application.
     Once you have the configuration parameters updated, you must zip all files in the /deploy/msteamsfiles folder.
     ![plot](./images/zipfilecontent.png) 
 
-    Now, we need to upload this to Microsoft Teams Admin Center(https://admin.teams.microsoft.com/). Login with an Active Directory user who has a Microsoft Teams Administrator role assigned.
+    Now, we need to upload this to [Microsoft Teams Admin Center](https://admin.teams.microsoft.com/). Login with an Active Directory user who has a Microsoft Teams Administrator role assigned.
 
     Use the menu as shown below to upload your app.
     ![plot](./images/admincenter.png) 
 
-    Once the upload is successful, you should be able to see the extension application in the Build for your org Section within Microsoft Teams, as shown below.<br>
+    Once the upload is successful, you should be able to see the extension application in the Build for your org Section within Microsoft Teams, as shown below.
     Login to https://teams.microsoft.com and check the App Store.
     ![plot](./images/installapp.png) 
 
 
-    ## Post Deployment Steps
+## Post Deployment Steps
 
-    Go to SAP BTP Cockpit. Go to the Subaccount - Services - Instances and Subscriptions. Click on the instance for Event Mesh. As this is executed in a trial environment, you will see the plan as a dev for SAP Event Mesh Service.
-    
-    ![plot](./images/btpcockpit-instances.png)
+**Configure webhook to receive notifications from SAP S/4HANA via SAP Event Mesh**
 
-    Before we configure the webhook, 
-    Open the SAP Event Mesh - dev instance, open the service key and get the below credentials. Look for the parameter - protocol, and select the details for HttpRest as shown below.
-    ![plot](./images/servicekey.png)
+1. Go to SAP BTP Cockpit. Go to the Subaccount - Services - Instances and Subscriptions. 
+2. Click on the instance for uaa service "wftaskdec-uaa-service" and create a Service key.
+![plot](./images/uaa-servicekey-create.png)
 
-    With this information , create webhook as shown below 
-    ![plot](./images/em-webhook.png)
+3. Notedown the service key details created in the above step.
+![plot](./images/uaa-servicekey-details.png)
 
-    If the subscription status is paused, then click on resume subscription.
+4. Click on the instance for Event Mesh. As this is executed in a trial environment, you will see the plan as a dev for SAP Event Mesh Service.
+![plot](./images/btpcockpit-instances.png)
 
-    This completes the deployment of the SAP BTP Extension application and the webhook configuration. 
-    Now, let us go ahead and test the application.
+5. Create webhook as shown below
+   Enter the respective values copied from from step 3 for Client ID and Client Secret.
+   For Token URL, enter the value as <url from step3>/oauth/token
+![plot](./images/em-webhook.png)
+
+6. If the subscription status is paused, then click on resume subscription.
+
+This completes the deployment of the SAP BTP Extension application and the webhook configuration. 
+Now, let us go ahead and test the application.
