@@ -61,7 +61,8 @@ Create a new security group with the name s4businessusergrp.</br>
 
 All users supposed to use the new extension application have to be assigned to this group. 
 
-The Object ID of this user group will later be mapped to a role collection in SAP BTP. So, before you move on, please note down the Object ID from the SAP BTP -> Trust Configurations -> Role Collection - Overview section. The group assignment of your Active Directory users will be provided to SAP BTP using the Groups claim of your SAML configuration. 
+The Object ID of this user group will later be mapped to a role collection in SAP BTP. So, before you move on, please note down the Object ID from the Azure Portal. for creating a new role collection in overview section of SAP BTP Trust Configuration.
+The group assignment of your Active Directory users will be provided to SAP BTP using the Groups claim of your SAML configuration. 
 
 ## Create users in Azure
 Go to Default Directory and click on Users - New User, as shown below.
@@ -86,20 +87,18 @@ Please see the below screenshot for the same. For a trial account, the assignmen
 In case of paid subscription , the assignment will look at below 
 ![plot](./images/enterpriseapp-users-paid.png)
 
-The required Role Collection Mapping on the SAP BTP side will be done in one of the next steps.
+The required Role Collection Mapping on the SAP BTP side will be done in the next steps.
 
-## 5. SAP BTP Role Collection Mapping
+## 5. Create SAP BTP Role Collection Mapping
 
-Please check: In the SAP BTP configurations, you would have created a role collection s4hana_procurement. You will need to update this Role collection with the GroupID detail from Azure.
-
-Copy the Group ID from the created group (s4businessusersgrp)
+Copy the Group ID from the created group (s4businessusersgrp) from Azure Portal.
 ![plot](./images/objectid-group.png)
 
 Go to your SAP BTP Account Cockpit - Select Subaccount - go to Security -> Trust Configuration, 
 ![plot](./images/btp-trustconfig.png)
 
 
-Open the Role Collection Mapping for Azure Identity Provider. In this case, we look at the trialAzureAD. Update the ObjectID details to as value against the attribute Group as shown below,
+Open the Role Collection Mappings for Azure Identity Provider. In this case, we look at the trialAzureAD. Update the ObjectID details to as value against the attribute Group as shown below,
  ![plot](./images/sapbtp-rolecollection.png)
 
 All MS Teams users supposed to use the extension application have to be assigned to this Azure AD group. This mapping allows the users (once their identity has been propagated to SAP BTP) to SAP S/4HANA based on their Principal Propagation identity.
