@@ -35,7 +35,7 @@ Set up SAP Event Mesh and test a sample application. Follow [SAP Event Mesh](htt
 
  
 ### XSUAA Service Configuration
-Create a new XSUAA instance in your dedicated SAP BTP subaccount. This XSUAA instance is required to authenticate access to the extension app's notification endpoint.
+Create a new  [XSUAA]([https://help.sap.com/docs/CP_AUTHORIZ_TRUST_MNG) instance in your dedicated SAP BTP subaccount. This XSUAA instance is required to authenticate access to the extension app's notification endpoint.
 ```
 Name: wftaskdec-uaa-service
 Service: Authorization and Trust Management Service (xsuaa)
