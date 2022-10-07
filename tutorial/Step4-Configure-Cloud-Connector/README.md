@@ -268,7 +268,7 @@ Enter the following configuration values:<br/>
 | --- | --- |
   |  Name | S4HANA_PP |
  |   Type | HTTP |
-  |  URL | The virtual host and port, e.g. http://vhcalnplci:44300 |
+  |  URL | The virtual host and port, e.g. http://virtualhostname:44300 |
   |  Proxy Type | OnPremise |
   |  Authentication | PrincipalPropagation |
 
@@ -287,7 +287,7 @@ Enter the following configuration values:<br/>
    | --- | --- |
    | Name | S4HANA_NP |
    | Type | HTTP |
-   | URL | The virtual host and port, e.g. http://vhcalnplci:44300 |
+   | URL | The virtual host and port, e.g. http://virtualhostname:44300 |
    | Proxy Type | OnPremise |
    | Authentication | BasicAuthentication |
    | User| Technical User |
