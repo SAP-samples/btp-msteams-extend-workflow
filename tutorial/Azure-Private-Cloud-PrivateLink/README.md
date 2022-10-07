@@ -98,7 +98,7 @@ Steps:
 3. Click on "Download IDP Metadata" button to download IDP metadata.<br>
 ![plot](./images/btp-dest-idp-metadata.png)
 4. In SAP S/4HANA (Azure Private Cloud) system, open the transaction "SAML2" or use the below url.<br>
-   **URL** - https://<S/4HANA HOST:PORT>/sap/bc/webdynpro/sap/saml2?sap-client=<client>
+   **URL** - https://s4hanahostname:port/sap/bc/webdynpro/sap/saml2?sap-client=clientnumber
 5. Navigate to the **Trusted Providers** tab.<br>
 ![Trusted Providers](./images/Trusted%20Providers%20Tab.png)
 6. In the table **List of Trusted Providers**, choose the value **OAuth 2.0 Identity Providers** from the dropdown as shown below:<br>
