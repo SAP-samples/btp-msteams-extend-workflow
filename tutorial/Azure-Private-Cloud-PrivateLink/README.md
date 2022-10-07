@@ -155,19 +155,19 @@ Now you will use the newly created system userid & the Trusted Provider to regis
 
 
 18. Open the Transaction **SOAUTH2** or use the below URL to configure the oauth and click **Create**.<br>
-**URL** - https://<S/4HANA HOST:PORT>/sap/bc/webdynpro/sap/oauth2_config?sap-client=<client><br>
+**URL** - https://s4hanahostname:port/sap/bc/webdynpro/sap/oauth2_config?sap-client=clientnumber
 ![Create OAuth](./images/Create%20OAuth%20Client.png)
-19. Enter the **User ID** from **Step 15** in the **OAuth 2.0 Client** input box, provide the description and click **Next**.<br>
+19. Enter the **User ID** from **Step 15** in the **OAuth 2.0 Client** input box, provide the description and click **Next**.
 ![Step 1 OAuth](./images/Oauth2.0%20step1.png)
-20. Click **Next** again.<br>
-21. In the **Resource Owner Authentication** step, choose the **Trusted OAuth 2.0 IdP** that you created in **Step 14** and click **Next**.<br>
+20. Click **Next** again.
+21. In the **Resource Owner Authentication** step, choose the **Trusted OAuth 2.0 IdP** that you created in **Step 14** and click **Next**
 ![Step 3 OAuth](./images/Trusted%20OAuth%202.0%20Idp%20Step%203.png)
-22. In the **Scope Assignment**, add the Task Processing OData service **ZTASKPROCESSING_0002**, click **Next** and click **Finish**.<br>
+22. In the **Scope Assignment**, add the Task Processing OData service **ZTASKPROCESSING_0002**, click **Next** and click **Finish**
 ![Step 4 OAuth Scope](./images/Scope%20Oauth%20step4.png)
 
 **Optional**: If the odata service is not visible in **Step 22**, you need to manually enable OAuth for it.
-23. Open the transaction **/n/iwfnd/maint_service**.<br>
-24. Select the service **ZTASKPROCESSING** and click the **OAuth** button to enable OAuth scope for the service.<br>
+23. Open the transaction **/n/iwfnd/maint_service**
+24. Select the service **ZTASKPROCESSING** and click the **OAuth** button to enable OAuth scope for the service
 ![Enable Oauth scope](./images/Enable%20OAuth.png)
 
 ### BTP Configuration
