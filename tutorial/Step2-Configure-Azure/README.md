@@ -1,10 +1,10 @@
 
-## Setup and Configurations in Microsoft Azure Platform and MS Teams
+## Configure Microsoft Azure Platform and MS Teams
 
-We will maintain app users and groups within the Microsoft Azure environment, define application registration, and configure trust between Microsoft Azure and SAP BTP.
-The list of Azure components that we will configure is as below
+You will maintain application users and groups within the Microsoft Azure AD, define application registration, and configure trust between Microsoft Azure AD and SAP BTP.
+These are the Microsoft Azure components you will configure:
 
-    Azure Active Directory instance with admin acess
+    Azure Active Directory instance with admin access
     Valid Azure subscription
     Azure Bot service instance
     Azure Storage account for bot to persist information
@@ -15,47 +15,43 @@ If you don't have access to a Microsoft Azure account (including a paid or trial
 
 It explains in detail how to create a new Microsoft Azure account and get a free trial subscription.
 
-Register at [Azure portal](https://portal.azure.com) and get started with configurations. 
+Register at [Azure portal](https://portal.azure.com) and get started with the configurations. 
 
-Once you have registred, you will be able to see the below list of services in portal.azure.com
+Once you have registered, you will be able to see the following list of Azure services in portal.azure.com
 ![plot](./images/azure-services.png) 
 
 
 
-## 1. Azure Services - Azure Active Directory
-Go to Azure Services and select Azure Active Directory. You should be able to see the below information in the Overview of Default Directory.
+## 1. Create tenant in Microsoft Azure - Azure Active Directory
+Login to [Azure portal](http://portal.azure.com). Select Azure Active Directory. You should be able to see the below information in the Overview of Default Directory.
 
-The default directory as below 
-![plot](./images/default-directory.png)
-
-Option to create and manage tenants
+Below is the option to create and manage tenants
 ![plot](./images/tenant-defaultdirectory.png)
 
 
 ## 2. Establish trust between Azure AD and SAP BTP
-The key pillar of the Principal Propagation process is the trust between your Azure Active Directory and your SAP BTP subaccount. This trust needs to be established by you within the Azure AD and your SAP BTP subaccount.
+The key pillar of the Principal Propagation process is the trust between your Azure Active Directory and your subaccount in SAP BTP. This trust needs to be established by you within the Azure AD and your subaccount in SAP BTP.
 
-Please check [this tutorial](https://developers.sap.com/tutorials/cp-azure-ad-saml.html#716a684a-b8fd-4d5b-9472-ba0cc82c01e3) on how to establish trust between Microsoft Azure Active Directory and an SAP BTP subaccount.
+For more information, check step 7 of the [Integrate Microsoft Azure AD with SAP BTP, Cloud Foundry Environment](https://developers.sap.com/tutorials/cp-azure-ad-saml.html#716a684a-b8fd-4d5b-9472-ba0cc82c01e3) tutorial.
 
-
-> Important: Please check the below configurations once more. Make sure while following the configuration process in Azure AD, you need to change the Reply URI in the SAML configuration from SAML/SSO to oAuth/token. This is mandatory to set the correct recipient URI in the SAML assertion.
+> Important: Check the Basic SAML configuration in Azure Active Directory again. Make sure you have changed the Reply URI from SAML/SSO to OAuth/token. It is mandatory to set the correct recipient URI in the SAML assertion.
 
 ![plot](./images/basic-saml-config.png)
 
-Furthermore, ensure that the user's email address (user. mail) is used as the Unique User Identifier (Name ID). Also, feel free to add additional claims if required, as depicted in the below screenshot.
+Furthermore, ensure that the user's email address (user. mail) is used as the Unique User Identifier (Name ID). Also, feel free to add additional claims if required, as depicted in the screenshot below.
 ![plot](./images/attributes-claims.png)
 
 **Disable User Logon**
-Once the **trust is configured** in Azure AD and SAP BTP, you can disable the BTP **Logon** using this IdP for users. The Azure AD IdP trust is only required for **technical purposes** (in this case, the Principal Propagation). Please make sure that the checkbox for creating **Shadow Users** is **checked**.
+Once the trust is configured between Azure AD and SAP BTP, you can disable the BTP **Logon** using this IdP for users. The Azure AD IdP trust is only required for **technical purposes** (in this case, the Principal Propagation). Please make sure that the checkbox for creating **Shadow Users** is **checked**.
 
 ![plot](./images/trust-config.png)
 
-Now that the trust is established between Azure AD(productive/trial account) to SAP BTP on Azure(productive/trial account), let us proceed with mapping role collection mapping as the next step.
+Now that the trust is established between Azure Active Directory(productive or trial account) to SAP BTP, let us proceed with mapping role collection mapping as the next step.
 
 ## 3. Create Group and Test Users in Azure AD
 
-## Groups in Azure 
-Go to Default Directory and click on Groups - New Group.
+## 3.1 Create groups in Azure AD
+Login to Azure Portal.Go to Default Directory and click on Groups - New Group.
 Create a new security group with the name s4businessusergrp.</br>
 ![plot](./images/azure-groups.png)
 
@@ -64,17 +60,18 @@ All users supposed to use the new extension application have to be assigned to t
 The Object ID of this user group will later be mapped to a role collection in SAP BTP. So, before you move on, please note down the Object ID from the Azure Portal. for creating a new role collection in overview section of SAP BTP Trust Configuration.
 The group assignment of your Active Directory users will be provided to SAP BTP using the Groups claim of your SAML configuration. 
 
-## Create users in Azure
+## 3.2 Create users in Azure
 Go to Default Directory and click on Users - New User, as shown below.
 ![plot](./images/azure-users.png)
 
-Ensure the email id is updated for the newly created user. This field is important and required when we are receiving the events from SAP S/4HANA.
+Ensure the email id is updated for the newly created user. This field is important for principal propogation and is required when receiving the events from SAP S/4HANA.The same ID will be configured for the named user in SAP S/4HANA.
 ![plot](./images/useremail.png)
 
-## Assign the users to the group
+## 3.3 Assign the users to the group
+Select the group and add the list of users.
 ![plot](./images/user-group-assignment.png)
 
-## 4. Enterprise application user (group) assignment
+## 4. Assign users and groups to enterprise application
 
 Go back to the default directory and select the enterprise application that was created when you set up the trust between Azure AD and SAP BTP.
 ![plot](./images/enterprise-app.png)
@@ -115,32 +112,32 @@ Please ensure you read this blog post to understand each of the configuration de
 Before you continue, open this blog post [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/)
 
 
-a) Create new app registration for the MS Teams extension application as below.
+6.1 Create new app registration for the MS Teams extension application as below.
 ![plot](./images/newappcreation.png)
 
-b) Update the Support account types to "Accounts in any organizational directory(Any Azure AD directory - Multitenant)
+6.2 Update the Support account types to "Accounts in any organizational directory(Any Azure AD directory - Multitenant)
 
-c) Update the Redirect URI. Select Web and update the URL as https://localhost for now.
+6.3 Update the Redirect URI. Select Web and update the URL as https://localhost for now.
 
-d) Note down the Application Client ID and Directory(Tenant ID) of the app registration.
+6.4 Note down the Application Client ID and Directory(Tenant ID) of the app registration.
 ![plot](./images/appregistrationdetails.png)
 
-e) Create new Client Secret and Value and note down the Client Secret Value
+6.5 Create new Client Secret and Value and note down the Client Secret Value
 ![plot](./images/clientsecret.png)
 
-f) Expose an API by clicking on Set in the sub-menu. Follow the instructions and explanations for how to form this Application ID URI from Blog Post - Steps 4,5,6, and 7.
+6.6 Expose an API by clicking on Set in the sub-menu. Follow the instructions and explanations for how to form this Application ID URI from Blog Post - Steps 4,5,6, and 7.
 
 Your configuration should look like below 
 ![plot](./images/exposeapi.png)
 Note: You will have to change the Application ID URI. 
 
-g) Click on Authentication in the sub-menu and configure the Redirect URIs for app registration and update the tokens that you would like to be issued by the authorization endpoint as below. Refer to Steps 8 and 9 from Blog Post.
+6.7 Click on Authentication in the sub-menu and configure the Redirect URIs for app registration and update the tokens that you would like to be issued by the authorization endpoint as below. Refer to Steps 8 and 9 from Blog Post.
 Your configuration should have 2 URLs configured as shown below 
 ![plot](./images/authentication.png)
 
 You will also activate the Access tokens and ID tokens. 
 
-h) Next will be to configure the Microsoft Graph API Permissions. Go through Steps 10 & 11 in the blog post for more details. 
+6.8 Next will be to configure the Microsoft Graph API Permissions. Go through Steps 10 & 11 in the blog post for more details. 
 
 Click on Add permission and select Microsoft Graph.
 ![plot](./images/addpermission.png)
@@ -152,7 +149,7 @@ Please follow the table in the blog post.
 Post following the steps, your configurations should look as below.
 ![plot](./images/grantadmin.png)
 
-i) Following the steps of 'Enable the SAP BTP integration for your application' from the blog post.
+6.9 Following the steps of 'Enable the SAP BTP integration for your application' from the blog post.
 ![plot](./images/entapp-api.png)
 
 Select expose an API and configure the client, as shown below. 
@@ -193,7 +190,7 @@ Note down the container name and the connection string from the configuration. T
 ![plot](./images/containername.png)
 ![plot](./images/accesskeys.png)
 
-## 8. Login to MS Teams 
+## 8. Login to MS Teams to check user access
 
 With the test user, you created, login to [Microsoft Teams](https://teams.microsoft.com/). You should be able to see the below screen 
 ![plot](./images/teamslogin.png)
