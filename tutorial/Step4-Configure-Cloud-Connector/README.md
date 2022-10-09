@@ -160,9 +160,8 @@ click on the Create Sample Certificate button
 
 ![plot](./images/create_cert.png)
 
-
+**Note :** Please use your test user while creating the sample certificate.
 This sample certificate is used to define the rules in the SAP S/4HANA On-premise system under the Transaction code (CERTRULE).
-
 
 ![plot](./images/cn_email.png)
 
