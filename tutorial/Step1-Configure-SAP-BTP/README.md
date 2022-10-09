@@ -1,7 +1,7 @@
 ## Setup the SAP BTP Subaccount and Initial configurations
 
 
-## SAP BTP Initial configurations
+### 1.Create SAP BTP Subaccount
 
 You can use both trial and enterprise account in SAP BTP. To set up a trial account, see the Get a [Free Account](https://developers.sap.com/tutorials/hcp-create-trial-account.html) on SAP BTP Trial tutorial.
 
@@ -23,7 +23,7 @@ Destination Service | lite | Destination service lets you find the destination i
 Connectivity Service | lite | Connectivity service to connect extension application to an on-premise system through the Cloud Connector.|
 Event Mesh | default | Messaging bus for inter-app communication within the Cloud Foundry environment.|
 
-### Setup Event Mesh
+### 2.Setup SAP Event Mesh
 Set up SAP Event Mesh and test a sample application. Follow [SAP Event Mesh](https://developers.sap.com/group.cp-enterprisemessaging-get-started.html) tutorial to get started.
 1. Navigate to your subaccount and choose Services -> Instances and Subscriptions
 2. Open the SAP Event Mesh application. 
@@ -34,7 +34,7 @@ Set up SAP Event Mesh and test a sample application. Follow [SAP Event Mesh](htt
 
 
  
-### XSUAA Service Configuration
+### 3.Configure XSUAA Service
 Create a new  [XSUAA]([https://help.sap.com/docs/CP_AUTHORIZ_TRUST_MNG) instance in your dedicated SAP BTP subaccount. This XSUAA instance is required to authenticate access to the extension app's notification endpoint.
 ```
 Name: wftaskdec-uaa-service
@@ -68,8 +68,8 @@ Click on Next and enter the following configuration parameters and click on "Cre
 
 ![plot](./images/btp-uaa-config.png)
 
-### Destination Service Configuration
-Create a new [Destination](https://help.sap.com/docs/CP_CONNECTIVITY) instance in your dedicated SAP BTP subaccount. This Destination instance lets you find the destination information required to access a remote service or system from your Cloud Foundry application.
+### 4.Configure SAP Destination Service
+Create a new [SAP Destination](https://help.sap.com/docs/CP_CONNECTIVITY) instance in your dedicated SAP BTP subaccount. This destination instance lets you find the destination information required to access a remote service or system from your SAP Cloud Foundry application.
 
 ```
 Name : wftaskdec-dest-service
@@ -78,11 +78,11 @@ plan : lite
 
 ![plot](./images/btp-dest-instance.png)
 
-For the connection to an on-premise SAP S/4HANA system, you can optionally use this service, together with (i.e. in addition to) the Connectivity service, see Consuming the Connectivity Service.
+For the connection to an on-premise SAP S/4HANA system, you can optionally use this service, together with (i.e. in addition to) the SAP Connectivity service, see Consuming the Connectivity Service.
 
 
-### Connectivity Service Configuration
-Create a new [Connectivity](https://help.sap.com/docs/CP_CONNECTIVITY) instance in your dedicated SAP BTP subaccount. This Connectivity instance lets you connect your Node.js extension application to an on-premise system through the SAP Cloud Connector. To achieve this, you must provide the required information about the target system (destination) and set up an HTTP proxy that lets your application access the on-premise system.
+### 5.Configure SAP Connectivity Service
+Create a new [Connectivity](https://help.sap.com/docs/CP_CONNECTIVITY) instance in your dedicated SAP BTP subaccount. This connectivity instance lets you connect your Node.js extension application to an on-premise system through the SAP Cloud Connector. To achieve this, you must provide the required information about the target system (destination) and set up an HTTP proxy that lets your application access the on-premise system.
 
 ```
 Name: wftaskdec-conn-service
@@ -90,4 +90,4 @@ plan: lite
 ```
 ![plot](./images/btp-conn-instance.png)
 
--> Note: If you change the names of XSUAA/Destination/Connectivity instances, please also adjust the manifest.yml file within your MS Teams extension project. This ensures the correct binding of the respective instances to your extension app. 
+-> Note: If you change the names of XSUAA/Destination/Connectivity instances, you need to adjust the manifest.yml file within your Node.js extension project. This ensures the correct binding of the respective instances to your extension app. 

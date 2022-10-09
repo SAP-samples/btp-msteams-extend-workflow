@@ -190,7 +190,7 @@ Note down the container name and the connection string from the configuration. T
 ![plot](./images/containername.png)
 ![plot](./images/accesskeys.png)
 
-## 8. Login to MS Teams to check user access
+## 8. Login to MS Teams to check user 
 
 With the test user, you created, login to [Microsoft Teams](https://teams.microsoft.com/). You should be able to see the below screen 
 ![plot](./images/teamslogin.png)
