@@ -33,7 +33,7 @@ In this step, you will create a flexible workflow, which will send a request(Wor
 ![Step type Approval](images/s4/6.png)
 
 8. Go to the **Recipients** section, select the dropdown value **User** for **Assignment By**, and provide the user id in the **User** field. <br> 
-Please Note: This user id needs to have the email address created in Azure AD. Go to user administrator in SAP S/4HANA and update the user's email address.
+Please Note: This user id needs to have the same email address of the test user that is created in Azure AD. Go to user administrator in SAP S/4HANA and update the user's email address.
 ![User Assignment](./images/s4/7.png)
     >Note: In this step, you will select which user the workflow should go to for approval.
 
@@ -120,7 +120,7 @@ In this sub-step, you will configure the OAuth client, which will be used by the
 29. Select the drop down value **/IWXBE/MGW_MQTT** in the field **OAuth 2.0 Client Profile**, enter a unique name in the **Configuration Name** and **OAuth 2.0 Client ID** value from **Step 21** : **Clientid**.<br>
 ![OAuth Client Details](./images/s4/23.png)
 
-30. Scroll down and enter **clientsecret** and **tokenendpoint** from **Step 21**.<br>
+30. Scroll down and enter **clientsecret** and **tokenendpoint** from **Step 21** and enter the value of **tokenendpoint** in "Authorization endpoint" field as well.<br>
 ![Additiona details](./images/s4/24.png)
 
 31. Select the radio buttons **Form Fields**, **Header Field** and **Client Credentials** as shown in the screenshot.<br>
@@ -139,7 +139,7 @@ Use the below git URL (ABAP branch) to import the ABAP Class and Report, which c
 34. Click **New Online** button to import the repository.<br>
 ![Import Repo](./images/s4/28.png)
 
-35. Enter the repository url, package & branch as **abap** and click **Create Online Repo** to import the repository.<br>
+35. Enter the repository url(https://github.com/SAP-samples/btp-msteams-extend-workflow/), package & branch as **abap** and click **Create Online Repo** to import the repository.<br>
 ![Repo details](./images/s4/29.png)
 
 36. Select **Clone Online Repo** and click **pull** to save the repo to your SAP S/4HANA system.<br>
@@ -159,10 +159,24 @@ Now that you have imported the code to push the workitems to the SAP Event Mesh.
 
 40. After the execution of the method: **GET_DELTA_WORKFLOW_INSTANCES**, the method: **CONNECT_TO_EM** will create the HTTP connection instance to the SAP Event Mesh, which is well explained using the comments in the code.<br>
 ![Execution](./images/s4/36.png)
-You will also maintain the URI for the SAP Event mesh in the **CONNECT_TO_EM** method as shown below:<br>
+You will also maintain the URI for the SAP Event Mesh in the **CONNECT_TO_EM** method as explained below:<br>
+
+In case of the SAP BTP trial account with SAP Event Mesh default plan, then 
+the URI value should be entered as 'URI value that should be used is '/messagingrest/v1/queues/PRApproval/messages'.
+
+In case of the SAP BTP enterprise account with SAP Event Mesh standard plan, if the namespace is "orgname/s4/t1" for your SAP Event Mesh instance and queue name is "PRApproval"(the queue name should be same as the one that you have entered in [### 2.Setup SAP Event Mesh](../Step1-Configure-SAP-BTP/README.md) step, then 
+
+URI - '/messagingrest/v1/queues/<encoded fully qualified queue name>/messages'
+Fully qualified queue name - orgname/s4/t1/PRApproval
+Encoded FQQN - orgname%2Fs4%2Ft1%2FPRApproval
+
+URI value that should be used is '/messagingrest/v1/queues/orgname%2Fs4%2Ft1%2FPRApproval/messages'
+
 ![Execution](./images/s4/52.png)
 
-41. Then the **SEND_WORKITEM_TO_EM** method will send the purchase requisition workitem to the SAP Event Mesh.<br>
+Save and activate the object before proceeding.
+
+41. Then the **SEND_WORKITEM_TO_EM** method will send the Purchase Requisition workitem to the Event Mesh.<br>
 ![Constructor](./images/s4/35.png)
     >**Note**: The Destination, OAuth Profile & OAuth Configuration are maintained in the **Contructor** method.
 
@@ -220,5 +234,10 @@ Let's create a new purchase requisition and go to SAP Event Mesh to see the mess
 
 57. Click on **Consume** to see the message.<br>
 ![Consume](./images/s4/51.png)
+
+### Activate the service API_PURCHASEREQ_PROCESS_SRV
+
+58. Add the service API_PURCHASEREQ_PROCESS_SRV with the /n/IWFND/MAINT_SERVICE transaction.<br>
+![Activate](./images/s4/53.png)
 
 Congratulations!! Now you have completed the creation of the new Flexible workflow for the purchase requisition, configured the background job to send the workitems to SAP Event Mesh, and tested it successfully.
