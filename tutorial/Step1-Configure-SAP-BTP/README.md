@@ -63,6 +63,15 @@ Click on Next and enter the following configuration parameters and click on "Cre
                     "uaa.user"
                 ]
             }
+        ],
+        "role-collections": [
+            {
+                "name": "s4hana_procurement",
+                "description": "S4HANA Procurement Role Collection",
+                "role-template-references": [
+                    "$XSAPPNAME.Token_Exchange"
+                ]
+            }
         ]
     }
 

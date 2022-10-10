@@ -101,7 +101,7 @@ Open the Role Collection Mappings for Azure Identity Provider. In this case, we 
 All MS Teams users supposed to use the extension application have to be assigned to this Azure AD group. This mapping allows the users (once their identity has been propagated to SAP BTP) to SAP S/4HANA based on their Principal Propagation identity.
 
 Now that we have enabled the trust between SAP BTP and Microsoft Azure and 
-Please perform the steps given in the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/) blog post on getting Microsoft Azure ready for registration of an application for MS Teams Extension.
+please perform the steps given in the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/) blog post on getting Microsoft Azure ready for registration of an application for MS Teams Extension.
 
 You can refer to the above blog, where similar steps and detailed explanations are provided for the Success Factors Integration example. Here we have provided similar steps in the Azure trial account and provided a screenshot for your quick reference.
 
