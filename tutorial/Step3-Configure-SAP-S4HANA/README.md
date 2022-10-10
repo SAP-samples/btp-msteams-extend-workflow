@@ -9,7 +9,7 @@ In this step, you will create a flexible workflow, which will send a request(Wor
 
 >Note: This step is optional if you already have an existing workflow running in your SAP S/4HANA system. Ensure that you deactivate other workflows before creating and activating this new workflow.
 
-1. Open the Fiori application - **Manage Workflow for Purchase Requisitions**.<br>
+1. Open the Fiori application - **Manage Workflow for purchase requisitions**.<br>
     >Note: Ensure the Role - SAP_BR_BPC_EXPERT is assigned to the user to have the above application accessible.<br>
     **Help**: https://fioriappslibrary.hana.ondemand.com/sap/fix/externalViewer/#/detail/Apps('F2705')/S20OP
 
@@ -29,7 +29,7 @@ In this step, you will create a flexible workflow, which will send a request(Wor
 6. Add the approval step by clicking the **Add** button in the **Step Sequence** section.<br>
 ![Approval Add step](images/s4/5.png)
 
-7. Select the step type **Release of Purchase Requisition Item** from the dropdown.<br>
+7. Select the step type **Release of purchase requisition Item** from the dropdown.<br>
 ![Step type Approval](images/s4/6.png)
 
 8. Go to the **Recipients** section, select the dropdown value **User** for **Assignment By**, and provide the user id in the **User** field. <br> 
@@ -70,10 +70,10 @@ You have successfully created a purchase requisition, which created a workflow i
 
 ### Background Job to send the Workflow Instances to the SAP Event Mesh
 
-In this step, you will create the background job to send the workflow instances(workitems) to the SAP Event Mesh. After this step, the event mesh subscription will forward the workitems to the Teams application for approval.
+In this step, you will create the background job to send the workflow instances(workitems) to the SAP Event Mesh. After this step, the configured webhook in SAP Event Mesh will forward the workitems to the MS Teams application for approval.
 
 
-#### <ins>Create the service key for your Event Mesh<ins>
+#### <ins>Create the service key for your SAP Event Mesh<ins>
 In this sub-step, you will create a service key for your SAP Event Mesh instance, which has the OAuth client credentials and the rest service URL to communicate with the SAP Event Mesh.
 
 17. Go to your SAP BTP subaccount and select **Instances and Subscriptions**.<br>
@@ -92,7 +92,7 @@ In this sub-step, you will create a service key for your SAP Event Mesh instance
 ![Note the service key details](./images/s4/15.png)
 
 #### <ins>Create the Destination<ins>
-In this sub-step, you will create a destination to maintain the rest URL of the event mesh to connect and send messages.
+In this sub-step, you will create a destination to maintain the rest URL of the SAP Event Mesh to connect and send messages.
 
 22. Goto **SM59** transaction and click **create** icon as shown in the below screenshot to create a new destination.<br>
 ![Destination](./images/s4/16.png)
@@ -130,7 +130,7 @@ In this sub-step, you will configure the OAuth client, which will be used by the
 ![Save OAuth](./images/s4/26.png)
 
 #### <ins>Import ABAP Git Project to run<ins>
-Use the below git URL (ABAP branch) to import the ABAP Class and Report, which contains the code to send the Workflow instances(workitems) to Event Mesh.
+Use the below git URL (ABAP branch) to import the ABAP Class and Report, which contains the code to send the Workflow instances(workitems) to SAP Event Mesh.
 
 33. Open **SE38** and execute the program **ZABAPGIT_STANDALONE**.<br>
     >Note: If the above program is not there in the system, follow the [Install ABAP Git](https://docs.abapgit.org/guide-install.html) documentation.
@@ -147,7 +147,7 @@ Use the below git URL (ABAP branch) to import the ABAP Class and Report, which c
     
 
 #### <ins>Understanding the Code<ins>
-Now that you have imported the code to push the workitems to the Event Mesh. Let's understand how it works.
+Now that you have imported the code to push the workitems to the SAP Event Mesh. Let's understand how it works.
 
 37. After completing the **Step 36**, you will have a report **ZWFCUSEMSEND_TEAMSINT** and a class **zcl_wfcusemsend_teamsint** created in your SAP S/4HANA system.<br>
 
@@ -157,17 +157,17 @@ Now that you have imported the code to push the workitems to the Event Mesh. Let
 39. Inside the method: **RUN_EM_JOB**, the private method: **GET_DELTA_WORKFLOW_INSTANCES** will be called to fetch all the workflow instances (workitems) that were created. The task **TS02000714** is from **Step 15**.<br>
 ![Task Fetch](./images/s4/34.png)
 
-40. After the execution of the method: **GET_DELTA_WORKFLOW_INSTANCES**, the method: **CONNECT_TO_EM** will create the HTTP connection instance to the Event Mesh, which is well explained using the comments in the code.<br>
+40. After the execution of the method: **GET_DELTA_WORKFLOW_INSTANCES**, the method: **CONNECT_TO_EM** will create the HTTP connection instance to the SAP Event Mesh, which is well explained using the comments in the code.<br>
 ![Execution](./images/s4/36.png)
-You will also maintain the URI for the Event mesh in the **CONNECT_TO_EM** method as shown below:<br>
+You will also maintain the URI for the SAP Event mesh in the **CONNECT_TO_EM** method as shown below:<br>
 ![Execution](./images/s4/52.png)
 
-41. Then the **SEND_WORKITEM_TO_EM** method will send the Purchase Requisition workitem to the Event Mesh.<br>
+41. Then the **SEND_WORKITEM_TO_EM** method will send the purchase requisition workitem to the SAP Event Mesh.<br>
 ![Constructor](./images/s4/35.png)
     >**Note**: The Destination, OAuth Profile & OAuth Configuration are maintained in the **Contructor** method.
 
 #### <ins>Background Job Creation<ins>
-In this step, you will automate the report from **Step 37** to run in the background every minute to send the newly created workitems to the Event Mesh.
+In this step, you will automate the report from **Step 37** to run in the background every minute to send the newly created workitems to the SAP Event Mesh.
 
 42. Open the Transaction **SM36** and click **Job Wizard** to create a new background job.<br>
 ![SM36](./images/s4/37.png)

@@ -1,4 +1,4 @@
-# Connect SAP S/4HANA using SAP BTP Connectivity Service.
+# Connect SAP S/4HANA using SAP BTP Connectivity Service
 
 ## Solution Architecture
 
