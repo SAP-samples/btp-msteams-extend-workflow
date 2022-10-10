@@ -1,10 +1,10 @@
-## Build and Deployment of SAP BTP Extension Application.
+## Build and Deployment of SAP BTP Extension Application
 
-Let us clone the codebase and deploy the extension application. 
+In this section, you will clone the codebase and deploy the extension application in SAP BTP. 
 
 1. Clone [this](https://github.com/SAP-samples/btp-msteams-extend-workflow) GitHub Repository.
 
-    Before deployment to the SAP BTP environment, please make sure that you created an **XSUAA instance** in your BTP subaccount as described as mentioned under **XSUAA Instance** in Section **Step 1 - Configure SAP BTP**.
+    Before deployment to the SAP BTP environment, please make sure that you created an **XSUAA instance** in your BTP subaccount as described in **XSUAA Instance** in Section **Step 1 - Configure SAP BTP**.
 
     Otherwise, the deployment will fail due to the missing binding. In case you changed the name of your XSUAA instance from **wftaskdec-uaa-service** to something else, please adjust the **manifest.yml** file in the deploy folder of this project. 
 
@@ -30,7 +30,7 @@ Let us clone the codebase and deploy the extension application.
 
     | key    | value    |
     | --------|---------|
-    |**SCENARIO**| For SAP S/4HANA  on-premise, the value is "onpremise" and for SAP S/4HANA on Azure Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for SAP S/4HANA running on [Azure-Private-Cloud](../Azure-Private-Cloud-PrivateLink/README.md)  |
+    |**SCENARIO**| For SAP S/4HANA  on-premise, the value is "onpremise" and for SAP S/4HANA Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for SAP S/4HANA running on [Azure-Private-Cloud](../Azure-Private-Cloud-PrivateLink/README.md)  |
     |**BTP_LANDSCAPE**|The region of your BTP subaccount e.g. eu20|
     |**BTP_ACCOUNT_NAME**|The subdomain of your BTP subaccount|
     |**XSUAA_CS_URL_SUFFIX**|The audience value (e.g., azure-live-eu20 or aws-live-eu10 or aws-live) which can be extracted from the SAML metadata of your SAP BTP subaccount. Make sure you don’t include the subdomain of your SAP BTP subaccount but only use the value after the last period|
@@ -46,14 +46,14 @@ Let us clone the codebase and deploy the extension application.
     |**SAP_CLIENT**|sap-client number of your S4/HANA system that you are using|
 
 
-4. Open the manifest.yml file to update the application name. This application name needs to be updated in App Registration Configuration in Microsoft Azure.
+4. Open the manifest.yml file to update the application name. This application name needs to be updated in App Registration configuration in Microsoft Azure.
 
     ```console
     Provide your application name in:
     /deploy/manifest.yml
     ```
 5. Build and deploy.
-    Once you're ready, please execute the following steps manually or by running the respective npm command.
+    Once you're ready, execute the following steps manually or by running the respective npm command.
 
     a) Build your server application
 
@@ -81,7 +81,7 @@ Let us clone the codebase and deploy the extension application.
     ![plot](./images/SAPBTPCockpit.png) 
 
 
-6. Microsoft Teams manifest upload.
+6. Upload manifest file in Microsoft Teams.
 
     In this step, you will upload the manifest definition of the extension application to Microsoft Teams.
 
@@ -109,7 +109,7 @@ Let us clone the codebase and deploy the extension application.
     Once you have the configuration parameters updated, you must zip all files in the /deploy/msteamsfiles folder.
     ![plot](./images/zipfilecontent.png) 
 
-    Now, we need to upload this to [Microsoft Teams Admin Center](https://admin.teams.microsoft.com/). Login with an Active Directory user who has a Microsoft Teams Administrator role assigned.
+    Upload this zip file to [Microsoft Teams Admin Center](https://admin.teams.microsoft.com/). Login with an Active Directory user who has a Microsoft Teams Administrator role assigned.
 
     Use the menu as shown below to upload your app.
     ![plot](./images/admincenter.png) 

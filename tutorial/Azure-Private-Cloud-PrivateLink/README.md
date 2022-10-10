@@ -2,7 +2,7 @@
 
 ## Business Process Flow
 
-The target application will provide the SAP Business User to be able to perform ERP operations via MS Teams. Below depicts the business process flow.
+The target application will provide the SAP Business user to perform ERP operations via MS Teams. Below depicts the business process flow for purchase requisition approval.
 
 ![plot](../../images/Processflow.png)
 
@@ -164,7 +164,7 @@ Now you will use the newly created system userid & the Trusted Provider to regis
 22. In the **Scope Assignment**, add the Task Processing OData service **ZTASKPROCESSING_0002**, click **Next** and click **Finish**
 ![Step 4 OAuth Scope](./images/Scope%20Oauth%20step4.png)
 
-**Optional**: If the odata service is not visible in **Step 22**, you need to manually enable OAuth for it.
+**Optional**: If the OData service is not visible in **Step 22**, you need to manually enable OAuth for it.
 23. Open the transaction **/n/iwfnd/maint_service**
 24. Select the service **ZTASKPROCESSING** and click the **OAuth** button to enable OAuth scope for the service
 ![Enable OAuth scope](./images/Enable%20OAuth.png)

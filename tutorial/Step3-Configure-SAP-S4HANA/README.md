@@ -1,11 +1,11 @@
-## Configure SAP S/4HANA On-Premise System
-In this section, you will configure the Purchase Requisition Flexible workflow and create a background job that reads all the generated workflow instances and sends them to the event mesh. After this step, the event mesh webhook subscription will send the Team's message to the approver.
+## Configure SAP S/4HANA for business scenario
+In this section, you will configure the purchase requisition flexible workflow and create a background job.This background job will read all the generated workflow instances and sends them to the SAP Event Mesh.
 
 ### Prerequisites
 Moderate knowledge of SAP ABAP, assigning user roles & navigating through SAP.
 
 ### Flexible Workflow Activation
-In this step, you will create a Flexible workflow, which will send a request(Workflow instance/Workitem) to an approver when you create a purchase requisition with a net amount greater than or equal to 500 USD in your SAP S/4HANA system.
+In this step, you will create a flexible workflow, which will send a request(Workflow instance/Workitem) to an approver when you create a purchase requisition with a net amount greater than or equal to 500 USD in your SAP S/4HANA system.
 
 >Note: This step is optional if you already have an existing workflow running in your SAP S/4HANA system. Ensure that you deactivate other workflows before creating and activating this new workflow.
 
@@ -33,9 +33,9 @@ In this step, you will create a Flexible workflow, which will send a request(Wor
 ![Step type Approval](images/s4/6.png)
 
 8. Go to the **Recipients** section, select the dropdown value **User** for **Assignment By**, and provide the user id in the **User** field. <br> 
-Please Note: This user id needs to have the email address created in Azure AD. Go to user administrator in SAP S/4HANA and update the User's email address.
+Please Note: This user id needs to have the email address created in Azure AD. Go to user administrator in SAP S/4HANA and update the user's email address.
 ![User Assignment](./images/s4/7.png)
-    >Note: In this step, you will select which User the workflow should go to for approval.
+    >Note: In this step, you will select which user the workflow should go to for approval.
 
 9. Click the **Add** button to save this step. The page will automatically navigate to the previous page.<br>
 ![Save the step](./images/s4/8.png)
@@ -48,16 +48,17 @@ Please Note: This user id needs to have the email address created in Azure AD. G
 
 You have now successfully created and activated the new Flexible Workflow.
 
-### Test Purchase Requisition Creation and Workflow
+### Test purchase requisition creation workflow
 In this step, you will create a purchase requisition and check if the workflow is created in your SAP S/4HANA system
+
 12. Open the Fiori application - **Manage Purchase Requisition Professional**.<br>
     >Note: Enure the Role - SAP_BR_PURCHASER is assigned to the User to have the above application accessible.<br>
-    **Help**: https://fioriappslibrary.hana.ondemand.com/sap/fix/externalViewer/#/detail/Apps('F2229')/S22OP
+    [**SAP Help - Manage Purchase Requisition Professional**](https://fioriappslibrary.hana.ondemand.com/sap/fix/externalViewer/#/detail/Apps('F2229')/S22OP)
 
 13. Click **Create** button to create a new Purchase Requisition.<br>
 ![create pr](./images/s4/31.png)
 
-14. Add an item with the net amount greater than or equal to 500 USD and click **Create to create the Purchase Requisition.<br>
+14. Add an item with the net amount greater than or equal to 500 USD and click **Create** to create the purchase requisition.<br>
 ![create pr](./images/s4/32.png)
 
 15. Open transaction **SWIA** and execute the transaction with shortcut F8(Function 8 key), which will show the newly created workitem in the list with the type **Dialog Step**. Note down the **Task**, which you will use in the upcoming steps.<br>
@@ -65,15 +66,15 @@ In this step, you will create a purchase requisition and check if the workflow i
 
 16. (Optional) You can also open the My Inbox Fiori application for the User configured in **Step 8** to see the workflow instance sent to the User's inbox for approval.<br>
 
-You have successfully created a Purchase Requisition, which created a workflow instance and sent it for approval.
+You have successfully created a purchase requisition, which created a workflow instance and sent it for approval.
 
-### Background Job to send the Workflow Instances to the Event mesh
+### Background Job to send the Workflow Instances to the SAP Event Mesh
 
-In this step, you will create the background job to send the workflow instances(workitems) to the event mesh. After this step, the event mesh subscription will forward the workitems to the Teams application for approval.
+In this step, you will create the background job to send the workflow instances(workitems) to the SAP Event Mesh. After this step, the event mesh subscription will forward the workitems to the Teams application for approval.
 
 
 #### <ins>Create the service key for your Event Mesh<ins>
-In this sub-step, you will create a service key for your Event Mesh instance, which has the OAuth client credentials and the rest service URL to communicate with the Event Mesh.
+In this sub-step, you will create a service key for your SAP Event Mesh instance, which has the OAuth client credentials and the rest service URL to communicate with the SAP Event Mesh.
 
 17. Go to your SAP BTP subaccount and select **Instances and Subscriptions**.<br>
 ![Ins & Subs](./images/s4/11.png)
@@ -106,12 +107,12 @@ In this sub-step, you will create a destination to maintain the rest URL of the 
 26. Select the **Active** radio button for **SSL** in the section **Logon & Security** and **SSL Client(Anonymous)** in **SSL Certificate** and click **Save**.<br>
 ![Destination](./images/s4/19.png)
 
-27. Click **Connection Test** to check if the connection to Event Mesh is established successfully.<br>
+27. Click **Connection Test** to check if the connection to SAP Event Mesh is established successfully.<br>
 ![Connection Button](./images/s4/20.png)
 ![Connection Result](./images/s4/21.png)
 
 #### <ins>Configure the oauth profile<ins>
-In this sub-step, you will configure the OAuth client, which will be used by the destination from **Step 22** to connect to Event Mesh.<br>
+In this sub-step, you will configure the OAuth client, which will be used by the destination from **Step 22** to connect to SAP Event Mesh.<br>
 
 28. Open transaction **OA2C_CONFIG**, which will open a web application in your browser, and click **Create** to create an OAuth client.<br>
 ![OAuth Create](./images/s4/22.png)
@@ -132,8 +133,8 @@ In this sub-step, you will configure the OAuth client, which will be used by the
 Use the below git URL (ABAP branch) to import the ABAP Class and Report, which contains the code to send the Workflow instances(workitems) to Event Mesh.
 
 33. Open **SE38** and execute the program **ZABAPGIT_STANDALONE**.<br>
-    >Note: If the above program is not there in the system, use the below link to install ABAP Git<br>
-    https://docs.abapgit.org/guide-install.html
+    >Note: If the above program is not there in the system, follow the [Install ABAP Git](https://docs.abapgit.org/guide-install.html) documentation.
+    
 
 34. Click **New Online** button to import the repository.<br>
 ![Import Repo](./images/s4/28.png)
@@ -142,8 +143,8 @@ Use the below git URL (ABAP branch) to import the ABAP Class and Report, which c
 ![Repo details](./images/s4/29.png)
 
 36. Select **Clone Online Repo** and click **pull** to save the repo to your SAP S/4HANA system.<br>
-    >Note: For more information, please follow the official ABAP Git tutorial below:<br>
-    https://docs.abapgit.org/guide-online-install.html
+    >Note: For more information, please follow the official [ABAP Git tutorial](https://docs.abapgit.org/guide-online-install.html)
+    
 
 #### <ins>Understanding the Code<ins>
 Now that you have imported the code to push the workitems to the Event Mesh. Let's understand how it works.
@@ -203,12 +204,12 @@ In this step, you will automate the report from **Step 37** to run in the backgr
 
 You have now completed the creation of the background job that will send the newly created workitems to the Event Mesh every 1 minute.
 
-### Testing: From Creation of PR to verifying the message in Event Mesh
-Let's create a new Purchase Requisition and go to Event Mesh to see the message details.
+### Testing: From Creation of PR to verifying the message in SAP Event Mesh
+Let's create a new purchase requisition and go to SAP Event Mesh to see the message details.
 
-53. Repeat the **Steps 12 - 14** to create a new Purchase Requisition and initiate a new Approval workflow. The background job will send the workitem information to the Event Mesh Queue in a minute.
+53. Repeat the **Steps 12 - 14** to create a new purchase requisition and initiate a new approval workflow. The background job will send the workitem information to SAP Event Mesh Queue in a minute.
 
-54. Open the Event Mesh application from your subaccount.<br>
+54. Open the SAP Event Mesh application from your subaccount.<br>
 ![Message Client](./images/s4/48.png)
 
 55. Go to the Message Client you have created and go to the **Test** tab to consume the message.<br>
@@ -220,4 +221,4 @@ Let's create a new Purchase Requisition and go to Event Mesh to see the message 
 57. Click on **Consume** to see the message.<br>
 ![Consume](./images/s4/51.png)
 
-Congratulations!! Now you have completed the creation of the new Flexible workflow for the Purchase Requisition, configured the background job to send the workitems to Event Mesh, and tested it successfully.
+Congratulations!! Now you have completed the creation of the new Flexible workflow for the purchase requisition, configured the background job to send the workitems to SAP Event Mesh, and tested it successfully.

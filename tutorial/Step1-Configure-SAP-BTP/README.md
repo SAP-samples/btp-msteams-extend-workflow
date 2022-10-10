@@ -78,7 +78,7 @@ plan : lite
 
 ![plot](./images/btp-dest-instance.png)
 
-For the connection to an on-premise SAP S/4HANA system, you can optionally use this service, together with (i.e. in addition to) the SAP Connectivity service, see Consuming the Connectivity Service.
+For the connection to an on-premise SAP S/4HANA system, you can optionally use this service, together with (i.e. in addition to) the SAP Connectivity service, see [Consuming the Connectivity Service](https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/313b215066a8400db461b311e01bd99b.html?locale=en-US)
 
 
 ### 5.Configure SAP Connectivity Service
