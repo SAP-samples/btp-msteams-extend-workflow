@@ -2,9 +2,9 @@
  * MainDialog.js returns a class extending the ComponentDialog class
  * 
  * This class provides the implementation of the bot's Main dialog. As this bot is supposed to support
- * various intents/scenarios in the future (like Leave Request, Feedback, Employee Performance, ...)
+ * various intents/scenarios in the future (like Approval Scenario, Feedback, Employee Performance, ...)
  * a Main dialog has been implemented, which is dynamically calling the sub-dialogs based on the 
- * requires scenario. If e.g. the user types Leave, the Main dialog starts the ApprovalDialog. 
+ * requires scenario.
  * 
  * The Main dialog is implemented as a waterfall dialog with three steps, containing an introduction message 
  * resulting in a text prompt, asking the user which scenario to load. Once the user types the desired scenario
@@ -13,7 +13,7 @@
  * 
  * The Main Dialog 
  *   -> Consists of a "Main" Waterfall Dialog 
- *      -> Loads sub-dialogs like the "Leave Request" Waterfall Dialog
+ *      -> Loads sub-dialogs like the "Approval" Waterfall Dialog
  *  
  */
 
@@ -43,7 +43,7 @@ class MainDialog extends ComponentDialog  {
 
         // Add required dialogs to the Main dialog 
         // including the main waterfall dialog and subsequent "sub-dialogs"
-        // like the Leave Request sub-dialog which is a waterfall dialog again
+        // like the Approval sub-dialog which is a waterfall dialog again
         this.addDialog(new WaterfallDialog(MAIN_WATERFALL_DIALOG, [
                 this.introStep.bind(this),
                 this.actionStep.bind(this),
