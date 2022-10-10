@@ -4,9 +4,9 @@
  * The CancelAndHelpDialog class can be found in the utils and is an extension of the standard ComponentDialog class.
  * It offers additional features to handle communication interruptions (e.g. user cancels or requires help).
  * 
- * This class provides the implementation of the bot's Leave Request dialog. It is loaded by the Waterfall Dialog of 
- * the Main Dialog, in case the user goes for the Leave Request scenario. The Leave Request dialog is also implemented
- * as Watefall Dialog consisting of multiple steps, to get the information required to send a new Leave Request to 
+ * This class provides the implementation of the bot's Approval dialog. It is loaded by the Waterfall Dialog of 
+ * the Main Dialog, in case the user goes for the Approval scenario. The Approval dialog is also implemented
+ * as Watefall Dialog consisting of multiple steps, to get the information required to send a new Approval to 
  * SAP SuccessFactors. 
  */
 
@@ -53,7 +53,7 @@ class ApprovalDialog extends CancelAndHelpDialog {
         // Add a standard choice prompt to the dialog
         this.addDialog(new ChoicePrompt(CHOICE_PROMPT))
 
-        // Add the Leave Request Waterfall Dialog to the dialog
+        // Add the Approval Waterfall Dialog to the dialog
         this.addDialog(new WaterfallDialog(WATERFALL_DIALOG, [
                 
                 // 1 - Get OAuth token to obtain SAML assertion for SAP BTP access
@@ -63,14 +63,14 @@ class ApprovalDialog extends CancelAndHelpDialog {
                 this.approveWorkflow.bind(this), 
         ]));
 
-        // Start the Leave Request Dialog by running the WaterfallDialog definded above
+        // Start the Approval Dialog by running the WaterfallDialog definded above
         this.initialDialogId = WATERFALL_DIALOG;
     }
 
 
    
     /**
-     * Leave Request Waterfall Dialog step wich is being used multiple times 
+     * Approval Waterfall Dialog step wich is being used multiple times 
      * Get a new OAuth token for the SAP BTP OAuth connection by starting the OAuth prompt as new Dialog
      * This OAuth token can then be used to obtain a new SAML assertion for BTP access
      */
@@ -79,9 +79,9 @@ class ApprovalDialog extends CancelAndHelpDialog {
     }
 
     /**
-     * Sventh step of Leave Request Waterfall Dialog 
+     * Sventh step of Approval Waterfall Dialog 
      * Load the available balance for the time type selected by the user and provide him an adaptive card
-     * to request additional input on the Leave and Return date. Use the OAuth token of the previous 
+     * to request decision for Approve/Reject PR. Use the OAuth token of the previous 
      * Waterfall Dialog step to get access to SAP BTP. SAP BTP Connection token is not cached, as user
      * might continue a dialog when the validity of a token has already expired. 
      */
@@ -113,12 +113,13 @@ class ApprovalDialog extends CancelAndHelpDialog {
         const replyToId = stepContext.context.activity.replyToId
         const scenario = process.env.SCENARIO;
         let responseStatus;
-        const btpOAuthToken = await authClient.getAccessTokenForBtpDestinationAccess('', stepContext.result.token);
         if(scenario === "azureprivatecloud"){
             //call wf via private link for action
+            const btpOAuthToken = await authClient.getAccessTokenForBtpDestinationAccess('', stepContext.result.token);
             responseStatus = await s4HANAClient.callWFActionUsingPrivateLinkPP(wfId,decisionKey,btpOAuthToken);
         } else {
             //call wf via Cloud Sdk for action
+            const btpOAuthToken = await authClient.getAccessTokenForBtpAccess('', stepContext.result.token);
             responseStatus = await s4HANAClient.callWFActionUsingCloudSdk(wfId,decisionKey,btpOAuthToken);
         }
         if(responseStatus == 200){

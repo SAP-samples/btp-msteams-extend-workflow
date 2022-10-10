@@ -61,7 +61,7 @@ class BotActivityHandler extends TeamsActivityHandler {
         this.conversationState = conversationState;
         this.userState = userState;
 
-        // the dialog variable contains the MainDialog contains the Leave Request bot dialog 
+        // the dialog variable contains the MainDialog contains the PR Approval Request bot dialog 
         this.dialog = dialog;
         this.dialogState = this.conversationState.createProperty('DialogState');
 
@@ -204,7 +204,7 @@ class BotActivityHandler extends TeamsActivityHandler {
      * Override the TeamsActivityHandler.handleTeamsTaskModuleFetch() method which allows us to handle extension 
      * use-cases in which a the botActvitiyHandler is used to provide the content of a custom task module.
      * 
-     * In this case the desired task module is loaded, when a user clicks on the action buttons of the leave request
+     * In this case the desired task module is loaded, when a user clicks on the action buttons of the PR approval
      * notifications like (Approve/Reject). 
      */
     async handleTeamsTaskModuleFetch(context, taskModuleRequest){
@@ -215,7 +215,7 @@ class BotActivityHandler extends TeamsActivityHandler {
     /**
      * Override the TeamsActivityHandler.handleTeamsTaskModuleSubmit() method which allows us to handle Submit Actions triggered 
      * from within a custom task module. This is the case if the task module has not been loaded from within a messaging extension
-     * (see above) but like in our case e.g. wen the user clicks on one of the Action buttons of the Leave Request notification.
+     * (see above) but like in our case e.g. wen the user clicks on one of the Action buttons of the PR Approval notification.
      */
     async handleTeamsTaskModuleSubmit(context, taskModuleSubmit){
 
@@ -395,7 +395,7 @@ const conversationState = new ConversationState(storage);
 // Create a new UserState instance providing the botStorage instance
 const userState = new UserState(storage);
 
-// Create a new instance of the Main Dialog, which is a wrapper for the Leave Request dialog and potential further bot dialogs
+// Create a new instance of the Main Dialog, which is a wrapper for the PR Approval dialog and potential further bot dialogs
 // The Main dialog will be passed to the botActivtityHandler on initialization
 
 const approvalDialog = new ApprovalDialog(APPROVAL_DIALOG);

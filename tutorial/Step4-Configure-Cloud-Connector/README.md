@@ -1,16 +1,16 @@
-# Connecting to SAP S/4HANA on Azure using SAP BTP Connectivity Service.
+# Connect SAP S/4HANA using SAP BTP Connectivity Service.
 
 ## Solution Architecture
 
 ### Recommended Architecture to connect to SAP S/4HANA on Azure using SAP BTP Connectivity Service.
 
-![plot](../../images/Architecture-CC.png)
+![plot](./images/Architecture-CC.png)
 
 ## Prerequisites
 
 **SAP S/4HANA on Azure**
 
-**SAP Business Technology Platform **
+**SAP Business Technology Platform**
 
 - Cloud Foundry Subaccount
     >
@@ -33,7 +33,7 @@
 For the above architecture, let us perform the below set of configurations.
 
 ### Download and install SAP Cloud Connector 
-The SAP Cloud Connector can be downloaded from this link https://tools.hana.ondemand.com/#cloud. If Java is not installed on the server, it is required to install Java.
+The SAP Cloud Connector can be downloaded from [this link](https://tools.hana.ondemand.com/#cloud). If Java is not installed on the server, it is required to install Java.
 
 ![plot](./images/scc_download.png)
 
@@ -41,12 +41,9 @@ You can download the zip archive for your operating system. You need administrat
 
 **Initial Configuration**
 
-To configure the SCC, enter https://hostname:8443 in a browser, where the <hostname> is the hostname of the machine on which the connector is installed, and the port number is the one configured during installation. The default port number is 8443.
+To configure the SCC, enter https://<hostname>:<port> in a browser, where the <hostname> is the hostname of the machine on which the connector is installed, and the <port> number is the one configured during installation. The default port number is 8443.
 
-<br/>
-<p align="center">
-  <img src="./images/scc_logon.png"width="75%" height="75%">
-</p>
+![plot](./images/scc_logon.png)
 
 Enter below default credentials (case sensitive) and click on Login:
 
@@ -79,11 +76,15 @@ In the SCC admin cockpit firstly make sure you select the right one in case you 
 
 Follow the wizard which opens up to create a HTTPS mapping.
 
-**Internal Host** is the hostname or ip address of the backend system and the corresponding ICM port
+1. Select the **Back-end Type** as "ABAP System".
 
-**Virtual Host** is the host name you will be using in the SAP BTP, you can select the default value which are the same as the Internal Host or select another less revealing name.
+2. Select the **Protocol** as "HTTPS".
 
-The **Principal Type** we will change it to **Principal Propagation**.
+3. **Internal Host** is the hostname or ip address of the backend system and the corresponding ICM port
+
+4. **Virtual Host** is the host name you will be using in the SAP BTP, you can select the default value which are the same as the Internal Host or select another less revealing name.
+
+5. Select **Principal Type** as "X.509 Certificate (Strict Usage)".
 
 Lastly you get a summary of the entered data and if you like you can tick the **Check Internal Host** which will perform a simple check to verify that the mapping is working.
 
@@ -96,10 +97,10 @@ As soon as Cloud connector setup is complete you able to see it in your SAP BTP 
 
 ## Principal Propagation Setup
 
-Read the below blog post which explains how to setup Principal Propogation as well.\
-https://blogs.sap.com/2021/09/06/setting-up-principal-propagation/
+Read the below blog posts which explains how to setup Principal Propogation as well.
+[Setting up Principal Propagation](https://blogs.sap.com/2021/09/06/setting-up-principal-propagation/)
 
-https://blogs.sap.com/2020/10/01/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp-part-ii
+[Principal Propagation in multi-cloud solution](https://blogs.sap.com/2020/10/01/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp-part-ii)
 
 Principal propagation enables the transmission of the message's user context from the sender to the receiver while maintaining its integrity. 
 
@@ -124,7 +125,7 @@ Download the generated certificate
 
 The downloaded sys_cert.der certificate will be used in the steps below. It will be uploaded to  the SAP S/4HANA on-premise backend system (STRUST).
 
-![plot](./images/download_cert.png)
+![plot](./images/download_system_cert.png)
 
 
 **CA Certificate**
@@ -138,7 +139,7 @@ To create the CA certificate, scroll down to the corresponding section and click
 
 Fill the required details in the pop-up window to generate the certificate.
 
-<img src="./images/config_caa_sscer.png" width="80%" height="80%">
+![plot](./images/config_caa_sscer.png)
 
 The Cloud connector acts as a CA when the request is sent from the SAP BTP to SAP S/4HANA on-premise system. Every request from the SAP BTP will be signed from Cloud Connector with this certificate. SAP S/4HANA must trust this certificate to establish the communication from cloud to the on-premise system.
 
@@ -147,24 +148,23 @@ The Cloud connector acts as a CA when the request is sent from the SAP BTP to SA
 
 Scroll down to the Principal propagation section and edit the Subject Pattern
 
-<img src="./images/user_cert.png" width="75%" height="75%">
+![plot](./images/user_cert.png)
 
 Select the Subject Pattern from the list to assert the user IDs. For example, Select ${mail} to assert the user against the user’s mail address propagated from the Cloud.
 
-<img src="./images/edit_pp.png" width="80%" height="80%">
-
+![plot](./images/edit_pp.png)
 
 Note: You can select the Subject Pattern depending on the assertion attribute. You can also provide manual pattern if it is not listed in the dropdown. For example, ${email}.
 
 click on the Create Sample Certificate button
-<br/>
-<img src="./images/create_cert.png" width="75%" height="75%">
 
+![plot](./images/create_cert.png)
 
+**Note :** Please use your test user while creating the sample certificate.
 This sample certificate is used to define the rules in the SAP S/4HANA On-premise system under the Transaction code (CERTRULE).
 
-<br/>
-<img src="./images/cn_email.png" width="75%" height="75%">
+![plot](./images/cn_email.png)
+
 
 ### Synchronize the Cloud Subaccount IDP
 You can follow the help document on how to add the subaccount in the Cloud connector here.
@@ -172,15 +172,8 @@ You can follow the help document on how to add the subaccount in the Cloud conne
 Go to Cloud To On-Premise → Principal Propagation tab. Click on the Synchronize button to sync the Trust Configuration details of the connected subaccount.
 
 
-<br/>
-<img src="./images/update_pp.png" width="75%" height="75%">
+![plot](./images/update_pp.png)
 
-
-**Configure Backend System details in Cloud Connector** <br/>
-Create a new System Mapping and provide the Internal and Virtual host details. Choose the Protocol as HTTPS and Principal Type as 509 Certificate (General Usage).
-
-<br/>
-<img src="./images/system_mapping.png" width="80%" height="80%">
 
 **Configure SAP S/4HANA On-Premise Backend System with Certificates for the Principal Propagation Setup**
 
@@ -195,31 +188,32 @@ Restart the ICM and check the profile parameters. (Transaction code – SMICM)
 Go to the transaction code STRUST
 Expand the SSL Server Standard and go to the Instance Specific as shown in the below image. If there is no existing SSL Server Standard, switch to the edit mode and right click on the SSL Server standard to create one.
 
-<img src="./images/trust_manager.png" >
+![plot](./images/trust_manager.png)
+
 
 Click on the Import Certificate button to import the System certificate downloaded from the Cloud Connector (sys_cert.der).
 
 Click on “Add to Certificate list” to add the certificate to the list of trusted certificates.
 
-<img src="./images/import_cert.png" >
-
+![plot](./images/import_cert.png)
 
 **Define the Rule-based Mapping**
 Go to the transaction code CERTRULE.
 Click on the “Import Certificate” button to import the Sample certificate (scc_sample_cert.der) that was downloaded from the Cloud Connector in section 1.3.
 
-<img src="./images/trust_rule.png" width="75%" height="75%">
+![plot](./images/trust_rule.png)
+
 
 Click on the Rule button to map the rules.
 
 
-<img src="./images/create_rule.png" width="75%" height="75%">
+![plot](./images/create_rule.png)
 
 
 Choose the Certificate Attr and login as E-Mail (or user name as per the requirement).
 You can view the Status after a Save.
 
-<img src="./images/cert_status.png" width="75%" height="75%">
+![plot](./images/cert_status.png)
 
 
 **Maintain Profile Parameters**
@@ -227,11 +221,12 @@ Go to the transaction RZ10
 Choose Profile DEFAULT and then Edit button for Extended Maintenance.
 
 
-<img src="./images/edit_profile.png" width="75%" height="75%">
+![plot](./images/edit_profile.png)
+
 
 Click on New Parameter button
 
-<img src="./images/new_param.png">
+![plot](./images/new_param.png)
 
 
 Give the Parameter name as “icm/trusted_reverse_proxy_0” and value as
@@ -242,11 +237,12 @@ You can copy these values from the Cloud Connector System Certificate section (1
 
 After filling the values, click on Copy.
 
-<img src="./images/main_user.png" width="75%" height="75%">
+![plot](./images/main_user.png)
 
 Go back and Save parameter. Activate the DEFAULT profile.
 
-<img src="./images/activate_profile.png">
+![plot](./images/activate_profile.png)
+
 
 You can ignore the error check validations at this point.
 
@@ -255,7 +251,8 @@ Go to the transaction SMICM.
 You can restart the ICM to reflect the changes related to the PROFILES and parameters.
 Go to Administration → ICM → Exit Soft → Global.
 
-<img src="./images/restart_icm.png" >
+![plot](./images/restart_icm.png)
+
 
 ## Destination Creation
 
@@ -270,7 +267,7 @@ Enter the following configuration values:<br/>
 | --- | --- |
   |  Name | S4HANA_PP |
  |   Type | HTTP |
-  |  URL | The virtual host and port, e.g. http://vhcalnplci:44300 |
+  |  URL | The virtual host and port, e.g. http://virtualhostname:44300 |
   |  Proxy Type | OnPremise |
   |  Authentication | PrincipalPropagation |
 
@@ -279,7 +276,6 @@ Enter the following configuration values:<br/>
   | key | value |
   |  --- | --- |
   |  sap-client | your client no |
-  |  TrustAll | true |
   |  HTML5.DynamicDestination | true |
   |  WebIDEEnabled | true |
   | WebIDEUsage | odata_abap |
@@ -290,7 +286,7 @@ Enter the following configuration values:<br/>
    | --- | --- |
    | Name | S4HANA_NP |
    | Type | HTTP |
-   | URL | The virtual host and port, e.g. http://vhcalnplci:44300 |
+   | URL | The virtual host and port, e.g. http://virtualhostname:44300 |
    | Proxy Type | OnPremise |
    | Authentication | BasicAuthentication |
    | User| Technical User |
@@ -301,7 +297,6 @@ Enter the following configuration values:<br/>
    | key | value |
    | --- | --- |
    | sap-client | your client no |
-   | TrustAll | true |
    | HTML5.DynamicDestination | true |
    | WebIDEEnabled | true |
    | WebIDEUsage | odata_abap |

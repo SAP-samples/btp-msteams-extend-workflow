@@ -214,17 +214,15 @@ User and admin consent
 - [Designer](https://adaptivecards.io/designer/)
 
 ## Disclaimer
-This project has been a PoC, including several limitations and prerequisites. The objective was to build a Microsoft Teams extension for an existing SAP S/4HANA system. For this reason, the coding should not be seen as any recommendation for productive implementation. It fulfils the purpose and requirements of a PoC scope and is not intended for productive usage! It has been declared as pure PoC only to give potential development teams some first ideas for solving potential challenges when integrating Microsoft Teams and SAP S/4HANA using the SAP Business Technology Platform. We do not recommend using any parts of this coding within a productive implementation without further review or validation!
+This project has been a PoC, including several limitations and prerequisites. The objective was to build a Microsoft Teams extension for an existing SAP S/4HANA system. For this reason, the coding should not be seen as any recommendation for productive implementation. It fulfils the purpose and requirements of a PoC scope and is not intended for productive usage! It has been declared as pure PoC only to give potential development teams some first ideas for solving potential challenges when integrating Microsoft Teams and SAP S/4HANA using the SAP Business Technology Platform. We do not recommend using any parts of this coding within a productive implementation without further review or validation.
 
 ## How to obtain support
 [Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug or have questions about the content.
-<<<<<<< HEAD
- 
 For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
 ## Contributing
 If you wish to contribute code, offer fixes or improvements, please send a pull request. Due to legal reasons, contributors will be asked to accept a DCO when they create the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
-=======
+
  For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
 ## Code of Conduct
@@ -232,7 +230,7 @@ Refer to [CODE OF CONDUCT](CODE_OF_CONDUCT.md) file.
 
 ## Contributing
 Refer to [CONTRIBUTING](CONTRIBUTING.md) file for guidelines to contributions from external parties.
->>>>>>> 9e769d8026f2d715fe949469bffd208154864fda
+
 
 ## License
-Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSE) file.
+Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0, except as noted otherwise in the [LICENSE](LICENSE) file.
