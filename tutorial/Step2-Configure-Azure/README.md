@@ -50,7 +50,7 @@ Now that the trust is established between Azure Active Directory(productive or t
 
 ## 3. Create Group and Test Users in Azure AD
 
-## 3.1 Create groups in Azure AD
+### 3.1 Create groups in Azure AD
 Login to Azure Portal.Go to Default Directory and click on Groups - New Group.
 Create a new security group with the name s4businessusergrp.</br>
 ![plot](./images/azure-groups.png)
@@ -60,14 +60,14 @@ All users supposed to use the new extension application have to be assigned to t
 The Object ID of this user group will later be mapped to a role collection in SAP BTP. So, before you move on, please note down the Object ID from the Azure Portal. for creating a new role collection in overview section of SAP BTP Trust Configuration.
 The group assignment of your Active Directory users will be provided to SAP BTP using the Groups claim of your SAML configuration. 
 
-## 3.2 Create users in Azure
+### 3.2 Create users in Azure
 Go to Default Directory and click on Users - New User, as shown below.
 ![plot](./images/azure-users.png)
 
 Ensure the email id is updated for the newly created user. This field is important for principal propogation and is required when receiving the events from SAP S/4HANA.The same ID will be configured for the named user in SAP S/4HANA.
 ![plot](./images/useremail.png)
 
-## 3.3 Assign the users to the group
+### 3.3 Assign the users to the group
 Select the group and add the list of users.
 ![plot](./images/user-group-assignment.png)
 
@@ -112,32 +112,32 @@ Please ensure you read this blog post to understand each of the configuration de
 Before you continue, open this blog post [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/)
 
 
-6.1 Create new app registration for the MS Teams extension application as below.
+### 6.1 Create new app registration for the MS Teams extension application as below.
 ![plot](./images/newappcreation.png)
 
-6.2 Update the Support account types to "Accounts in any organizational directory(Any Azure AD directory - Multitenant)
+### 6.2 Update the Support account types to "Accounts in any organizational directory(Any Azure AD directory - Multitenant)
 
-6.3 Update the Redirect URI. Select Web and update the URL as https://localhost for now.
+### 6.3 Update the Redirect URI. Select Web and update the URL as https://localhost for now.
 
-6.4 Note down the Application Client ID and Directory(Tenant ID) of the app registration.
+### 6.4 Note down the Application Client ID and Directory(Tenant ID) of the app registration.
 ![plot](./images/appregistrationdetails.png)
 
-6.5 Create new Client Secret and Value and note down the Client Secret Value
+### 6.5 Create new Client Secret and Value and note down the Client Secret Value
 ![plot](./images/clientsecret.png)
 
-6.6 Expose an API by clicking on Set in the sub-menu. Follow the instructions and explanations for how to form this Application ID URI from Blog Post - Steps 4,5,6, and 7.
+### 6.6 Expose an API by clicking on Set in the sub-menu. Follow the instructions and explanations for how to form this Application ID URI from Blog Post - Steps 4,5,6, and 7.
 
 Your configuration should look like below 
 ![plot](./images/exposeapi.png)
 Note: You will have to change the Application ID URI. 
 
-6.7 Click on Authentication in the sub-menu and configure the Redirect URIs for app registration and update the tokens that you would like to be issued by the authorization endpoint as below. Refer to Steps 8 and 9 from Blog Post.
+### 6.7 Click on Authentication in the sub-menu and configure the Redirect URIs for app registration and update the tokens that you would like to be issued by the authorization endpoint as below. Refer to Steps 8 and 9 from Blog Post.
 Your configuration should have 2 URLs configured as shown below 
 ![plot](./images/authentication.png)
 
 You will also activate the Access tokens and ID tokens. 
 
-6.8 Next will be to configure the Microsoft Graph API Permissions. Go through Steps 10 & 11 in the blog post for more details. 
+### 6.8 Next will be to configure the Microsoft Graph API Permissions. Go through Steps 10 & 11 in the blog post for more details. 
 
 Click on Add permission and select Microsoft Graph.
 ![plot](./images/addpermission.png)
@@ -149,7 +149,7 @@ Please follow the table in the blog post.
 Post following the steps, your configurations should look as below.
 ![plot](./images/grantadmin.png)
 
-6.9 Following the steps of 'Enable the SAP BTP integration for your application' from the blog post.
+### 6.9 Following the steps of 'Enable the SAP BTP integration for your application' from the blog post.
 ![plot](./images/entapp-api.png)
 
 Select expose an API and configure the client, as shown below. 
@@ -190,7 +190,7 @@ Note down the container name and the connection string from the configuration. T
 ![plot](./images/containername.png)
 ![plot](./images/accesskeys.png)
 
-## 8. Login to MS Teams to check user 
+## 9. Login to MS Teams to check user 
 
 With the test user, you created, login to [Microsoft Teams](https://teams.microsoft.com/). You should be able to see the below screen 
 ![plot](./images/teamslogin.png)

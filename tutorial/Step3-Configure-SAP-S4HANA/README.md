@@ -9,7 +9,7 @@ In this step, you will create a flexible workflow, which will send a request(Wor
 
 >Note: This step is optional if you already have an existing workflow running in your SAP S/4HANA system. Ensure that you deactivate other workflows before creating and activating this new workflow.
 
-1. Open the Fiori application - **Manage Workflow for Purchase Requisitions**.<br>
+1. Open the Fiori application - **Manage Workflow for purchase requisitions**.<br>
     >Note: Ensure the Role - SAP_BR_BPC_EXPERT is assigned to the user to have the above application accessible.<br>
     **Help**: https://fioriappslibrary.hana.ondemand.com/sap/fix/externalViewer/#/detail/Apps('F2705')/S20OP
 
@@ -29,11 +29,11 @@ In this step, you will create a flexible workflow, which will send a request(Wor
 6. Add the approval step by clicking the **Add** button in the **Step Sequence** section.<br>
 ![Approval Add step](images/s4/5.png)
 
-7. Select the step type **Release of Purchase Requisition Item** from the dropdown.<br>
+7. Select the step type **Release of purchase requisition Item** from the dropdown.<br>
 ![Step type Approval](images/s4/6.png)
 
 8. Go to the **Recipients** section, select the dropdown value **User** for **Assignment By**, and provide the user id in the **User** field. <br> 
-Please Note: This user id needs to have the email address created in Azure AD. Go to user administrator in SAP S/4HANA and update the user's email address.
+Please Note: This user id needs to have the same email address of the test user that is created in Azure AD. Go to user administrator in SAP S/4HANA and update the user's email address.
 ![User Assignment](./images/s4/7.png)
     >Note: In this step, you will select which user the workflow should go to for approval.
 
@@ -70,10 +70,10 @@ You have successfully created a purchase requisition, which created a workflow i
 
 ### Background Job to send the Workflow Instances to the SAP Event Mesh
 
-In this step, you will create the background job to send the workflow instances(workitems) to the SAP Event Mesh. After this step, the event mesh subscription will forward the workitems to the Teams application for approval.
+In this step, you will create the background job to send the workflow instances(workitems) to the SAP Event Mesh. After this step, the configured webhook in SAP Event Mesh will forward the workitems to the MS Teams application for approval.
 
 
-#### <ins>Create the service key for your Event Mesh<ins>
+#### <ins>Create the service key for your SAP Event Mesh<ins>
 In this sub-step, you will create a service key for your SAP Event Mesh instance, which has the OAuth client credentials and the rest service URL to communicate with the SAP Event Mesh.
 
 17. Go to your SAP BTP subaccount and select **Instances and Subscriptions**.<br>
@@ -92,7 +92,7 @@ In this sub-step, you will create a service key for your SAP Event Mesh instance
 ![Note the service key details](./images/s4/15.png)
 
 #### <ins>Create the Destination<ins>
-In this sub-step, you will create a destination to maintain the rest URL of the event mesh to connect and send messages.
+In this sub-step, you will create a destination to maintain the rest URL of the SAP Event Mesh to connect and send messages.
 
 22. Goto **SM59** transaction and click **create** icon as shown in the below screenshot to create a new destination.<br>
 ![Destination](./images/s4/16.png)
@@ -120,7 +120,7 @@ In this sub-step, you will configure the OAuth client, which will be used by the
 29. Select the drop down value **/IWXBE/MGW_MQTT** in the field **OAuth 2.0 Client Profile**, enter a unique name in the **Configuration Name** and **OAuth 2.0 Client ID** value from **Step 21** : **Clientid**.<br>
 ![OAuth Client Details](./images/s4/23.png)
 
-30. Scroll down and enter **clientsecret** and **tokenendpoint** from **Step 21**.<br>
+30. Scroll down and enter **clientsecret** and **tokenendpoint** from **Step 21** and enter the value of **tokenendpoint** in "Authorization endpoint" field as well.<br>
 ![Additiona details](./images/s4/24.png)
 
 31. Select the radio buttons **Form Fields**, **Header Field** and **Client Credentials** as shown in the screenshot.<br>
@@ -130,7 +130,7 @@ In this sub-step, you will configure the OAuth client, which will be used by the
 ![Save OAuth](./images/s4/26.png)
 
 #### <ins>Import ABAP Git Project to run<ins>
-Use the below git URL (ABAP branch) to import the ABAP Class and Report, which contains the code to send the Workflow instances(workitems) to Event Mesh.
+Use the below git URL (ABAP branch) to import the ABAP Class and Report, which contains the code to send the Workflow instances(workitems) to SAP Event Mesh.
 
 33. Open **SE38** and execute the program **ZABAPGIT_STANDALONE**.<br>
     >Note: If the above program is not there in the system, follow the [Install ABAP Git](https://docs.abapgit.org/guide-install.html) documentation.
@@ -139,7 +139,7 @@ Use the below git URL (ABAP branch) to import the ABAP Class and Report, which c
 34. Click **New Online** button to import the repository.<br>
 ![Import Repo](./images/s4/28.png)
 
-35. Enter the repository url, package & branch as **abap** and click **Create Online Repo** to import the repository.<br>
+35. Enter the repository url(https://github.com/SAP-samples/btp-msteams-extend-workflow/), package & branch as **abap** and click **Create Online Repo** to import the repository.<br>
 ![Repo details](./images/s4/29.png)
 
 36. Select **Clone Online Repo** and click **pull** to save the repo to your SAP S/4HANA system.<br>
@@ -147,7 +147,7 @@ Use the below git URL (ABAP branch) to import the ABAP Class and Report, which c
     
 
 #### <ins>Understanding the Code<ins>
-Now that you have imported the code to push the workitems to the Event Mesh. Let's understand how it works.
+Now that you have imported the code to push the workitems to the SAP Event Mesh. Let's understand how it works.
 
 37. After completing the **Step 36**, you will have a report **ZWFCUSEMSEND_TEAMSINT** and a class **zcl_wfcusemsend_teamsint** created in your SAP S/4HANA system.<br>
 
@@ -157,17 +157,31 @@ Now that you have imported the code to push the workitems to the Event Mesh. Let
 39. Inside the method: **RUN_EM_JOB**, the private method: **GET_DELTA_WORKFLOW_INSTANCES** will be called to fetch all the workflow instances (workitems) that were created. The task **TS02000714** is from **Step 15**.<br>
 ![Task Fetch](./images/s4/34.png)
 
-40. After the execution of the method: **GET_DELTA_WORKFLOW_INSTANCES**, the method: **CONNECT_TO_EM** will create the HTTP connection instance to the Event Mesh, which is well explained using the comments in the code.<br>
+40. After the execution of the method: **GET_DELTA_WORKFLOW_INSTANCES**, the method: **CONNECT_TO_EM** will create the HTTP connection instance to the SAP Event Mesh, which is well explained using the comments in the code.<br>
 ![Execution](./images/s4/36.png)
-You will also maintain the URI for the Event mesh in the **CONNECT_TO_EM** method as shown below:<br>
+You will also maintain the URI for the SAP Event Mesh in the **CONNECT_TO_EM** method as explained below:<br>
+
+In case of the SAP BTP trial account with SAP Event Mesh default plan, then 
+the URI value should be entered as 'URI value that should be used is '/messagingrest/v1/queues/PRApproval/messages'.
+
+In case of the SAP BTP enterprise account with SAP Event Mesh standard plan, if the namespace is "orgname/s4/t1" for your SAP Event Mesh instance and queue name is "PRApproval"(the queue name should be same as the one that you have entered in [### 2.Setup SAP Event Mesh](../Step1-Configure-SAP-BTP/README.md) step, then 
+
+URI - '/messagingrest/v1/queues/<encoded fully qualified queue name>/messages'
+Fully qualified queue name - orgname/s4/t1/PRApproval
+Encoded FQQN - orgname%2Fs4%2Ft1%2FPRApproval
+
+URI value that should be used is '/messagingrest/v1/queues/orgname%2Fs4%2Ft1%2FPRApproval/messages'
+
 ![Execution](./images/s4/52.png)
+
+Save and activate the object before proceeding.
 
 41. Then the **SEND_WORKITEM_TO_EM** method will send the Purchase Requisition workitem to the Event Mesh.<br>
 ![Constructor](./images/s4/35.png)
     >**Note**: The Destination, OAuth Profile & OAuth Configuration are maintained in the **Contructor** method.
 
 #### <ins>Background Job Creation<ins>
-In this step, you will automate the report from **Step 37** to run in the background every minute to send the newly created workitems to the Event Mesh.
+In this step, you will automate the report from **Step 37** to run in the background every minute to send the newly created workitems to the SAP Event Mesh.
 
 42. Open the Transaction **SM36** and click **Job Wizard** to create a new background job.<br>
 ![SM36](./images/s4/37.png)
@@ -220,5 +234,10 @@ Let's create a new purchase requisition and go to SAP Event Mesh to see the mess
 
 57. Click on **Consume** to see the message.<br>
 ![Consume](./images/s4/51.png)
+
+### Activate the service API_PURCHASEREQ_PROCESS_SRV
+
+58. Add the service API_PURCHASEREQ_PROCESS_SRV with the /n/IWFND/MAINT_SERVICE transaction.<br>
+![Activate](./images/s4/53.png)
 
 Congratulations!! Now you have completed the creation of the new Flexible workflow for the purchase requisition, configured the background job to send the workitems to SAP Event Mesh, and tested it successfully.
