@@ -104,6 +104,7 @@ In this section, you will clone the codebase and deploy the extension applicatio
     Your manifest.json file should reflect the below changes
 ![plot](./images/manifest1.png) 
 
+
 ![plot](./images/manifest2.png) 
 
     Once you have the configuration parameters updated, you must zip all files in the /deploy/msteamsfiles folder.
@@ -116,6 +117,7 @@ In this section, you will clone the codebase and deploy the extension applicatio
 
     Once the upload is successful, you should be able to see the extension application in the Build for your org Section within Microsoft Teams, as shown below.
     Login to https://teams.microsoft.com and check the App Store.
+
 ![plot](./images/installapp.png) 
 
 
@@ -128,6 +130,7 @@ In this section, you will clone the codebase and deploy the extension applicatio
 ![plot](./images/uaa-servicekey-create.png)
 
 3. Notedown the service key details created in the above step.
+
 ![plot](./images/uaa-servicekey-details.png)
 
 4. Click on the instance for Event Mesh. As this is executed in a trial environment, you will see the plan as a dev for SAP Event Mesh Service.
