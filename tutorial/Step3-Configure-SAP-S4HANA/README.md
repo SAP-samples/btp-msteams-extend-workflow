@@ -161,20 +161,20 @@ Now that you have imported the code to push the workitems to the SAP Event Mesh.
 ![Execution](./images/s4/36.png)
 You will also maintain the URI for the SAP Event Mesh in the **CONNECT_TO_EM** method as explained below:<br>
 
-In case of the SAP BTP trial account with SAP Event Mesh default plan, then 
-the URI value should be entered as 'URI value that should be used is '/messagingrest/v1/queues/PRApproval/messages'.
+    In case of the SAP BTP trial account with SAP Event Mesh default plan, then 
+    the URI value should be entered as 'URI value that should be used is '/messagingrest/v1/queues/PRApproval/messages'.
 
-In case of the SAP BTP enterprise account with SAP Event Mesh standard plan, if the namespace is "orgname/s4/t1" for your SAP Event Mesh instance and queue name is "PRApproval"(the queue name should be same as the one that you have entered in [### 2.Setup SAP Event Mesh](../Step1-Configure-SAP-BTP/README.md) step, then 
+    In case of the SAP BTP enterprise account with SAP Event Mesh standard plan, if the namespace is "orgname/s4/t1" for your SAP Event Mesh instance and queue name is "PRApproval"(the queue name should be same as the one that you have entered in [### 2.Setup SAP Event Mesh](../Step1-Configure-SAP-BTP/README.md) step, then 
 
-URI - '/messagingrest/v1/queues/<encoded fully qualified queue name>/messages'
-Fully qualified queue name - orgname/s4/t1/PRApproval
-Encoded FQQN - orgname%2Fs4%2Ft1%2FPRApproval
+    URI - '/messagingrest/v1/queues/<encoded fully qualified queue name>/messages'
+    Fully qualified queue name - orgname/s4/t1/PRApproval
+    Encoded FQQN - orgname%2Fs4%2Ft1%2FPRApproval
 
-URI value that should be used is '/messagingrest/v1/queues/orgname%2Fs4%2Ft1%2FPRApproval/messages'
+    URI value that should be used is '/messagingrest/v1/queues/orgname%2Fs4%2Ft1%2FPRApproval/messages'
 
-![Execution](./images/s4/52.png)
+    ![Execution](./images/s4/52.png)
 
-Save and activate the object before proceeding.
+    Save and activate the object before proceeding.
 
 41. Then the **SEND_WORKITEM_TO_EM** method will send the Purchase Requisition workitem to the Event Mesh.<br>
 ![Constructor](./images/s4/35.png)
