@@ -26,6 +26,7 @@ Once you have registered, you will be able to see the following list of Azure se
 Login to [Azure portal](http://portal.azure.com). Select Azure Active Directory. You should be able to see the below information in the Overview of Default Directory.
 
 Below is the option to create and manage tenants
+
 ![plot](./images/tenant-defaultdirectory.png)
 
 
@@ -69,6 +70,7 @@ Ensure the email id is updated for the newly created user. This field is importa
 
 ### 3.3 Assign the users to the group
 Select the group and add the list of users.
+
 ![plot](./images/user-group-assignment.png)
 
 ## 4. Assign users and groups to enterprise application
@@ -78,10 +80,10 @@ Go back to the default directory and select the enterprise application that was 
 
 Hint – Please be aware that if you're using a free Azure Active Directory, you have to add all (test) users manually, as groups cannot be added. Nevertheless, the previous group assignment will be available in SAP BTP via the configured SAML claim.
 
-Please see the below screenshot for the same. For a trial account, the assignment will look at below.
+Please see the below screenshot for the same. For a trial account, the assignment will look as below.
 ![plot](./images/enterpriseapp-users.png)
 
-In case of paid subscription , the assignment will look at below 
+In case of paid subscription, the assignment will look as below 
 ![plot](./images/enterpriseapp-users-paid.png)
 
 The required Role Collection Mapping on the SAP BTP side will be done in the next steps.
@@ -127,12 +129,15 @@ Before you continue, open this blog post [Get your Microsoft Azure settings read
 
 ### 6.6 Expose an API by clicking on Set in the sub-menu. Follow the instructions and explanations for how to form this Application ID URI from Blog Post - Steps 4,5,6, and 7.
 
-Your configuration should look like below 
+Your configuration should look like below.
+
 ![plot](./images/exposeapi.png)
+
 Note: You will have to change the Application ID URI. 
 
 ### 6.7 Click on Authentication in the sub-menu and configure the Redirect URIs for app registration and update the tokens that you would like to be issued by the authorization endpoint as below. Refer to Steps 8 and 9 from Blog Post.
-Your configuration should have 2 URLs configured as shown below 
+Your configuration should have 2 URLs configured as shown below.
+
 ![plot](./images/authentication.png)
 
 You will also activate the Access tokens and ID tokens. 
@@ -140,9 +145,11 @@ You will also activate the Access tokens and ID tokens.
 ### 6.8 Next will be to configure the Microsoft Graph API Permissions. Go through Steps 10 & 11 in the blog post for more details. 
 
 Click on Add permission and select Microsoft Graph.
+
 ![plot](./images/addpermission.png)
 
  There are two types of permissions - Delegated and Application.
+
 ![plot](./images/permissiontypes.png)
 
 Please follow the table in the blog post.
@@ -153,7 +160,9 @@ Post following the steps, your configurations should look as below.
 ![plot](./images/entapp-api.png)
 
 Select expose an API and configure the client, as shown below. 
+
 ![plot](./images/entapp-apiexpose.png)
+
 Note: The client ID you are mentioning here is that of the app registration which you created.
 
 ## 7. Create Azure Bot Service
@@ -166,7 +175,8 @@ Look for Azure Bot and start to create.
 
 Once you have the Azure Bot has been created, go ahead and add Microsoft Teams to the connected channels and complete all the configurations as mentioned in the blog post.
 
-You should be able to see the final configurations below
+You should be able to see the final configurations 
+
 ![plot](./images/botconfigs.png)
 
 Click on Test Connection and test both the OAuth connection settings (GraphConnection and BTPConnection).
@@ -178,6 +188,7 @@ We are using Test User to test the connection.
 ## 8. Create Azure Storage Account
 
 The next step is to create the Azure Storage Account.
+
 ![plot](./images/storageaccount.png)
 
 Click on Advanced Tab and make sure the blob public access is disabled before clicking on Review+Create.
@@ -187,12 +198,15 @@ Once the storage account is successfully created, go to the resource and add a c
 ![plot](./images/containers-keys.png)
 
 Note down the container name and the connection string from the configuration. This will be used in environmental variables.
+
 ![plot](./images/containername.png)
+
 ![plot](./images/accesskeys.png)
 
 ## 9. Login to MS Teams to check user 
 
 With the test user, you created, login to [Microsoft Teams](https://teams.microsoft.com/). You should be able to see the below screen 
+
 ![plot](./images/teamslogin.png)
 
 In case you do not see this, then check for details in the blog post under Section - Microsoft Teams licence. You can assign the licence to the AD users.
