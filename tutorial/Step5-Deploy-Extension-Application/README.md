@@ -75,10 +75,10 @@ In this section, you will clone the codebase and deploy the extension applicatio
     ```
 
     Once the application is deployed, note down the Extension Application URL as shown below
-    ![plot](./images/deploy.png) 
+![plot](./images/deploy.png) 
 
     You can also check the status of your application in your SAP BTP Cockpit.
-    ![plot](./images/SAPBTPCockpit.png) 
+![plot](./images/SAPBTPCockpit.png) 
 
 
 6. Upload manifest file in Microsoft Teams.
@@ -90,7 +90,7 @@ In this section, you will clone the codebase and deploy the extension applicatio
 
 
     Generate the GUID from command prompt as shown below. 
-    ![plot](./images/guid.png) 
+![plot](./images/guid.png) 
 
     Once the GUID is generated, update the manifest.json file with the below parameter before you upload the manifest definition of your extension app to Microsoft Teams.
 
@@ -102,21 +102,21 @@ In this section, you will clone the codebase and deploy the extension applicatio
     |**domain-placeholder:**|The CF domain of your MS Teams extension.|
 
     Your manifest.json file should reflect the below changes
-    ![plot](./images/manifest1.png) 
+![plot](./images/manifest1.png) 
 
-    ![plot](./images/manifest2.png) 
+![plot](./images/manifest2.png) 
 
     Once you have the configuration parameters updated, you must zip all files in the /deploy/msteamsfiles folder.
-    ![plot](./images/zipfilecontent.png) 
+![plot](./images/zipfilecontent.png) 
 
     Upload this zip file to [Microsoft Teams Admin Center](https://admin.teams.microsoft.com/). Login with an Active Directory user who has a Microsoft Teams Administrator role assigned.
 
     Use the menu as shown below to upload your app.
-    ![plot](./images/admincenter.png) 
+![plot](./images/admincenter.png) 
 
     Once the upload is successful, you should be able to see the extension application in the Build for your org Section within Microsoft Teams, as shown below.
     Login to https://teams.microsoft.com and check the App Store.
-    ![plot](./images/installapp.png) 
+![plot](./images/installapp.png) 
 
 
 ## Post Deployment Steps
