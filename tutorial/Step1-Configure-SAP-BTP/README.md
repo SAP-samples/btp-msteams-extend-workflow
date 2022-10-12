@@ -78,7 +78,7 @@ Click on Next and enter the following configuration parameters and click on "Cre
 ![plot](./images/btp-uaa-config.png)
 
 ### 4.Configure SAP Destination Service
-Create a new [SAP Destination](https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/783fa1c418a244d0abb5f153e69ca4ce.html) instance in your dedicated SAP BTP subaccount. This destination instance lets you find the destination information required to access a remote service or system from your SAP Cloud Foundry application.
+Create a new [SAP Destination](https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/9fdad3cad92e4b63b73d5772014b380e.html?locale=en-US) service instance in your dedicated SAP BTP subaccount. This destination instance lets you find the destination information required to access a remote service or system from your SAP Cloud Foundry application.
 
 ```
 Name : wftaskdec-dest-service
