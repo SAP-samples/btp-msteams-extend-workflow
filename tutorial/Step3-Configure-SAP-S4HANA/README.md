@@ -130,7 +130,7 @@ In this sub-step, you will configure the OAuth client, which will be used by the
 ![Save OAuth](./images/s4/26.png)
 
 #### <ins>Import ABAP Git Project to run<ins>
-Use the below git URL (ABAP branch) to import the ABAP Class and Report, which contains the code to send the Workflow instances(workitems) to SAP Event Mesh.
+Use the GitHub [ABAP Branch URL ](https://github.com/SAP-samples/btp-msteams-extend-workflow/tree/abap) to import the ABAP Class and Report, which contains the code to send the Workflow instances(workitems) to SAP Event Mesh.
 
 33. Open **SE38** and execute the program **ZABAPGIT_STANDALONE**.<br>
     >Note: If the above program is not there in the system, follow the [Install ABAP Git](https://docs.abapgit.org/guide-install.html) documentation.
