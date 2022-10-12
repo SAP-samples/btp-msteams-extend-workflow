@@ -83,7 +83,8 @@ Hint – Please be aware that if you're using a free Azure Active Directory, you
 Please see the below screenshot for the same. For a trial account, the assignment will look as below.
 ![plot](./images/enterpriseapp-users.png)
 
-In case of paid subscription, the assignment will look as below 
+In case of paid subscription, the assignment will look as below.
+
 ![plot](./images/enterpriseapp-users-paid.png)
 
 The required Role Collection Mapping on the SAP BTP side will be done in the next steps.
@@ -171,6 +172,7 @@ Go to the home screen at http://portal.azure.com and search for the marketplace.
 ![plot](./images/marketplace.png)
 
 Look for Azure Bot and start to create.
+
 ![plot](./images/azurebot.png)
 
 Once you have the Azure Bot has been created, go ahead and add Microsoft Teams to the connected channels and complete all the configurations as mentioned in the blog post.

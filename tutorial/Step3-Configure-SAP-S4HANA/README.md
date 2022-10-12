@@ -159,6 +159,7 @@ Now that you have imported the code to push the workitems to the SAP Event Mesh.
 
 40. After the execution of the method: **GET_DELTA_WORKFLOW_INSTANCES**, the method: **CONNECT_TO_EM** will create the HTTP connection instance to the SAP Event Mesh, which is well explained using the comments in the code.<br>
 ![Execution](./images/s4/36.png)
+
 You will also maintain the URI for the SAP Event Mesh in the **CONNECT_TO_EM** method as explained below:<br>
 
     In case of the SAP BTP trial account with SAP Event Mesh default plan, then 
@@ -166,7 +167,7 @@ You will also maintain the URI for the SAP Event Mesh in the **CONNECT_TO_EM** m
 
     In case of the SAP BTP enterprise account with SAP Event Mesh standard plan, if the namespace is "orgname/s4/t1" for your SAP Event Mesh instance and queue name is "PRApproval"(the queue name should be same as the one that you have entered in [### 2.Setup SAP Event Mesh](../Step1-Configure-SAP-BTP/README.md) step, then 
 
-    URI - '/messagingrest/v1/queues/<encoded fully qualified queue name>/messages'
+    URI - '/messagingrest/v1/queues/encoded fully qualified queue name/messages'
     Fully qualified queue name - orgname/s4/t1/PRApproval
     Encoded FQQN - orgname%2Fs4%2Ft1%2FPRApproval
 
@@ -178,6 +179,7 @@ You will also maintain the URI for the SAP Event Mesh in the **CONNECT_TO_EM** m
 
 41. Then the **SEND_WORKITEM_TO_EM** method will send the Purchase Requisition workitem to the Event Mesh.<br>
 ![Constructor](./images/s4/35.png)
+
     >**Note**: The Destination, OAuth Profile & OAuth Configuration are maintained in the **Contructor** method.
 
 #### <ins>Background Job Creation<ins>

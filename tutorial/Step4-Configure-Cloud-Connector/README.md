@@ -13,18 +13,18 @@
 **SAP Business Technology Platform**
 
 - Cloud Foundry Subaccount
-    >
-    > - Foundation for running the MS Teams extension application.
-    > - Required for Azure AD - SAP BTP Trust Configuration
-    > - Required to connect to  SAP S/4HANA using SAP Cloud connector
-    >
+    
+    - Foundation for running the MS Teams extension application.
+    - Required for Azure AD - SAP BTP Trust Configuration
+    - Required to connect to  SAP S/4HANA using SAP Cloud connector
+    
 - Connectivity Service
-    >
-    > - Required to establish connectivity between SAP S/4HANA and a SAP BTP application.
-    >
+    
+    - Required to establish connectivity between SAP S/4HANA and a SAP BTP application.
+    
 - Destination Service
-    >
-    > - Required to consume SAP S/4HANA API or ODATA service using SAP BTP application.
+    
+    - Required to consume SAP S/4HANA API or ODATA service using SAP BTP application.
 
 ## Configuration
 

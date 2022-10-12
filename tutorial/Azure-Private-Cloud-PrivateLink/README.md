@@ -28,27 +28,27 @@ Recommended architecture to connect to SAP S/4HANA on Azure using BTP Private Li
 **SAP Business Technology Platform Services**
 
 - Cloud Foundry Subaccount
-    >
-    > - Foundation for running the MS Teams extension application.
-    > - Required for Azure AD - SAP BTP trust
-    > - Create and manage destinations 
-    > - Required to connect to SAP S/4HANA instance using SAP Private Link service 
-    >
+    
+    - Foundation for running the MS Teams extension application.
+    - Required for Azure AD - SAP BTP trust
+    - Create and manage destinations 
+    - Required to connect to SAP S/4HANA instance using SAP Private Link service 
+    
 - SAP Private Link service
-    >
-    > - Required to connect to SAP S/4HANA instance using Azure Private Link service 
-    > - SAP BTP Private Link service is currently only available on SAP BTP Enterprise Accounts and not available with SAP BTP trial account or as Free Tier service.
+    
+    - Required to connect to SAP S/4HANA instance using Azure Private Link service 
+    - SAP BTP Private Link service is currently only available on SAP BTP Enterprise Accounts and not available with SAP BTP trial account or as Free Tier service.
 
 
 - Destination Service
-    >
-    > - Required to connect to SAP S/4HANA instance using SAP BTP Private Link service
+    
+    - Required to connect to SAP S/4HANA instance using SAP BTP Private Link service
 
 **Microsoft Azure**
 
 - Azure Private Link service
-    >
-    > - Required to connect to SAP S/4HANA instance from SAP BTP subaccount
+    
+    - Required to connect to SAP S/4HANA instance from SAP BTP subaccount
 
 ## Setup and configure SAP Private Link service and Azure Private Link service 
 
@@ -70,7 +70,7 @@ Click New **Destination**.
     --- | --- |
     Name | S4HANA_PL_NP |
     Type | HTTP |
-    URL | <https://[your> private hostname]/  |
+    URL | https://your private hostname  |
     Proxy Type | PrivateLink |
     Authentication | BasicAuthentication |
     User| Technical User |
@@ -187,7 +187,7 @@ key | value |
 --- | --- |
 Name | s4BasicAuth |
 Type | HTTP |
-URL | <https://[your> private hostname]/ |
+URL | https://your private hostname |
 Proxy Type | PrivateLink |
 Authentication | Basic Authentication (TEAMSCLIENT) |
 scope | ZTASKPROCESSING_0002 |
@@ -208,7 +208,7 @@ key | value |
 --- | --- |
 Name | s4oauth |
 Type | HTTP |
-URL | <https://[your private hostname]/sap/bc/sec/oauth2/token?sap-client=[your client no] > |
+URL | https://your private hostname/sap/bc/sec/oauth2/token?sap-client=[your client no] |
 Proxy Type | PrivateLink |
 Authentication | SAMLAssertion |
 Audience | check Provider Name on **SAML2 backend transaction** |
@@ -224,8 +224,8 @@ HTML5.DynamicDestination | true |
 WebIDEEnabled | true |
 WebIDEUsage | odata_abap |
 nameIdFormat | urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress |
-tokenServiceURL  | <https://[your private hostname]/sap/bc/sec/oauth2/token > |
-assertionRecipient  | <https://[your private hostname]/sap/bc/sec/oauth2/token >|
+tokenServiceURL  | https://your private hostname/sap/bc/sec/oauth2/token |
+assertionRecipient  | https://your private hostname/sap/bc/sec/oauth2/token |
 userSourceId  | email
 
 3. Create destination "s4NoAuth" (This is used for final call to OData without Authentication, we inject the Bearer token from preceeding calls)
