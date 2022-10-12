@@ -31,3 +31,20 @@ Note: This business user creates the PR and the manager approves/rejects the PR.
     ![plot](./images/approved.png)  
 
 Congratulations! You have completed the end-to-end integration of Microsoft Teams with SAP BTP and SAP S/4HANA.
+
+### Troubleshooting
+
+1. To access MS Teams admin URL, make sure the test user has Teams Administrator Role Assignment. This is also required to upload the application in MS Teams Admin console.
+
+2. Add Microsoft Teams Exploratory license to the test user, especially the Exchange Online (Plan 1) License without which some resources like https://graph.microsoft.com/v1.0/me/calendar will not be available with graph api. 
+
+3. In SAP S/4HANA on-premise system, before importing the ABAP Project (Open SE38 and execute the program ZABAPGIT_STANDALONE) and add a step to import GitHub certificate as mentioned here. Otherwise, you will encounter SSL certificate errors. 
+
+4. In SAP S/4HANA 2020 and higher versions, the Clone Repository is not present in Abap Git program. On creating the online repository, a local copy is created automatically. So, the Clone Online Repo step can be avoided in these systems and Pull step can be executed directly. 
+
+5. In case of Unauthorized error in Webhook, make sure that the role created by uaa instance is added to the Role Collection mapped in the Trust config. If this also does not solve the Issue the Role Collection should be added to the user. 
+
+6. In case of Unauthorized error in destination configuration, Principal Type can be changed to X.509 Certificate (Strict Usage) in cloud configuration. 
+
+7. In the Azure BOT Service, make sure to pass all the scopes while adding the Graph Connection to prevent issue of 403-Forbidden Error. When we test the connection, we have to test with Test User and provide all the permissions for the user.
+
