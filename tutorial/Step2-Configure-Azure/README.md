@@ -81,7 +81,7 @@ Hint – Please be aware that if you're using a free Azure Active Directory, you
 Please see the below screenshot for the same. For a trial account, the assignment will look as below.
 ![plot](./images/enterpriseapp-users.png)
 
-In case of paid subscription , the assignment will look as below 
+In case of paid subscription, the assignment will look as below 
 ![plot](./images/enterpriseapp-users-paid.png)
 
 The required Role Collection Mapping on the SAP BTP side will be done in the next steps.
