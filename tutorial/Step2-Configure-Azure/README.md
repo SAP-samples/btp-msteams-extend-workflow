@@ -78,10 +78,10 @@ Go back to the default directory and select the enterprise application that was 
 
 Hint – Please be aware that if you're using a free Azure Active Directory, you have to add all (test) users manually, as groups cannot be added. Nevertheless, the previous group assignment will be available in SAP BTP via the configured SAML claim.
 
-Please see the below screenshot for the same. For a trial account, the assignment will look at below.
+Please see the below screenshot for the same. For a trial account, the assignment will look as below.
 ![plot](./images/enterpriseapp-users.png)
 
-In case of paid subscription , the assignment will look at below 
+In case of paid subscription , the assignment will look as below 
 ![plot](./images/enterpriseapp-users-paid.png)
 
 The required Role Collection Mapping on the SAP BTP side will be done in the next steps.

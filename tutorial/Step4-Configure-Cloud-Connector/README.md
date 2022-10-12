@@ -41,7 +41,7 @@ You can download the zip archive for your operating system. You need administrat
 
 **Initial Configuration**
 
-To configure the SCC, enter https://<hostname>:<port> in a browser, where the <hostname> is the hostname of the machine on which the connector is installed, and the <port> number is the one configured during installation. The default port number is 8443.
+To configure the SCC, enter https://hostname:port in a browser, where "hostname" is the hostname of the machine on which the connector is installed, and the "port" is the port number configured during installation. The default port number is 8443.
 
 ![plot](./images/scc_logon.png)
 
