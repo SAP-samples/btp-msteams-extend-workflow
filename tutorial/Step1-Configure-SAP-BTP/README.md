@@ -146,4 +146,4 @@ plan: lite
 ```
 ![plot](./images/btp-conn-instance.png)
 
-**Note**: If you change the names of XSUAA/Destination/Connectivity instances, you need to adjust the manifest.yml file within your Node.js extension project. This will ensure correct binding of the respective instances to your extension app. 
+**Note**: If you change the names of Authorization and Trust Management/Destination/Connectivity service instance, you need to adjust the manifest.yml file within your Node.js extension project. This will ensure correct binding of the respective instances to your extension app. 
