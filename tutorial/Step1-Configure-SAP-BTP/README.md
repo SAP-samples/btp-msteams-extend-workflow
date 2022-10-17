@@ -52,9 +52,11 @@ To set up SAP Event Mesh for this scenario, follow these steps:
 ![plot](./images/em-create-queue.png)
 
  
-### 3. Set Up the SAP Authorization and Trust Management Service
+### 3. Set Up SAP Authorization and Trust Management Service
 
-You need the SAP Authorization and Trust Management service  to authenticate the access to the extension app's notification endpoint. See [SAP Authorization and Trust Management Service](https://help.sap.com/docs/CP_AUTHORIZ_TRUST_MNG). 
+You need the SAP Authorization and Trust Management service  to authenticate the access to the extension app's notification endpoint.
+
+See [SAP Authorization and Trust Management Service](https://help.sap.com/docs/CP_AUTHORIZ_TRUST_MNG). 
 
 To set up the SAP Authorization and Trust Management service for this scenario, follow these steps:
 
@@ -104,9 +106,11 @@ Plan: application
 
 ![plot](./images/btp-uaa-config.png)
 
-### 4. Set Up the Destination Service
+### 4. Set Up SAP Destination Service
 
-You need the SAP Destination service to access a remote service or system from your SAP Cloud Foundry application. See [Create and Bind a Destination Service Instance](https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/9fdad3cad92e4b63b73d5772014b380e.html) 
+You need the SAP Destination service to access a remote service or system from your SAP Cloud Foundry application. 
+
+See [Create and Bind a Destination Service Instance](https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/9fdad3cad92e4b63b73d5772014b380e.html) 
 
 To set up the SAP Destination service for this scenario, follow these steps:
 
@@ -124,9 +128,11 @@ plan : lite
 For the connection to an on-premise SAP S/4HANA system, you can optionally use this service, together with (i.e. in addition to) the SAP Connectivity service, see [Consuming the Connectivity Service](https://help.sap.com/docs/CP_CONNECTIVITY/cca91383641e40ffbe03bdc78f00f681/313b215066a8400db461b311e01bd99b.html?locale=en-US)
 
 
-### 5.Configure SAP Connectivity Service
+### 5.Set Up SAP Connectivity Service
 
-You need the SAP Destination service to connect your Node.js extension application to an on-premise system through the SAP Cloud Connector. See [SAP BTP Connectivity](https://help.sap.com/docs/CP_CONNECTIVITY).To achieve this, you must provide the required information about the target system (destination) and set up an HTTP proxy that lets your application access the on-premise system.
+You need the SAP Destination service to connect your Node.js extension application to an on-premise system through the SAP Cloud Connector. See [SAP BTP Connectivity](https://help.sap.com/docs/CP_CONNECTIVITY).
+
+To achieve this, you must provide the required information about the target system (destination) and set up an HTTP proxy that lets your application access the on-premise system.
 
 To set up the SAP Connectivity service for this scenario, follow these steps:
 
