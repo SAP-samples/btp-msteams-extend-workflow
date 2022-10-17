@@ -1,10 +1,14 @@
 import core from "@sap-cloud-sdk/core";
 import AuthClient from "./AuthClient.js";
 import axios from 'axios';
+import https from 'https';
 
 class S4HANAClient {
   constructor() { 
     this.sapClient = process.env.SAP_CLIENT;
+    this.httpsAgent = new https.Agent({  
+      rejectUnauthorized: process.env.ACCEPT_SELF_SIGNED_CERT === "true"? false:true
+    });
   }
 
   async callWFActionUsingCloudSdk(wfId, decisionKey, jwtToken) {
@@ -38,8 +42,8 @@ class S4HANAClient {
       //fetch accesstoken for SAML principal propagation
       const authClient = new AuthClient();
       const destinationDetails = await authClient.getDestinationDetails(VCAP_SERVICES.destination[0].credentials, "s4BasicAuth");
-      const samlConfiguration = await authClient.getSamlDestinationConfiguration(s4oauthDestConfigUrl, jwtToken);
-      const finalBearerToken = await authClient.getBearerForSAML(destinationDetails, samlConfiguration);
+      const samlConfiguration = await authClient.getSamlDestinationConfiguration(s4oauthDestConfigUrl, jwtToken, this.httpsAgent);
+      const finalBearerToken = await authClient.getBearerForSAML(destinationDetails, samlConfiguration, this.httpsAgent);
       const finalDestinationDetails = await authClient.getDestinationDetails(VCAP_SERVICES.destination[0].credentials, "s4NoAuth");
       let responseStatus = await this.executeWF(finalDestinationDetails, finalBearerToken, approveUrl);
       return responseStatus;
@@ -63,7 +67,8 @@ class S4HANAClient {
           headers: {
             'Authorization': `Bearer ${finalBearerToken}`,
             'x-csrf-token': 'fetch'
-          }
+          },
+          httpsAgent: this.httpsAgent
         }
       );
       csrfToken = res.headers['x-csrf-token'];
@@ -81,7 +86,8 @@ class S4HANAClient {
             'Authorization': `Bearer ${finalBearerToken}`,
             'x-csrf-token': csrfToken,
             'Cookie': cookie
-          }
+          },
+          httpsAgent: this.httpsAgent
         }
       );
       return response.status;

@@ -44,7 +44,7 @@ In this section, you will clone the codebase and deploy the extension applicatio
     |**MICROSOFT_APP_PASSWORD**|A Client Secret which you created for your Azure AD App Registration|
     |**MICROSOFT_AD_TENANT_ID**|The unique Id of your Azure Active Directory|
     |**SAP_CLIENT**|sap-client number of your S4/HANA system that you are using|
-
+    |**ACCEPT_SELF_SIGNED_CERT**|true for development environment and false for production environment|
 
 4. Open the manifest.yml file to update the application name. This application name needs to be updated in App Registration configuration in Microsoft Azure.
 

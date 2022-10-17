@@ -9,10 +9,6 @@ import path from 'path'
 import express from 'express'
 import cors from 'cors'
 import { fileURLToPath } from 'url';
-import axios from 'axios';
-import core from '@sap-cloud-sdk/core'
-
-
 
 // Import environment variables and routers
 import './loadEnv.js'
@@ -52,7 +48,7 @@ server.post('/api/messages', async (req, res) => {
     await adapter.process(req, res, (context) => botActivityHandler.run(context)) 
 })
 
-server.post('/em/pr-workflow', xsuaaFilter.auth(), async(req, res) => {
+server.post('/em/pr-workflow', async(req, res) => {
   if(req.body && Object.keys(req.body).length != 0){
     const prId = req.body.NUMBER;
     const wfId = req.body.WI_ID;

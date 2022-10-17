@@ -10,7 +10,6 @@
 import querystring from 'querystring'
 import qs from 'qs'
 import axios from 'axios'
-import https from 'https'
 
 class AuthClient {
     constructor(){
@@ -176,9 +175,9 @@ class AuthClient {
 
             // Request a new OAuth token for SAP Cloud Integration apiaccess using the SAML assertion
             // and the respective client id and secret of the process integration runtime instance. 
-            var res = await (async () => {
+            let res = await (async () => {
                 try {
-                    let res = await axios.post(btpTokenEndpoint, data, {
+                    let resp = await axios.post(btpTokenEndpoint, data, {
                         auth: {
                             username: this.xsuaaClientId,
                             password: this.xsuaaSecret
@@ -187,7 +186,7 @@ class AuthClient {
                             'Content-Type': this.headerUrlEncoded
                         }
                     });
-                    return res;
+                    return resp;
                 } catch (err) {
                     console.error(err);
                 }
@@ -195,8 +194,8 @@ class AuthClient {
 
             // The access token can now be extracted from the result
             if (res.data && res.headers['content-type'].includes('application/json')){
-                var responseBody = res.data;
-                var accessToken = " ";
+                const responseBody = res.data;
+                let accessToken = " ";
                 try{   
                     accessToken = responseBody["access_token"].toString();
                     return accessToken;
@@ -253,9 +252,9 @@ class AuthClient {
 
             // Request a new OAuth token for SAP Cloud Integration apiaccess using the SAML assertion
             // and the respective client id and secret of the process integration runtime instance. 
-            var res = await (async () => {
+            let res = await (async () => {
                 try {
-                    let res = await axios.post(btpTokenEndpoint, data, {
+                    let resp = await axios.post(btpTokenEndpoint, data, {
                         auth: {
                             username: this.destXsuaaClientId,
                             password: this.destXsuaaSecret
@@ -264,7 +263,7 @@ class AuthClient {
                             'Content-Type': this.headerUrlEncoded
                         }
                     });
-                    return res;
+                    return resp;
                 } catch (err) {
                     console.error(err);
                 }
@@ -272,8 +271,8 @@ class AuthClient {
 
             // The access token can now be extracted from the result
             if (res.data && res.headers['content-type'].includes('application/json')){
-                var responseBody = res.data;
-                var accessToken = " ";
+                const responseBody = res.data;
+                let accessToken = " ";
                 try{   
                     accessToken = responseBody["access_token"].toString();
                     return accessToken;
@@ -347,15 +346,12 @@ class AuthClient {
     }
 
     // Get SAML Destination config for the principal propagation
-     async getSamlDestinationConfiguration (samlTokenEndpoint, token){
+     async getSamlDestinationConfiguration (samlTokenEndpoint, token, httpsAgent){
         try {
-            var res = await (async () => {
+            let res = await (async () => {
                 try {
-                    const agent = new https.Agent({  
-                        rejectUnauthorized: false
-                    });
                     let res = await axios.get(samlTokenEndpoint, {
-                        httpsAgent: agent,
+                        httpsAgent: httpsAgent,
                         headers: {
                             'Authorization': 'Bearer '+token,
                             'X-user-token': token
@@ -369,7 +365,7 @@ class AuthClient {
 
             // The access token can now be extracted from the result
             if (res.data && res.headers['content-type'].includes('application/json')){
-                var responseBody = res.data;
+                const responseBody = res.data;
                 try{   
                     const destinationUrl = responseBody.destinationConfiguration.URL;
                     const samlAuthToken = responseBody.authTokens[0].value.toString();
@@ -394,7 +390,7 @@ class AuthClient {
     }
 
     // Get Bearer For SAML
-    async getBearerForSAML(destinationDetails, samlDestination){
+    async getBearerForSAML(destinationDetails, samlDestination, httpsAgent){
         try {
             const destinationConfiguration = destinationDetails.destinationConfiguration;
             const user = destinationConfiguration.User.trim();
@@ -406,24 +402,20 @@ class AuthClient {
                 client_id: user,
                 scope: userScope
             });
-            var res = await (async () => {
+            let res = await (async () => {
                 try {
-                    const agent = new https.Agent({  
-                        rejectUnauthorized: false
-                      });
-                    const token = destinationDetails.authTokens[0];
                     const config = {
                         auth: {
                             username: user,
                             password: password
                         },
-                        httpsAgent: agent,
+                        httpsAgent: httpsAgent,
                         headers: {
                             'Content-Type': "application/x-www-form-urlencoded"
                         }
                     };
-                    let res = await axios.post(samlDestination.destinationUrl, data, config);
-                    return res;
+                    const resp = await axios.post(samlDestination.destinationUrl, data, config);
+                    return resp;
                 } catch (err) {
                     console.error(err);
                 }
@@ -431,7 +423,7 @@ class AuthClient {
 
             // The access token can now be extracted from the result
             if (res.data && res.headers['content-type'].includes('application/json')){
-                var responseBody = res.data;
+                const responseBody = res.data;
                 try{   
                     const accessToken = responseBody.access_token.toString();
                     return accessToken;
@@ -495,7 +487,7 @@ class AuthClient {
                 }
             });
         });
-    };
+    }
 
     // Get SAML Assertion for BTP Access (on behalf of flow )
 
@@ -527,14 +519,14 @@ class AuthClient {
 
         const aadTokenEndpoint = this.aadBasUrl + this.pathOAuth;
         
-        var res = await (async () => {
+        let res = await (async () => {
             try {
-                let res = await axios.post(aadTokenEndpoint, data, {
+                let resp = await axios.post(aadTokenEndpoint, data, {
                     headers: {
                         'Content-Type': this.headerUrlEncoded
                     }
                 });
-                return res;
+                return resp;
             } catch (err) {
                 console.error(err);
             }
@@ -546,8 +538,8 @@ class AuthClient {
         }
         
         if (res.data && res.headers['content-type'].includes('application/json')){
-            var responseBody = res.data;
-            var samlAssertion = " ";
+            const responseBody = res.data;
+            let samlAssertion = " ";
             try{
                 samlAssertion = responseBody["access_token"].toString();
                 return samlAssertion;
@@ -567,7 +559,7 @@ class AuthClient {
         const authHeader = req.headers.authorization;
         const token = authHeader.split(' ')[1];
         return token;
-    };
+    }
 }
 
 export default AuthClient;
