@@ -70,36 +70,37 @@ Plan: application
 
 3. Choose **Next**, enter the following configuration parameters, and choose **Create**.
 
-
-    {
-        "xsappname": "teamsprapp",
-        "tenant-mode": "dedicated",
-        "description": "Security profile for Microsoft Teams extension",
-        "scopes": [
-            {
-                "name": "uaa.user",
-                "description": "UAA"
-            }
-        ],
-        "role-templates": [
-            {
-                "name": "Token_Exchange",
-                "description": "UAA",
-                "scope-references": [
-                    "uaa.user"
-                ]
-            }
-        ],
-        "role-collections": [
-            {
-                "name": "s4hana_procurement",
-                "description": "S4HANA Procurement Role Collection",
-                "role-template-references": [
-                    "$XSAPPNAME.Token_Exchange"
-                ]
-            }
-        ]
-    }
+```
+{
+    "xsappname": "teamsprapp",
+    "tenant-mode": "dedicated",
+    "description": "Security profile for Microsoft Teams extension",
+    "scopes": [
+        {
+            "name": "uaa.user",
+            "description": "UAA"
+        }
+    ],
+    "role-templates": [
+        {
+            "name": "Token_Exchange",
+            "description": "UAA",
+            "scope-references": [
+                "uaa.user"
+            ]
+        }
+    ],
+    "role-collections": [
+        {
+            "name": "s4hana_procurement",
+            "description": "S4HANA Procurement Role Collection",
+            "role-template-references": [
+                "$XSAPPNAME.Token_Exchange"
+            ]
+        }
+    ]
+}
+```
 
 ![plot](./images/btp-uaa-config.png)
 
