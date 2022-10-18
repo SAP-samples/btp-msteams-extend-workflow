@@ -38,7 +38,7 @@ Congratulations! You have completed the end-to-end integration of Microsoft Team
 
 2. Add Microsoft Teams Exploratory license to the test user, especially the Exchange Online (Plan 1) License without which some resources like https://graph.microsoft.com/v1.0/me/calendar will not be available with graph api. 
 
-3. In SAP S/4HANA on-premise system, before importing the ABAP Project (Open SE38 and execute the program ZABAPGIT_STANDALONE) and add a step to import GitHub certificate as mentioned here. Otherwise, you will encounter SSL certificate errors. 
+3. Ensure you import GitHub certificate by following [abapGit documentation](https://docs.abapgit.org/guide-ssl-setup.html) before executing Step 33 in [Step3-Configure-SAP-S4HANA](../Step3-Configure-SAP-S4HANA/README.md) to avoid SSL certificate errors.
 
 4. In SAP S/4HANA 2020 and higher versions, the Clone Repository is not present in Abap Git program. On creating the online repository, a local copy is created automatically. So, the Clone Online Repo step can be avoided in these systems and Pull step can be executed directly. 
 

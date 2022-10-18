@@ -6,8 +6,6 @@ These are the Microsoft Azure components you will configure:
 
     Azure Active Directory instance with admin access
     Valid Azure subscription
-    Azure Bot service instance
-    Azure Storage account for bot to persist information
     Microsoft Teams subscription
 
 
