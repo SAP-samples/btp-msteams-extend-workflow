@@ -1,215 +1,218 @@
-
 ## Configure Microsoft Azure Platform and MS Teams
 
-You will maintain application users and groups within the Microsoft Azure AD, define application registration, and configure trust between Microsoft Azure AD and SAP BTP.
-These are the Microsoft Azure components you will configure:
+These are the Microsoft Azure services and components you will need for this scenario:
 
-    Azure Active Directory instance with admin access
-    Valid Azure subscription
-    Microsoft Teams subscription
+    - Azure Active Directory instance with admin access
+    - Valid Azure subscription
+    - Azure Bot service instance
+    - Azure Storage account for bot to persist information
+    - Microsoft Teams subscription
 
+You will use Microsoft Azure Active Directory for maintaining application users and groups. Developments in Microsoft Azure environment starts with setting up the application registration. An application registration allows you to authenticate against your Azure Active Directory and offers dedicated settings for authentication, permission handling and so on. For this scenario, you will create an application registration for your Microsoft Teams extension as it will interact with Microsoft Graph and SAP BTP using Azure Active Directory authentication features.
 
-If you don't have access to a Microsoft Azure account (including a paid or trial subscription), check out the [tutorial](https://open.sap.com/courses/btpma1/items/1f82kP2dhVdZ6e9xia10A8) in the latest openSAP course [Building Applications on SAP BTP with Microsoft Services](https://open.sap.com/courses/btpma1/). 
+If you don't have access to a Microsoft Azure account (including a paid or trial subscription), check out the [Unit 3: Microsoft Azure basics and setup](https://open.sap.com/courses/btpma1/items/1f82kP2dhVdZ6e9xia10A8) chapter in the latest openSAP course [Building Applications on SAP BTP with Microsoft Services](https://open.sap.com/courses/btpma1/). 
 
-It explains in detail how to create a new Microsoft Azure account and get a free trial subscription.
-
-Register at [Azure portal](https://portal.azure.com) and get started with the configurations. 
-
-Once you have registered, you will be able to see the following list of Azure services in portal.azure.com
+It explains in detail how to create a new Microsoft Azure account and get a free trial subscription. 
+Once you have access to Microsoft Azure account, you will be able to see the following list of Azure services in portal.azure.com.
 ![plot](./images/azure-services.png) 
 
+### 1. Create Tenant in Microsoft Azure - Azure Active Directory
+
+1. Log in to [Microsoft Azure](http://portal.azure.com). 
+2. Select Azure Active Directory. This is the information you will see in the Overview of Default Directory.
+
+    ![plot](./images/tenant-defaultdirectory.png)
 
 
-## 1. Create tenant in Microsoft Azure - Azure Active Directory
-Login to [Azure portal](http://portal.azure.com). Select Azure Active Directory. You should be able to see the below information in the Overview of Default Directory.
+### 2. Establish Trust Between Azure Active Directory and SAP BTP
+The key pillar of the principal propagation is to establish the trust between your Azure Active Directory and your subaccount in SAP BTP. 
 
-Below is the option to create and manage tenants
+1. Follow step 7 of the [Integrate Microsoft Azure AD with SAP BTP, Cloud Foundry Environment](https://developers.sap.com/tutorials/cp-azure-ad-saml.html#716a684a-b8fd-4d5b-9472-ba0cc82c01e3) tutorial.
 
-![plot](./images/tenant-defaultdirectory.png)
+    > Important: Check the Basic SAML configuration in Azure Active Directory again. Make sure you have changed the Reply URI from SAML/SSO to OAuth/token. It is mandatory to set the correct recipient URI in the SAML assertion.
 
+    ![plot](./images/basic-saml-config.png)
 
-## 2. Establish trust between Azure AD and SAP BTP
-The key pillar of the Principal Propagation process is the trust between your Azure Active Directory and your subaccount in SAP BTP. This trust needs to be established by you within the Azure AD and your subaccount in SAP BTP.
+    Furthermore, ensure that the user's email address (user. mail) is used as the Unique User Identifier (Name ID). Also, feel free to add additional claims if required, as depicted in the following screenshot.
+    ![plot](./images/attributes-claims.png)
 
-For more information, check step 7 of the [Integrate Microsoft Azure AD with SAP BTP, Cloud Foundry Environment](https://developers.sap.com/tutorials/cp-azure-ad-saml.html#716a684a-b8fd-4d5b-9472-ba0cc82c01e3) tutorial.
+2. Once the trust between Azure AD and SAP BTP is configured, go to SAP BTP cockpit, navigate to **Security** > **Trust Configuration** and select the configured identity provider from **Custom Identity Provider for Applications** as shown in screenshot.
 
-> Important: Check the Basic SAML configuration in Azure Active Directory again. Make sure you have changed the Reply URI from SAML/SSO to OAuth/token. It is mandatory to set the correct recipient URI in the SAML assertion.
+    ![plot](./images/trustconfig.png)
 
-![plot](./images/basic-saml-config.png)
+3. Click on **Edit** to edit the Trust Configuration parameters. 
 
-Furthermore, ensure that the user's email address (user. mail) is used as the Unique User Identifier (Name ID). Also, feel free to add additional claims if required, as depicted in the screenshot below.
-![plot](./images/attributes-claims.png)
+4. Uncheck the **Available for User Logon** field. The Azure Active Directory trust configuration is required for **technical purposes** (in this case, for principal propogation). Make sure that the checkbox for creating **Shadow Users** is **checked** as shown below.
 
-**Disable User Logon**
-Once the trust is configured between Azure AD and SAP BTP, you can disable the BTP **Logon** using this IdP for users. The Azure AD IdP trust is only required for **technical purposes** (in this case, the Principal Propagation). Please make sure that the checkbox for creating **Shadow Users** is **checked**.
+    ![plot](./images/btplogondisable.png)
 
-![plot](./images/trust-config.png)
+### 3. Create Groups in Azure Active Directory
 
-Now that the trust is established between Azure Active Directory(productive or trial account) to SAP BTP, let us proceed with mapping role collection mapping as the next step.
+1. Login to **Microsoft Azure**. Choose **Azure Active Directory** and choose **Groups** > **New Group** to create a new security group.
 
-## 3. Create Group and Test Users in Azure AD
-
-### 3.1 Create groups in Azure AD
-Login to Azure Portal.Go to Default Directory and click on Groups - New Group.
-Create a new security group with the name s4businessusergrp.</br>
+2. In the **Group name** field enter **s4businessusergrp** as show in the screenshot.
 ![plot](./images/azure-groups.png)
 
-All users supposed to use the new extension application have to be assigned to this group. 
+    **Note**: All users who have access to SAP BTP extension application will have to be assigned to this group. 
 
-The Object ID of this user group will later be mapped to a role collection in SAP BTP. So, before you move on, please note down the Object ID from the Azure Portal. for creating a new role collection in overview section of SAP BTP Trust Configuration.
-The group assignment of your Active Directory users will be provided to SAP BTP using the Groups claim of your SAML configuration. 
+3. The **Object Id** of this **Group** will be later mapped to a role collection in SAP BTP. Note down the **Object Id** from the Azure Portal. 
 
-### 3.2 Create users in Azure
-Go to Default Directory and click on Users - New User, as shown below.
-![plot](./images/azure-users.png)
+### 4. Create Users in Azure Active Directory
 
-Ensure the email id is updated for the newly created user. This field is important for principal propogation and is required when receiving the events from SAP S/4HANA.The same ID will be configured for the named user in SAP S/4HANA.
-![plot](./images/useremail.png)
+1. Login to **Microsoft Azure**. Choose **Azure Active Directory** and choose **Users** > **New User** to create a new user.
+    ![plot](./images/azure-users.png)
 
-### 3.3 Assign the users to the group
-Select the group and add the list of users.
+2. Ensure the **Email** field is updated for the newly created user. This field is important for principal propogation and this is required when receiving the events from SAP S/4HANA.The same email ID is configured for the named user in SAP S/4HANA.
+    ![plot](./images/useremail.png)
 
-![plot](./images/user-group-assignment.png)
+### 5. Assign the Users to the Group
 
-## 4. Assign users and groups to enterprise application
+1. Login to **Microsoft Azure**. Choose **Azure Active Directory** and choose **Groups**.
 
-Go back to the default directory and select the enterprise application that was created when you set up the trust between Azure AD and SAP BTP.
-![plot](./images/enterprise-app.png)
+2. Select the **s4businessusergrp** and click on **Users** under **Direct members** to add the user.
 
-Hint – Please be aware that if you're using a free Azure Active Directory, you have to add all (test) users manually, as groups cannot be added. Nevertheless, the previous group assignment will be available in SAP BTP via the configured SAML claim.
+    ![plot](./images/user-group-assignment.png)
 
-Please see the below screenshot for the same. For a trial account, the assignment will look as below.
-![plot](./images/enterpriseapp-users.png)
+### 6. Assign Users and Groups to Enterprise applications
 
-In case of paid subscription, the assignment will look as below.
+1. Go to **Azure Active Directory** in **Home** page and choose **Enterprise applications**.
+    ![plot](./images/enterprise-app.png)
 
-![plot](./images/enterpriseapp-users-paid.png)
+2. If you are using a free subscription for Microsoft Azure, you need to add all (test) users manually, as groups cannot be added as shown in screenshot.
+    ![plot](./images/enterpriseapp-users.png)
 
-The required Role Collection Mapping on the SAP BTP side will be done in the next steps.
+3. In case of paid subscription, the assignment will look as shown in screenshot.
+    ![plot](./images/enterpriseapp-users-paid.png)
 
-## 5. Create SAP BTP Role Collection Mapping
+### 7. Create SAP BTP Role Collection Mapping
 
-Copy the Group ID from the created group (s4businessusersgrp) from Azure Portal.
+1. Select **Azure Active Directory** > **Groups**. Select the Group **s4businessusersgrp** and copy the **Object Id**.
 ![plot](./images/objectid-group.png)
 
-Go to your SAP BTP Account Cockpit - Select Subaccount - go to Security -> Trust Configuration, 
+2. Log in to SAP BTP Account cockpit, navigate to you subacccount and choose **Security** > **Trust Configuration** and select the configured trust configuration from **Custom Identity Provider for Applications**. 
 ![plot](./images/btp-trustconfig.png)
 
+3. Choose **Role Collection Mappings** and then choose **New Role Collection Mapping**.
 
-Open the Role Collection Mappings for Azure Identity Provider. In this case, we look at the trialAzureAD. Update the ObjectID details to as value against the attribute Group as shown below,
- ![plot](./images/sapbtp-rolecollection.png)
+4. In the **Role Collection** field select **s4hana_procurement**.
+5. In the **Attribute** field enter **Groups**.
+6. In the **Value** field enter the value of **Object Id** from Microsoft Azure Group **s4businessusergrp**.
+    ![plot](./images/btprolecoll.png)
+    ![plot](./images/sapbtp-rolecollection.png)
 
-All MS Teams users supposed to use the extension application have to be assigned to this Azure AD group. This mapping allows the users (once their identity has been propagated to SAP BTP) to SAP S/4HANA based on their Principal Propagation identity.
+    **Note**:All MS Teams users who are authorized use the extension application need to have this group assinged in Azure Active Directory. This mapping allows the users(once their identity has been propagated to SAP BTP) to SAP S/4HANA based on their principal propagation identity.
 
-Now that we have enabled the trust between SAP BTP and Microsoft Azure and 
-please perform the steps given in the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/) blog post on getting Microsoft Azure ready for registration of an application for MS Teams Extension.
+### 8. Register an Enterprise application for Microsoft Teams Extension in Microsoft Azure
 
+Before you continue, open this blog post [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/)on getting Microsoft Azure ready for registration of an application for MS Teams Extension.
 You can refer to the above blog, where similar steps and detailed explanations are provided for the Success Factors Integration example. Here we have provided similar steps in the Azure trial account and provided a screenshot for your quick reference.
 
-Please ensure you read this blog post to understand each of the configuration details mentioned below. You will need to refer to the blog post for the below steps.
+1. Navigate to **Microsoft Azure** > **Azure Active Directory** > **Enterprise applications**.
 
-## 6. Register an application for Microsoft Teams Extension
+2. Choose **New application**. 
 
-Before you continue, open this blog post [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/)
+    Enter **MicrosoftTeamsS4App** in the **Name** field. 
+    
+    Select **Accounts in any organizational directory(Any Azure AD directory - Multitenant)** under **Supported account types**.
 
+    Enter **Web** and enter **https://localhost** under **Redirect URI(optional)** as shown in screenshot.
+    
+    ![plot](./images/newappcreation.png)
 
-### 6.1 Create new app registration for the MS Teams extension application as below.
-![plot](./images/newappcreation.png)
-
-### 6.2 Update the Support account types to "Accounts in any organizational directory(Any Azure AD directory - Multitenant)
-
-### 6.3 Update the Redirect URI. Select Web and update the URL as https://localhost for now.
-
-### 6.4 Note down the Application Client ID and Directory(Tenant ID) of the app registration.
+3. Once the application registration is created, note down the **Application(client) ID** and **Directory(tenant) ID** from **Overview**
 ![plot](./images/appregistrationdetails.png)
 
-### 6.5 Create new Client Secret and Value and note down the Client Secret Value
+4. Choose **Certificates & Secrets** and select **New client secret** to create a new client secret and value. Note down the **Client Secret Value** and **Secret ID**.
 ![plot](./images/clientsecret.png)
 
-### 6.6 Expose an API by clicking on Set in the sub-menu. Follow the instructions and explanations for how to form this Application ID URI from Blog Post - Steps 4,5,6, and 7.
+5. Choose **Expose an API** and follow the instructions and explanations for how to form this Application ID URI from Step 4, 5, 6 and 7 in [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/).
 
-Your configuration should look like below.
+    Your configuration should look like below.
 
-![plot](./images/exposeapi.png)
+    ![plot](./images/exposeapi.png)
 
-Note: You will have to change the Application ID URI. 
+    You will have to change the Application ID URI. 
 
-### 6.7 Click on Authentication in the sub-menu and configure the Redirect URIs for app registration and update the tokens that you would like to be issued by the authorization endpoint as below. Refer to Steps 8 and 9 from Blog Post.
+6. Choose **Authentication** in the sub-menu and choose **Web** > **Redirect URIs** from **Platform configurations** to update the tokens that you would like to be issued by the authorization endpoint as below. Refer to Steps 8 and 9 in [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/).
 Your configuration should have 2 URLs configured as shown below.
 
-![plot](./images/authentication.png)
+    ![plot](./images/authentication.png)
 
-You will also activate the Access tokens and ID tokens. 
+    Activate the Access tokens and ID tokens. 
 
-### 6.8 Next will be to configure the Microsoft Graph API Permissions. Go through Steps 10 & 11 in the blog post for more details. 
+7. To configure the Microsoft Graph API Permissions in **API permission**, go through steps 10 & 11 in [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/).
 
-Click on Add permission and select Microsoft Graph.
+    Click on **Add a permission** and select **Microsoft Graph** from **Request API permissions** as shown in screenshot.
 
-![plot](./images/addpermission.png)
+    ![plot](./images/addpermission.png)
 
- There are two types of permissions - Delegated and Application.
+    There are two types of permissions - Delegated and Application.
 
-![plot](./images/permissiontypes.png)
+    ![plot](./images/permissiontypes.png)
 
-Please follow the table in the blog post.
-Post following the steps, your configurations should look as below.
-![plot](./images/grantadmin.png)
+    Your configurations should look as below.
+    ![plot](./images/grantadmin.png)
 
-### 6.9 Following the steps of 'Enable the SAP BTP integration for your application' from the blog post.
-![plot](./images/entapp-api.png)
+8. Follow the steps of 'Enable the SAP BTP integration for your application' from the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/).
 
-Select expose an API and configure the client, as shown below. 
+    ![plot](./images/entapp-api.png)
 
-![plot](./images/entapp-apiexpose.png)
+    Select expose an API and configure the client, as shown below.
+    ![plot](./images/entapp-apiexpose.png)
 
-Note: The client ID you are mentioning here is that of the app registration which you created.
+    **Note**: The client ID you are mentioning here is that of the app registration which you created.
 
-## 7. Create Azure Bot Service
+### 9. Create Azure Bot Service
 
-Go to the home screen at http://portal.azure.com and search for the marketplace.
+1. Log in to **Microsoft Azure** and search for the Marketplace.
 ![plot](./images/marketplace.png)
 
-Look for Azure Bot and start to create.
+2. Search for **Azure Bot** and choose to **Create**.
 
-![plot](./images/azurebot.png)
+    ![plot](./images/azurebot.png)
 
-Once you have the Azure Bot has been created, go ahead and add Microsoft Teams to the connected channels and complete all the configurations as mentioned in the blog post.
+3. Once you have the Azure Bot has been created, add Microsoft Teams to the connected channels and complete all the configurations as mentioned in the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/).
 
-You should be able to see the final configurations 
+    You should be able to see the final configurations as shown in screenshot.
 
-![plot](./images/botconfigs.png)
+    ![plot](./images/botconfigs.png)
 
-Click on Test Connection and test both the OAuth connection settings (GraphConnection and BTPConnection).
+4. Click on Test Connection and test both the OAuth connection settings (GraphConnection and BTPConnection).
 
-When testing the connection, when prompted for user credentials, use the test user created.
-We are using Test User to test the connection.
-![plot](./images/azure-users.png)
+    When testing the connection, when prompted for user credentials, enter the test user credentials.
+    ![plot](./images/azure-users.png)
 
-## 8. Create Azure Storage Account
+### 10. Create Azure Storage Account
 
-The next step is to create the Azure Storage Account.
+1. Log in to **Microsoft Azure** > **Storage accounts** to create a storage account. 
 
-![plot](./images/storageaccount.png)
+    Select **Free Trial** in **Subscription** field.
+    
+    Select **SAPResourceGrp** in **Resource group** field.
 
-Click on Advanced Tab and make sure the blob public access is disabled before clicking on Review+Create.
+    Enter **businessbots** in **Storage account name** field.
 
-Once the storage account is successfully created, go to the resource and add a container and note down the connection strings from the Access Keys.
+    ![plot](./images/storageaccount.png)
 
-![plot](./images/containers-keys.png)
+2. Select **Advanced** Tab and make sure the blob public access is disabled before clicking on Review+Create.
 
-Note down the container name and the connection string from the configuration. This will be used in environmental variables.
+3. Once the storage account is successfully created, go to the resource and add a container and note down the connection strings from the Access Keys.
 
-![plot](./images/containername.png)
+    ![plot](./images/containers-keys.png)
 
-![plot](./images/accesskeys.png)
+4. Note down the container name and the connection string from the configuration. This will be used in environmental variables.
 
-## 9. Login to MS Teams to check user 
+    ![plot](./images/containername.png)
 
-With the test user, you created, login to [Microsoft Teams](https://teams.microsoft.com/). You should be able to see the below screen 
+    ![plot](./images/accesskeys.png)
 
-![plot](./images/teamslogin.png)
+### 11. Log In to Microsoft Teams 
 
-In case you do not see this, then check for details in the blog post under Section - Microsoft Teams licence. You can assign the licence to the AD users.
+1. Log in to [Microsoft Teams](https://teams.microsoft.com/) with test user credentials.
 
-This completes all the configurations on the Azure side.
+    ![plot](./images/teamslogin.png)
+
+In case you do not see this, check for details in the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/) blog post under Section - Microsoft Teams licence. You can assign the licence to the AD users.
+
+This completes all the configurations on the Microsoft Azure.
 We will need to revisit and update a few configurations after we complete the deployment of the SAP BTP Extension application.
