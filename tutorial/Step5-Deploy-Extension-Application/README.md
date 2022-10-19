@@ -1,52 +1,55 @@
-## Build and Deployment of SAP BTP Extension Application
+## Build and Deploy of SAP BTP Extension Application
 
 In this section, you will clone the codebase and deploy the extension application in SAP BTP. 
 
-1. Clone [this](https://github.com/SAP-samples/btp-msteams-extend-workflow) GitHub Repository.
+### 1. Clone GitHub Repository
+    
+1. Access GitHub repository[Extend your SAP S/4HANA Business Scenarios into Microsoft Azure Ecosystem](https://github.com/SAP-samples/btp-msteams-extend-workflow) to download the source code files.
 
-    Before deployment to the SAP BTP environment, please make sure that you created an **XSUAA instance** in your BTP subaccount as described in **XSUAA Instance** in Section **Step 1 - Configure SAP BTP**.
+2. Check pre-requisitcs for deployment
+
+    Before deployment to the SAP BTP Cloud Foundry environment, make sure that you created an service instance of **SAP Authorization and Trust Management** in your BTP subaccount as described in **Set Up SAP Authorization and Trust Management Service** section **Step 1 - Configure SAP BTP**.
 
     Otherwise, the deployment will fail due to the missing binding. In case you changed the name of your XSUAA instance from **wftaskdec-uaa-service** to something else, please adjust the **manifest.yml** file in the deploy folder of this project. 
 
+### 2. Update Configuration Files and Deploy
 
-2. Update manifest.yml and vars.yml files.
-   Go to the deploy folder and make sure you fill the sample files in the **deploy** folder and remove the **sample** file extension before you push the app. 
+1. Go to the deploy folder and rename the samples files as shown below.
 
-    Rename the manifest.yml.sample to manifest.yml 
-    Rename the vars.yml.sample to vars.yml
+    Rename the **manifest.yml.sample** to **manifest.yml**
 
-3. Update the environment variables in vars.yml as shown below.
+    Rename the **vars.yml.sample** to **vars.yml**
+
+3. Update vars.yml from **deploy** folder.
 
     ```
-
-    Provide your environment variables in:
-    /deploy/vars.yml
+        /deploy/vars.yml
     ```
-
-    ### Environment variables
-    The following environment variables need to be set before you deploy the application to SAP BTP or upload it to your MS Teams environment.
+    The following environment variables need to be set before you deploy the extension application to SAP BTP Cloud Foundry Runtime.
 
     **/deploy/vars.yaml**
 
     | key    | value    |
     | --------|---------|
-    |**SCENARIO**| For SAP S/4HANA  on-premise, the value is "onpremise" and for SAP S/4HANA Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for SAP S/4HANA running on [Azure-Private-Cloud](../Azure-Private-Cloud-PrivateLink/README.md)  |
+    |**SCENARIO**| For SAP S/4HANA, the value is "onpremise" and for SAP S/4HANA Private Cloud, use the value "azureprivatecloud". Please follow the below steps to configure additional settings needed for SAP S/4HANA running on [Azure-Private-Cloud](../Azure-Private-Cloud-PrivateLink/README.md)  |
     |**BTP_LANDSCAPE**|The region of your BTP subaccount e.g. eu20|
     |**BTP_ACCOUNT_NAME**|The subdomain of your BTP subaccount|
-    |**XSUAA_CS_URL_SUFFIX**|The audience value (e.g., azure-live-eu20 or aws-live-eu10 or aws-live) which can be extracted from the SAML metadata of your SAP BTP subaccount. Make sure you don’t include the subdomain of your SAP BTP subaccount but only use the value after the last period|
+    |**XSUAA_CS_URL_SUFFIX**|The audience value (e.g., azure-live-eu20 or aws-live-eu10 or aws-live) which can be extracted from the SAML metadata of your SAP BTP subaccount. Make sure you do not include the subdomain of your SAP BTP subaccount but only use the value after the last period|
     |**BTP_SCOPES**|The full name of the custom scope created in Step 2 Configure-Azure from api:// to /access_as_user|
     |**CONNECTION_NAME_GRAPH**|The name of the Graph connection creates in Step 2 Configure-Azure e.g. GraphConnection|
     |**CONNECTION_NAME_BTP**|The name of the BTP connection creates in Step 2 Configure-Azure e.g. BTPConnection|
     |**MICROSOFT_BLOB_CONTAINER_NAME**|The respective values copied in Step 2 - Configure-Azure|
     |**MICROSOFT_BLOB_CONNECTION_STRING**|The respective values copied in Step 2 - Configure-Azure|
-    |**DOMAIN**| The CF domain of your MS Teams extension application e.g. btp-extendworkflow-s4-msteams.cfapps.region.hana.ondemand.com (check the region and update accordiingly) |
-    |**MICROSOFT_APP_ID**| The Application Client Id of your Azure AD App Registraiton |
-    |**MICROSOFT_APP_PASSWORD**|A Client Secret which you created for your Azure AD App Registration|
+    |**DOMAIN**| The Cloud Foundry domain of your Microsoft Teams extension application e.g. btp-extendworkflow-s4-msteams.cfapps.region.hana.ondemand.com (check the region and update accordingly) |
+    |**MICROSOFT_APP_ID**| The Application Client Id of your Azure Active Directory App Registraiton |
+    |**MICROSOFT_APP_PASSWORD**|A Client Secret which you created for your Azure Active Directory App Registration|
     |**MICROSOFT_AD_TENANT_ID**|The unique Id of your Azure Active Directory|
-    |**SAP_CLIENT**|sap-client number of your S4/HANA system that you are using|
+    |**SAP_CLIENT**|sap-client number of your SAP S/4/HANA system that you are using|
     |**ACCEPT_SELF_SIGNED_CERT**|true for development environment and false for production environment|
 
-4. Open the manifest.yml file to update the application name. This application name needs to be updated in App Registration configuration in Microsoft Azure.
+4. Open the manifest.yml file to update the application name. 
+
+5. Log in to Microsoft Azure portal. Choose **Azure Active Directory** > **App registrations**. Select the application created and update This application name needs to be updated in **App Registration** configuration in Microsoft Azure.
 
     ```console
     Provide your application name in:
