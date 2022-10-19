@@ -162,7 +162,17 @@ Your configuration should have 2 URLs configured as shown below.
 
     **Note**: The client ID you are mentioning here is that of the app registration which you created.
 
-### 9. Create Azure Bot Service
+### 9. Create Azure Resource groups
+
+1. In the Azure portal, navigate to **Home** page and choose **Resource groups** to create a new resource group.
+
+    ![plot](./images/resourcegrp.png)
+
+2. In the **Project details** > **Subscription** > **Resource group**, enter **SAPResourceGrp** as shown in the screenshot.
+
+    ![plot](./images/resourcegrpcreate.png)
+
+### 10. Create Azure Bot Service
 
 1. Log in to **Microsoft Azure** and search for the Marketplace.
 ![plot](./images/marketplace.png)
@@ -171,18 +181,18 @@ Your configuration should have 2 URLs configured as shown below.
 
     ![plot](./images/azurebot.png)
 
-3. Once you have the Azure Bot has been created, add Microsoft Teams to the connected channels and complete all the configurations as mentioned in the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/).
+3. Once you have the Azure Bot service has been created, add Microsoft Teams to the connected channels and complete all the configurations as mentioned in the [Get your Microsoft Azure settings ready](https://blogs.sap.com/2022/02/28/sap-ms-teams-7-get-your-microsoft-azure-settings-ready/).
 
     You should be able to see the final configurations as shown in screenshot.
 
     ![plot](./images/botconfigs.png)
 
-4. Click on Test Connection and test both the OAuth connection settings (GraphConnection and BTPConnection).
+4. Choose **Test Connection** and test both the OAuth connection settings (GraphConnection and BTPConnection).
 
     When testing the connection, when prompted for user credentials, enter the test user credentials.
     ![plot](./images/azure-users.png)
 
-### 10. Create Azure Storage Account
+### 11. Create Azure Storage Account
 
 1. Log in to **Microsoft Azure** > **Storage accounts** to create a storage account. 
 
@@ -194,19 +204,23 @@ Your configuration should have 2 URLs configured as shown below.
 
     ![plot](./images/storageaccount.png)
 
-2. Select **Advanced** Tab and make sure the blob public access is disabled before clicking on Review+Create.
+2. Select **Advanced** > **Security** and make sure the **Allow enabling public access on containers** is disabled 
 
-3. Once the storage account is successfully created, go to the resource and add a container and note down the connection strings from the Access Keys.
+    ![plot](./images/storageaccadv.png)
+
+3. Choose **Review+Create** to complete the storage account creation.
+
+3. Choose the created Storage account and choose **Containers** from **Data Storage** to add a container.
 
     ![plot](./images/containers-keys.png)
 
-4. Note down the container name and the connection string from the configuration. This will be used in environmental variables.
+     ![plot](./images/containername.png)
 
-    ![plot](./images/containername.png)
+4. Choose **Access keys** from **Security + networking** and note down the container name and the connection string from the configuration. This will be used in environmental variables.
 
-    ![plot](./images/accesskeys.png)
+   ![plot](./images/accesskeys.png)
 
-### 11. Log In to Microsoft Teams 
+### 12. Log In to Microsoft Teams 
 
 1. Log in to [Microsoft Teams](https://teams.microsoft.com/) with test user credentials.
 
