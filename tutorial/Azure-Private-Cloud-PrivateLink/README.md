@@ -115,8 +115,10 @@ Steps:
 ![NameID add](./images/Email%20NameID%20Format.png)
 13. Scroll up and click **Save**.<br>
 14. Click **enable** to enable to Trusted Provider.<br>
-![Enable Trusted Provider](./images/Enable%20Trusted%20Provider.png)
-For registering an inbound OAuth client, you need to create an User ID in the system, which will be the Client ID.
+
+    ![Enable Trusted Provider](./images/Enable%20Trusted%20Provider.png)
+
+    For registering an inbound OAuth client, you need to create an User ID in the system, which will be the Client ID.
 15. Open transaction **SU01**, provide an unique **User** id and click Create icon as shown below:<br>
 ![userid create](./images/UserID%20Create.png)
 16. In the **Logon Data** tab, choose **Sytem** as the **User Type**.
@@ -128,9 +130,13 @@ Now you will use the newly created system userid & the Trusted Provider to regis
     >Note: Providing authorization here will help in setting up the SAP BTP destination in the upcoming steps.
 
     a. Open **PFCG** transacation, provide a role name and click **Create Single Role**.<br>
-![Single Role](./images/Create%20PFCG%20role.png)
+
+    ![Single Role](./images/Create%20PFCG%20role.png)
+
     b. In the **Authorizations** tab, click **Propose profile names** button to create a profile.
-![Propose Profile](./images/Propose%20Profile%20name.png)
+
+    ![Propose Profile](./images/Propose%20Profile%20name.png)
+
     c. Click **Change Authorizatoin Data** button to add the authorizations.
 ![AUthorization data](./images/Change%20Authorization%20Data.png)<br>
     <br>**Note**: If a popup shows to save the role, click **Save** and if another popup opens to **Choose Template**, click **Do not select templates**.<br>
