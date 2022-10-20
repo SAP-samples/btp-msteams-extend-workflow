@@ -1,4 +1,4 @@
-## Test the End-to-End Application
+## Test the Extension Application
 
 Now that you have successfully deployed the extension application in SAP BTP and uploaded the application manifest file in Microsoft Teams Admin Center, follow these steps to test the application.
 
