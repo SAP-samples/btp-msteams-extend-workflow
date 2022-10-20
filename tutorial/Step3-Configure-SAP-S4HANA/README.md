@@ -74,6 +74,8 @@ In this step, you will create a purchase requisition and check if the workflow i
 
 You have successfully created a purchase requisition, which created a workflow instance and is sent for approval.
 
+
+
 ### 3. Create a Service Key for the SAP Event Mesh Service Instance
 
 In this step, you create a service key for the SAP Event Mesh service instance. This service key holds the OAuth client credentials and the REST service URL to communicate with the SAP Event Mesh service.
