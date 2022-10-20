@@ -37,7 +37,7 @@ Congratulations! You have completed the end-to-end integration of Microsoft Team
 
 ### Troubleshooting
 
-1. To access MS Teams admin URL, make sure the test user has Teams Administrator Role Assignment. This is also required to upload the application in MS Teams Admin console.
+1. To access Microsoft Teams admin URL, make sure the test user has Teams Administrator Role Assignment. This is also required to upload the application in MS Teams Admin console.
 
 2. Add Microsoft Teams Exploratory license to the test user, especially the Exchange Online (Plan 1) License without which some resources like https://graph.microsoft.com/v1.0/me/calendar will not be available with Microsoft Graph API. 
 
