@@ -102,7 +102,7 @@ You will create a destination to maintain the REST URL of the SAP Event Mesh <> 
 1. In your SAP S/4HANA system, open the **SM59** transaction and choose the **Create** icon to create a new destination.
 ![Destination](./images/s4/16.png)
 
-2. Provide a unique name for the **Destination** and select **G HTTP Connection to external server** from the **Connection Type** dropdown menu.
+2. In the **Destination** field, enter a unique name for the destination and select **G HTTP Connection to external server** from the **Connection Type** dropdown menu.
 ![Destination](./images/s4/17.png)
 
 3. Go to the **Technical Settings** tab. In the **Host** field, enter the copied value of the **uri** parameter in step 5 of the **3. Create a Service Key for the SAP Event Mesh Service Instance** section without **https://**. In the **Port** field, enter **443**.
@@ -187,39 +187,37 @@ After the execution of the **GET_DELTA_WORKFLOW_INSTANCES** method, the **CONNEC
 
 The **SEND_WORKITEM_TO_EM** method will send the purchase requisition workitems to  SAP Event Mesh when the background job is executed.
 
-### 8. Adjust the Code
+### 8. Adjust the Code of the ABAP Application
 
-1. Form the URI value to update in **CONNECT_TO_EM** method.
+1. Form the URI value to update it in the **CONNECT_TO_EM** method. This URI depends on wheather you are using a trail or enterprise account in SAP BTP.
 
-    - In case of the SAP BTP trial account with SAP Event Mesh default plan, then the URI value should be entered as '/messagingrest/v1/queues/PRApproval/messages' where **PRApproval** is your queue name.
+    - In case of a trial account, use SAP Event Mesh with the **default** plan. Then, the URI value would look like this: **/messagingrest/v1/queues/PRApproval/messages** where **PRApproval** is your queue name.
 
-    - In case of the SAP BTP enterprise account with SAP Event Mesh standard plan, if the namespace is "orgname/s4/t1" for your SAP Event Mesh instance and queue name is "PRApproval"(the queue name should be same as the one that you have entered, then 
-    URI value should be '/messagingrest/v1/queues/orgname%2Fs4%2Ft1%2FPRApproval/messages'
+    - In case of an enterprise account, use SAP Event Mesh with the **standard plan**. Then, the URI value would look like this: **/messagingrest/v1/queues/orgname%2Fs4%2Ft1%2FPRApproval/messages** where **orgname/s4/t1** is the namespace of the SAP Event Mesh service instance and **PRApproval** is the queue name.
 
-        **Note**: The URI value should always have encoded fully qualified queue name
-    For example, if the fully qualified queue name is **orgname/s4/t1/PRApproval**, then the encoded FQQN will be **orgname%2Fs4%2Ft1%2FPRApproval**.
-
-    Copy the URI value.
+        **Note**: The URI value should always have encoded the fully-qualified queue name.
+        For example, if the fully-qualified queue name is **orgname/s4/t1/PRApproval**, then the encoded fully-qualified queue name will be **orgname%2Fs4%2Ft1%2FPRApproval**.
 
 2. In your SAP S/4HANA system, open the **SE24** transaction and in the **Object Type** field, enter **ZCL_WFCUSEMSEND_TEAMSINT** and choose **Change**.
 
-3. Open the **CONNECT_TO_EM** method to update the URI value as copied in step 1.
+3. Open the **CONNECT_TO_EM** method to update the URI value as formed in step 1.
 
     ![Method](./images/s4/emconnecturi.png)
 
-4. Open the **CONSTRUCTOR** method to update the destination, OAuth Profile and OAuth configuration parameters.
+4. Open the **CONSTRUCTOR** method to update the destination, OAuth profile and OAuth configuration parameters.
     
-    - Copy the value for **dest_name** from **4. Create an RFC Destination in SAP S/4HANA**
-    - Copy the value for **auth_profile** and **auth_conf** from **5. Configure The OAuth Profile**.
+    - Replace the value for **dest_name** with the value of the destination name from step 2 of the **4. Create an RFC Destination in SAP S/4HANA** section.
+    - Replace the value for **auth_profile** with the value of the OAuth 2.0 client profile from step 2 of the **5. Configure The OAuth Profile** section.
+    - Replace the value for **auth_conf** with the value of the configuration name from step 2 of the **5. Configure The OAuth Profile** section.
 
     Your configuration should look like this:
     ![Constructor](./images/s4/35.png)
 
 5. Save and activate the class.
 
-### 9. Create Background Job
+### 9. Create the Background Job
 
-You will configure the **ZWFCUSEMSEND_TEAMSINT** report to run in the background every minute. This sends the newly created workitems from SAP S/4HANA system to SAP Event Mesh.
+You will configure the **ZWFCUSEMSEND_TEAMSINT** report to run in the background every minute. This sends the newly created workitems from the SAP S/4HANA system to SAP Event Mesh.
 
 1. In your SAP S/4HANA system, open the **SM36** transaction and choose **Job Wizard** to create a new background job.
 ![SM36](./images/s4/37.png)
@@ -227,10 +225,10 @@ You will configure the **ZWFCUSEMSEND_TEAMSINT** report to run in the background
 2. Choose **Continue**.
 ![SM36 Step 2](./images/s4/38.png)
 
-3. Provide a unique name for **Job Name** and choose **Continue**.
+3. In the **Job Name** field, enter a unique name and choose **Continue**. 
 ![SM36 Step 3](./images/s4/39.png)
 
-4. Select **ABAP Program Step** radio button and then choose **Continue**.
+4. Select the **ABAP Program Step** radio button and then choose **Continue**.
 ![SM36 Step 4](./images/s4/40.png)
 
 5. In the **ABAP Program Name** field, enter **ZWFCUSEMSEND_TEAMSINT** and choose **Continue**.
@@ -239,43 +237,45 @@ You will configure the **ZWFCUSEMSEND_TEAMSINT** report to run in the background
 6. Choose **Continue**.
 ![SM36 Step 6](./images/s4/42.png)
 
-7. Select **Immediately** radio button and choose **Continue**.
+7. Select the **Immediately** radio button and choose **Continue**.
 ![SM36 Step 7](./images/s4/43.png)
 
-8. Select **Period** as show in the screenshot.
+8. Select the **Period** checkbox.
 ![SM36 Step 8](./images/s4/44.png)
 
-9. Select **None of the above** and choose **Other Periods**.
+9. Select the **None of the above** radio button and choose **Other periods**.
 ![SM36 Step 9](./images/s4/45.png)
 
-10. Enter **1** in **Minute(s)** input field, so the background job will run for every 1 minute, and choose **Create**.
+10. Enter **1** in **Minute(s)** input field, so the background job will run for every 1 minute. Choose **Create**.
 ![SM36 Step 10](./images/s4/46.png)
 
 11. Choose **Complete** to schedule the background job.
 ![SM36 Step 11](./images/s4/47.png)
 
-You have now completed the creation of the background job that will send the newly created workitems to the SAP Event Mesh every 1 minute.
+You have now created the background job that sends the newly created workitems to SAP Event Mesh every 1 minute.
 
-### 10. Testing the Application End-to-End from SAP S/4HANA Side
+### 10. Test the Application End-to-End from the SAP S/4HANA Side
 Let's create a new purchase requisition and go to SAP Event Mesh to see the message details.
 
-1. Repeat steps 1, 2 and 3 of the **2. Test The Purchase Requisition Workflow** section to create a new purchase requisition and initiate a new approval workflow. The background job will send the workitem information to SAP Event Mesh Queue in a minute.
+1. Repeat steps 1, 2, and 3 of the **2. Test The Purchase Requisition Workflow** section to create a new purchase requisition and initiate a new approval workflow. The background job will send the workitem information to SAP Event Mesh queue in a minute.
 
-2. Open the SAP Event Mesh application from your SAP BTP subaccount.
+2. Open the SAP Event Mesh application from the SAP BTP cockpit. <<refer to the other section TO-DO>>
 ![Message Client](./images/s4/48.png)
 
-3. Navigate to the Message Client you have created and go to the **Test** tab to consume the message.
+3. Choose **Message Clients**, select the message client you have created and go to the **Test** tab to consume the message.
 ![Message Client](./images/s4/49.png)
 
-4. Select your Queue to see the messages sent to Queue.
+4. Select your queue to see the messages sent to it.
 ![Queue](./images/s4/50.png)
 
 5. Choose **Consume** to see the message.
 ![Consume](./images/s4/51.png)
 
-### 11. Activate The Service API_PURCHASEREQ_PROCESS_SRV
+### 11. Activate the API_PURCHASEREQ_PROCESS_SRV Service
 
-1. Add the service API_PURCHASEREQ_PROCESS_SRV with the /n/IWFND/MAINT_SERVICE transaction.
+1. In your SAP S/4HANA system, open the **/n/IWFND/MAINT_SERVICE** trasaction.
+
+2. Activate the API_PURCHASEREQ_PROCESS_SRV service.
 ![Activate](./images/s4/53.png)
 
-Congratulations!! Now you have completed the creation of the new Flexible workflow for the purchase requisition, configured the background job to send the workitems to SAP Event Mesh, and tested it successfully.
+Now you have the new Flexible workflow for the purchase requisition process created, and you have configured the background job to send the workitems to SAP Event Mesh.
