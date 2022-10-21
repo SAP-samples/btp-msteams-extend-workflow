@@ -1,22 +1,20 @@
-# Connect SAP BTP and SAP S/4HANA using SAP BTP Connectivity Service
+# Connect SAP BTP and SAP S/4HANA Using SAP BTP Connectivity Service
 
-Follow these steps to set up Cloud Connector and SAP Connectivity service to establish secured communication between SAP BTP and SAP S/4HANA. 
+Follow these steps to set up the Cloud Connector and the SAP Connectivity service to establish secured communication between SAP BTP and SAP S/4HANA. 
 
-### 1. Download and Install SAP Cloud Connector 
+### 1. Download and Install the Cloud Connector 
 
-1. The Cloud Connector can be downloaded from [SAP Development Tools](https://tools.hana.ondemand.com/#cloud). If Java is not installed on the server, download and install Java.
+1. Download the Cloud Connector from [SAP Development Tools](https://tools.hana.ondemand.com/#cloud) for your operating system. If you don't have Java installed on the server, download and install it.
 
     ![plot](./images/scc_download.png)
 
-    You can download the installable for your operating system. 
-    
-    You need administrator access to install the Cloud Connector. 
+    You need an administrator access to install the Cloud Connector. 
 
 2. Run the installation package and follow the on-screen installation guide. If the installation is successful, the  Cloud Connector will be started automatically.
 
-### 2. Configure Cloud Connector 
+### 2. Configure the Cloud Connector 
 
-1. To configure the Cloud Connector, open https://hostname:port, replace "hostname" with the hostname of the machine on which the cloud connector is installed, and the "port" with the port number mentioned during installation. The default port number is 8443.
+1. To configure the Cloud Connector, open https://hostname:port, replace **hostname** with the hostname of the machine on which the Cloud Connector is installed, and the **port** with the port number mentioned during the installation. The default port number is 8443.
 
     ![plot](./images/scc_logon.png)
 
@@ -35,99 +33,89 @@ Follow these steps to set up Cloud Connector and SAP Connectivity service to est
 
     ![plot](./images/addsubaccount.png)
 
-    In the **Region** field, select your subaccount region.
+    1. In the **Region** field, select your subaccount region.
     
-    In the **Subaccount** field, enter the value you copied from the previous step for **Subaccount ID**.
+    2. In the **Subaccount** field, enter the value of the subaccount ID you copied in the previous step.
 
-    In the **Display Name** field, enter a unique name of your choice.
+    3. In the **Display Name** field, enter a unique name of your choice.
 
-    In the **Login E-Mail** and **Password** field, enter the SAP BTP Global Administrator's email id and password.
+    4. In the **Login E-Mail** and **Password** fields, enter the Global Account Administrator's email ID and password.
 
     Your configuration should look like this:
     ![plot](./images/scc_initial_setup.png)
 
-    Choose **Save**.
+    5. Choose **Save**.
 
-    **Note**: The following entries are mandatory:
+### 3. Create a Cloud to On-Premise Connection
 
-    | key | value |
-    | --- | --- |
-    | Region | The region you were you SAP BTP subaccount is created.|
-    | Subaccount | Your SAP BTP Subaccount ID.|
-    | Login E-Mail | Global Administrator's e-mail address which was used when creating the SAP BTP subaccount.|
-    | Password | Password of the Global Administrator user ID.|
+To make the SAP S/4HANA system available to the services and application in SAP BTP, you need to create a mapping between the Cloud Connector and the SAP S/4HANA system.
 
-    Choose **Save**.
+1. Log in to the Cloud Connector Administration cockpit and choose the name of your subaccount in SAP BTP in the **Subaccount** field.
 
-### 3. Create Cloud to on-premise Connection
+2. Choose **Cloud To On-Premise**. In the **ACCESS CONTROL** tab, in the **Mapping Virtual To Internal System** section, choose the **Add** icon to add a virtual host entry.
 
-To make SAP S/4HANA system available to SAP BTP services and applications, you need to create a mapping between the Cloud Connector and SAP S/4HANA system.
+    1. In the **Back-end Type** dropdown menu, select **ABAP System**. Choose **Next**.
 
-1. Log in to the Cloud Connector Administration cockpit and choose the name of your subaccount in SAP BTP in **Subaccount** field.
+    2. In the **Protocol** dropdown menu, select **HTTPS**. Choose **Next**.
 
-2. Choose **Cloud To On-Premise**. In the **ACCESS CONTROL** tab, choose the **Add** icon to add a virtual host entry under **Mapping Virtual To Internal System**.
+    3. In the **Internal Host** and **Internal Port** fields, enter the hostname or IP address of the SAP S/4HANA system and the corresponding ICM port. Choose **Next**.
 
-    1. In the **Back-end Type** field, select **ABAP System** from the dropdown menu.
+    4. In the **Virtual Host** and **Virtual Port** fields, enter a hostname of your choice and the **443** port. The value for virtual port can be updated if required. Choose **Next**.
 
-    2. In the **Protocol** field, select **HTTPS** from the dropdown menu.
-    3. In the **Internal Host** and **Internal Port** fields, enter the hostname or ip address of the SAP S/4HANA system and the corresponding ICM port respectively.
+    5. In the **Principal Type** dropdown menu, select **X.509 Certificate (Strict Usage)**. Choose **Next**.
 
-    4. In the **Virtual Host** and **Virtual Port** fields, enter the hostname of your choice and **443** respectively. The value for Virtual Port name can be updated if required.
-
-    5. In the **Principal Type** field, select **X.509 Certificate (Strict Usage)** from the dropdown menu.
-
-    6. In the **Host In Request Header** field, select **Use Virtual Host** from the dropdown menu.
+    6. In the **Host In Request Header** dropdown menu, select **Use Virtual Host**. Choose **Next**.
     
-    7. In the **Summary**, select **Check Internal Host** and choose **Finish**.
+    7. Select the **Check Internal Host** checkbox and choose **Finish**.
 
-3. Select the virtual host created in the previous step and under **Resources** section , choose **Add** icon.
+3. Select the virtual host created in the previous step and in the **Resources** section, choose the **Add** icon.
 
     1. In the **URL Path** field, enter **/**.
     2. Select the **Active** field.
-    3. In the **Access Policy** field, select **Path and All Sub-Paths** radio button.
+    3. In the **Access Policy** field, select the **Path and All Sub-Paths** radio button.
     4. Choose **Save**. 
   
 4.  Your configuration should look like this:
    ![plot](./images/cloudconnector.png)
 
 
-5. Navigate to your subaccount in SAP BTP. Choose **Connectivity** > **Cloud Connectors**. You should see the cloud connector configurations in **Connected** state as shown in the screenshot. 
+5. In SAP BTP cockpit, navigate to your subaccount. Choose **Connectivity** > **Cloud Connectors**. The state of the Cloud Connector configurations should be **Connected**.
 
     ![plot](./images/btp-cc.png)
 
-### 4. Set Up Principal Propagation
+### 4. Set Up the Principal Propagation
 
-Principal propagation enables the transmission of the message's user context from the sender to the receiver while maintaining its integrity. 
+The principal propagation enables the transmission of the user context from the sender to the receiver while maintaining its integrity. 
 
-There are two different levels of trust that can be set. The Cloud Connector must first authenticate itself using the system certificates for HTTPs. In order to forward a transient X.509 certificate, we secondly need to permit this identity to spread appropriately. We then map the user in the destination system, in this case the SAP S/4HANA system. 
+There are two different levels of trust that can be set. The Cloud Connector must first authenticate itself using the system certificates for HTTPs. In order to forward a transient X.509 certificate, you need to allow this identity to spread appropriately. Then, map the user in the target system, in this case the SAP S/4HANA system. 
 
-Information about the logged in cloud user is contained in the subject of the X.509 certificate, and this information is used to map the user to the equivalent user in the target system.
+Information about the user who is logged in contained in the subject of the X.509 certificate, and this information is used to map the user to the equivalent user in the target system.
 
-Before you continue, read the blog posts which explains how to setup principal propogation.
+Before you continue, read the blog posts which explains how to set up principal propogation:
 
-[Setting up Principal Propagation](https://blogs.sap.com/2021/09/06/setting-up-principal-propagation/).
+- [Setting up Principal Propagation](https://blogs.sap.com/2021/09/06/setting-up-principal-propagation/).
 
-[Principal Propagation in multi-cloud solution](https://blogs.sap.com/2020/10/01/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp-part-ii).
+- [Principal Propagation in multi-cloud solution](https://blogs.sap.com/2020/10/01/principal-propagation-in-a-multi-cloud-solution-between-microsoft-azure-and-sap-cloud-platform-scp-part-ii).
 
-Follow the steps to configure the following certificates in Cloud Connector:
+Follow these steps to configure the certificates in the Cloud Connector:
 
-1. Generate **System Certificate** in Cloud Connector
+1. Generate a system certificate in the Cloud Connector:
 
-    1. Log in to Cloud Connector Administration cockpit, choose **Configuration**. Go to the **ON PREMISE** tab and choose the **Create and import a self-signed certificate** icon.
+    1. Log in to the Cloud Connector Administration cockpit and choose **Configuration**. Go to the **ON PREMISE** tab and choose the **Create and import a self-signed certificate** icon.
 
         ![plot](./images/system_cert.png)
 
-    2. In the **Common Name (CN) field, enter a name of your choice and choose **Create**.
+    2. In the **Common Name (CN)** field, enter a name of your choice and choose **Create**.
     
         The Common Name(CN) represents the server name protected by the SSL certificate. The request hostname must match the certificate common name for a valid certificate.
 
-        Fill the details for other fields in **Subject DN** if required.
+        Fill in the details for the other fields in the **Subject DN** section if required.
 
         ![plot](./images/create_sso.png)
 
     3. Download the generated certificate by choosing the     **Download certificate in DER format** icon.
 
-        The downloaded sys_cert.der certificate will be used in the steps below. It will be uploaded to  the SAP S/4HANA system (STRUST).
+        The downloaded **sys_cert.der** certificate will be used in the steps to follow.
 
         ![plot](./images/download_system_cert.png)
 
@@ -273,9 +261,9 @@ Follow the steps to configure the following certificates in Cloud Connector:
 
 2. Navigate to you subaccount and choose **Connectivity** > **Destinations**. 
 
-3. Choose New **Destinations**.
+3. Choose **New Destinations**.
 
-4. Enter the following configuration values to create destination for principal propagation.
+4. Create a destination with the name **S4HANA_PP**.Enter the following configuration values to create destination for principal propagation.
 
     | key | value |
     | --- | --- |
@@ -285,8 +273,7 @@ Follow the steps to configure the following certificates in Cloud Connector:
     |  Proxy Type | OnPremise |
     |  Authentication | PrincipalPropagation |
 
-
-    Add additional properties:
+    Add the additional properties:
 
     | key | value |
     |  --- | --- |
@@ -295,7 +282,7 @@ Follow the steps to configure the following certificates in Cloud Connector:
     |  WebIDEEnabled | true |
     | WebIDEUsage | odata_abap |
 
-5. Enter the following configuration values to create destination for basic authentication.
+5. Create another destination with the name **S4HANA_NP**.This is used for basic authentication.
 
    | key | value |
    | --- | --- |
@@ -307,7 +294,7 @@ Follow the steps to configure the following certificates in Cloud Connector:
    | User| Technical User |
    | Password| Technical User Password | 
 
-    Add additional properties:
+    Add the additional properties:
 
     | key | value |
     | --- | --- |
