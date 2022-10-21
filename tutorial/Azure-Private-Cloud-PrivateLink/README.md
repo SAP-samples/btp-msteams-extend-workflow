@@ -67,7 +67,7 @@ To configure Azure Private Link service for SAP S/4HANA system, follow
 
         ![Enable Trusted Provider](./images/Enable%20Trusted%20Provider.png)
 
-3. Create User ID
+### 3. Create User ID
 
     For registering an inbound OAuth client, you need to create an User ID in the system, which will be the Client ID.
 
@@ -79,7 +79,7 @@ To configure Azure Private Link service for SAP S/4HANA system, follow
 
     3. Provide an initial password and choose **Save**.
 
-4. Provide read authorization to the user ID. 
+### 4. Provide read authorization to the user ID. 
 
     You need to provide read authorization for the OData service 'API_PURCHASEREQ_PROCESS_SRV' to the newly created user.
     >Note: Providing authorization here will help in setting up the SAP BTP destination in the upcoming steps.
@@ -121,7 +121,7 @@ To configure Azure Private Link service for SAP S/4HANA system, follow
     11. Enter the user ID and choose **User Comparison**.<br>
 ![Auth Object](./images/Add%20user%20to%20role.png)<br>
 
-5. Create an Inbound OAuth Client
+### 5. Create an Inbound OAuth Client
 
     1. In your SAP S/4HANA system, open the **SOAUTH2** transaction  or use the below URL to configure the oAuth client and choose **Create**.<br>
     **URL** - https://s4hanahostname:port/sap/bc/webdynpro/sap/oauth2_config?sap-client=clientnumber
@@ -144,7 +144,7 @@ To configure Azure Private Link service for SAP S/4HANA system, follow
         2. Select the service **ZTASKPROCESSING** and choose the **OAuth** button to enable OAuth scope for the service
         ![Enable OAuth scope](./images/Enable%20OAuth.png)
 
-### 3. Create Destinations in your subaccount in SAP BTP
+### 6. Create Destinations in your subaccount in SAP BTP
 
 Follow the steps to create destinations for principal propogations between Microsoft Teams to SAP S/4HANA.
 
