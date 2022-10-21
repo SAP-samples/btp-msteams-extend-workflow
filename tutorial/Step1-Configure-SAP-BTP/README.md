@@ -43,20 +43,19 @@ To set up SAP Event Mesh for this scenario, follow these steps:
 
     - If you are using SAP BTP Enterprise account, go to the **Subscriptions** tab and choose **Event Mesh** to open the application.
 
-      ![plot](./images/eventmesh-btp.png)
+        ![plot](./images/eventmesh-btp.png)
 
     
     - If you are using SAP BTP Trial account, go to **Instances** tab, select the instance for SAP Event Mesh and choose **View Dashboard**.
 
-    ![plot](./images/viewdashboard.png)
+        ![plot](./images/viewdashboard.png)
 
 3. Choose **Message Clients** and then choose **Create Queue** to create your message client queue.
 
 4. In the **Queue Name** field, enter **PRApproval** as shown in the screenshot.
 
-![plot](./images/em-create-queue.png)
+    ![plot](./images/em-create-queue.png)
 
- 
 ### 3. Set Up SAP Authorization and Trust Management Service
 
 You need the SAP Authorization and Trust Management service to authenticate the access to the extension app's notification endpoint.

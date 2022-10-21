@@ -80,7 +80,7 @@ This is a high-level solution architecture diagram that shows how to use the SAP
 
 For more information, see [Set Up Connectivity Between SAP BTP and SAP S/4HANA Using SAP Private Link Service](./tutorial/Azure-Private-Cloud-PrivateLink/README.md) page.
 
-**Note**: In this scenario, it is mandatory to configure principal propagation. <TODO>
+**Note**: In this scenario, it is mandatory to configure principal propagation.
 
 ## Requirements 
 

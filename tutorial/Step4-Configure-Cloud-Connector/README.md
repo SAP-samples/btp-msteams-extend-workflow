@@ -42,6 +42,7 @@ Follow these steps to set up the Cloud Connector and the SAP Connectivity servic
     4. In the **Login E-Mail** and **Password** fields, enter the Global Account Administrator's email ID and password.
 
     Your configuration should look like this:
+    
     ![plot](./images/scc_initial_setup.png)
 
     5. Choose **Save**.
@@ -76,6 +77,7 @@ To make the SAP S/4HANA system available to the services and application in SAP 
     4. Choose **Save**. 
   
 4.  Your configuration should look like this:
+   
    ![plot](./images/cloudconnector.png)
 
 
@@ -146,6 +148,7 @@ Follow these steps to configure the certificates in the Cloud Connector:
     2. In the **Common Name(CN)** field, select ${email} from the drop down menu to assert the user IDs. For example, Select ${mail} to assert the user against the user’s e-mail address propagated from the cloud.
 
     3. Make sure **Expiration Tolerance (h)** field has a value of **2** and **Certificate Validitity (min)** field has a value of **60**. If these values are empty, you can update the values as required. 
+    
     ![plot](./images/edit_pp.png)
 
         Note: You can select the Subject Pattern depending on the assertion attribute. You can also provide manual pattern if it is not listed in the dropdown. For example, ${email}.
