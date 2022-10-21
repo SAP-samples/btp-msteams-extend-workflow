@@ -120,32 +120,32 @@ Follow these steps to configure the certificates in the Cloud Connector:
         ![plot](./images/download_system_cert.png)
 
 
-2. Generate **CA Certificate** in Cloud Connector.
+2. Generate a Certificate Authority(CA) certificate in Cloud Connector.
 
     A CA certificate signs all the certificates that are used when a request is forwarded from SAP BTP with the cloud principles.
 
-    The Cloud connector acts as a CA when the request is sent from the SAP BTP to SAP S/4HANA system. Every request from the SAP BTP will be signed from Cloud Connector with this certificate. SAP S/4HANA must trust this certificate to establish the communication from cloud to the on-premise system.
+    The Cloud Connector acts as a Certificate Authority(CA) when the request is sent from SAP BTP to the SAP S/4HANA system. Every request from SAP BTP will be signed from the Cloud Connector with this certificate. The SAP S/4HANA system must trust this certificate to establish the communication from the cloud to the on-premise system.
 
-    1. To create the CA certificate, scroll down in the **ON PREMISE** tab and choose **Create and import a self-signed certificate** icon.
+    1. To create the CA certificate, scroll down in the **ON PREMISE** tab and choose the **Create and import a self-signed certificate** icon.
 
         ![plot](./images/config_ca_cert.png)
 
 
-    2. In the **Common Name (CN)** field, enter a name of your choice.Fill the details for other fields in **Subject DN** if required.
+    2. In the **Common Name (CN)** field, enter a name of your choice.Fill in the details for the other fields in the **Subject DN** section if required.
     
          ![plot](./images/config_caa_sscer.png)
       
     3. Choose **Create**.
 
-3. Create **User Certificate** in Cloud Connector.
+3. Create a user certificate in the Cloud Connector.
 
-    1. To create the User certificate, scroll down to Principal Propogation section in the **ON PREMISE** tab and choose **Edit** icon to edit the Subject Pattern.
+    1. To create a user certificate, scroll down to the **Principal Propogation** section in the **ON PREMISE** tab and choose the **Edit** icon to edit the Subject Pattern.
 
         ![plot](./images/user_cert.png)
 
-    2. In the **Common Name(CN)** field, selct ${email} from the drop down menu to assert the user IDs. For example, Select ${mail} to assert the user against the user’s e-mail address propagated from the cloud.
+    2. In the **Common Name(CN)** field, select ${email} from the drop down menu to assert the user IDs. For example, Select ${mail} to assert the user against the user’s e-mail address propagated from the cloud.
 
-    3. Make sure **Expiration Tolerance (h)** field have a value of **2** and **Certificate Validitity (min)** field has a value of **60**. If these values are empty, you can update the values as required. 
+    3. Make sure **Expiration Tolerance (h)** field has a value of **2** and **Certificate Validitity (min)** field has a value of **60**. If these values are empty, you can update the values as required. 
     ![plot](./images/edit_pp.png)
 
         Note: You can select the Subject Pattern depending on the assertion attribute. You can also provide manual pattern if it is not listed in the dropdown. For example, ${email}.
@@ -166,10 +166,9 @@ Follow these steps to configure the certificates in the Cloud Connector:
 
         This will download the sample certificate.
 
-
 ### 5. Synchronize the Cloud Subaccount IDP
 
-   In your Cloud Connector Administration cockpit, choose **Cloud To On-Premise**. Go to the **PRINCIPAL PROPOGATION** tab and choose **Synchronise** icon to sync the trust configuration details of the connected subaccount in SAP BTP.
+   In your Cloud Connector Administration cockpit, choose the **Cloud To On-Premise**. Go to the **PRINCIPAL PROPOGATION** tab and choose the **Synchronise** icon to sync the trust configuration details of the connected subaccount in SAP BTP.
   
   You should be able to see the below entry in your **Trust Configuration** table.
 
@@ -180,12 +179,11 @@ Follow these steps to configure the certificates in the Cloud Connector:
 
 1. Import the System Certificate
 
-    1. In your SAP S/4HANA system, go to **STRUST** transaction.
+    1. In your SAP S/4HANA system, open the **STRUST** transaction.
 
-        Expand **SSL Server Standard** and go to the Instance Specific. If there is no existing SSL Server Standard, switch to the edit mode and right click on the SSL Server standard to create one.
+        Expand **SSL Server Standard** and go to the **Instance Specific**. If there is no existing SSL Server Standard, switch to the edit mode and right click on the SSL Server standard to create one.
 
         ![plot](./images/trust_manager.png)
-
 
     2. Choose **Import Certificate** to import the system certificate that you downloaded from the Cloud Connector (sys_cert.der).
 
@@ -218,7 +216,7 @@ Follow these steps to configure the certificates in the Cloud Connector:
 
 3. Maintain Profile Parameters
 
-    1. Go to the **RZ10** transaction in your SAP S/4HANA system.
+    1. Open the **RZ10** transaction in your SAP S/4HANA system.
 
     2. In the **Profile** field, enter **DEFAULT** and in the **Edit Profile** select **Extended Maintenance**. 
 
@@ -257,51 +255,55 @@ Follow these steps to configure the certificates in the Cloud Connector:
 
 ### 7. Create Destination in SAP BTP subaccount
 
-1. In the SAP BTP cockpit, log in with admin user credentials. 
+Follow these steps to create the destinations for basic authentication and principal propogation between Microsoft Teams and the SAP S/4HANA system.
+
+1. Log in to the SAP BTP cockpit with admin user credentials. 
 
 2. Navigate to you subaccount and choose **Connectivity** > **Destinations**. 
 
-3. Choose **New Destinations**.
+3. Create a new destination with the name **S4HANA_PP**.This is used for principal propogation.
 
-4. Create a destination with the name **S4HANA_PP**.Enter the following configuration values to create destination for principal propagation.
+    1. Choose **New Destination** and enter the following configuration values.
 
-    | key | value |
-    | --- | --- |
-    |  Name | S4HANA_PP |
-    |   Type | HTTP |
-    |  URL | The virtual host and port, e.g. http://virtualhostname:44300 |
-    |  Proxy Type | OnPremise |
-    |  Authentication | PrincipalPropagation |
+        | key | value |
+        | --- | --- |
+        |  Name | S4HANA_PP |
+        |   Type | HTTP |
+        |  URL | The virtual host and port, e.g. http://virtualhostname:44300 |
+        |  Proxy Type | OnPremise |
+        |  Authentication | PrincipalPropagation |
 
-    Add the additional properties:
+    2. Add the additional properties:
 
-    | key | value |
-    |  --- | --- |
-    |  sap-client | your client no |
-    |  HTML5.DynamicDestination | true |
-    |  WebIDEEnabled | true |
-    | WebIDEUsage | odata_abap |
+        | key | value |
+        |  --- | --- |
+        |  sap-client | your SAP Client no |
+        |  HTML5.DynamicDestination | true |
+        |  WebIDEEnabled | true |
+        | WebIDEUsage | odata_abap |
 
-5. Create another destination with the name **S4HANA_NP**.This is used for basic authentication.
+4. Create another destination with the name **S4HANA_NP**.This is used for basic authentication.
 
-   | key | value |
-   | --- | --- |
-   | Name | S4HANA_NP |
-   | Type | HTTP |
-   | URL | The virtual host and port, e.g. http://virtualhostname:44300 |
-   | Proxy Type | OnPremise |
-   | Authentication | BasicAuthentication |
-   | User| Technical User |
-   | Password| Technical User Password | 
+    1. Choose **New Destination** and enter the following configuration values.
 
-    Add the additional properties:
+        | key | value |
+        | --- | --- |
+        | Name | S4HANA_NP |
+        | Type | HTTP |
+        | URL | The virtual host and port, e.g. http://virtualhostname:44300 |
+        | Proxy Type | OnPremise |
+        | Authentication | BasicAuthentication |
+        | User| Technical User |
+        | Password| Technical User Password | 
 
-    | key | value |
-    | --- | --- |
-    | sap-client | your client no |
-    | HTML5.DynamicDestination | true |
-    | WebIDEEnabled | true |
-    | WebIDEUsage | odata_abap |
+    2. Add the additional properties:
+
+        | key | value |
+        | --- | --- |
+        | sap-client | your SAP Client no |
+        | HTML5.DynamicDestination | true |
+        | WebIDEEnabled | true |
+        | WebIDEUsage | odata_abap |
 
     **Note:** The destination name is hardcoded in the application. If you change the name of the destination here, you have to change the code as well in S4HANAClient.js file.
 
