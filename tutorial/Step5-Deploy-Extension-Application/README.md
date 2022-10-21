@@ -25,13 +25,14 @@ In case you changed the name of your SAP Authorization and Trust Management serv
     ![plot](./images/appname.png) 
 
 
-3. Copy the configuration paramters from subaccount of SAP BTP.
+3. Copy the configuration parameters from your subaccount in SAP BTP. 
+    You do this in the SAP BTP cockpit.
 
-    1. To update **BTP_LANDSCAPE** variable, go to the **Overview** page of your subaccount in SAP BTP. Choose **Cloud Foundry Environment** tab and copy the value of region in the **API Endpoint** URL. 
+    1. To update the **BTP_LANDSCAPE** variable, go to the **Overview** page of your subaccount. Choose **Cloud Foundry Environment** tab and copy the value of region in the **API Endpoint** URL. 
 
-    2. To update **BTP_ACCOUNT_NAME** variable, go to the **Overview** page of your subaccount in SAP BTP. Go to the **General** section and copy the value of the **Subdomain**.
+    2. To update the **BTP_ACCOUNT_NAME** variable, go to the **Overview** page of your subaccount. Go to the **General** section and copy the value of the **Subdomain**.
 
-    3. To update **XSUAA_CS_URL_SUFFIX** variable, go to the SAP BTP cockpit, navigate to your subaccount and choose **Security** >  **Trust configuration** and then choose **SAML Metadata** to download the metadata file. Open the metadata file and copy the value from the **Location** variable as shown in the screenshot.
+    3. To update the **XSUAA_CS_URL_SUFFIX** variable, navigate to your subaccount and choose **Security** >  **Trust configuration** and then choose **SAML Metadata** to download the metadata file. Open the metadata file and copy the value from the **Location** variable as shown in the screenshot.
 
         ![plot](./images/samlmetadata.png) 
         
@@ -39,7 +40,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
 
 4. Copy the configuration parameters from Microsoft Azure Portal.
 
-    1. Log in to Microsoft Azure Portal and coose **Overview** and copy the value of **Tenant ID** to update **MICROSOFT_AD_TENANT_ID** variable.
+    1. Log in to Microsoft Azure Portal and choose **Overview** and copy the value of **Tenant ID** to update **MICROSOFT_AD_TENANT_ID** variable.
 
         ![plot](./images/mstenant.png) 
 
@@ -51,9 +52,9 @@ In case you changed the name of your SAP Authorization and Trust Management serv
     
     5. Go to the **Home** page and choose **Azure Bot Service**. Select the Azure Bot Service you created in step 10 **Configure Microsoft Azure Platform and MS Teams**. Choose **Configuration** and the copy the values of the service provider connection settings. These values will be used to update **CONNECTION_NAME_GRAPH** and **CONNECTION_NAME_BTP** variables.
 
-    6. Go the  Go to the **Home** page and choose **Azure Storage Account**.Select the Azure Storage Account you created in step 11 **Configure Microsoft Azure Platform and MS Teams**. Choose **Containers** and copy the value of the container you created to update **MICROSOFT_BLOB_CONTAINER_NAME** variable. 
+    6. Go the **Home** page and choose **Azure Storage Account**. Select the Azure Storage Account you created in step 11 **Configure Microsoft Azure Platform and MS Teams**. Choose **Containers** and copy the value of the container you created to update **MICROSOFT_BLOB_CONTAINER_NAME** variable. 
     
-        Next,choose **Access keys** and the copy the value **Connection string** to update 
+        Next, choose **Access keys** and the copy the value **Connection string** to update 
         **MICROSOFT_BLOB_CONNECTION_STRING** variable.
 
 5. Update vars.yml in the **deploy** folder with the values from the previous step.
@@ -62,24 +63,21 @@ In case you changed the name of your SAP Authorization and Trust Management serv
     
     | key    | value    |
     | --------|---------|
-    |**SCENARIO**| For SAP S/4HANA, the value is **onpremise** and for SAP S/4HANA Private Cloud, use the **azureprivatecloud** value. Follow these steps to configure the additional settings required for SAP S/4HANA running on [Azure Private Cloud](../Azure-Private-Cloud-PrivateLink/README.md). |
+    |**SCENARIO**| For SAP S/4HANA, the value is **onpremise** and for SAP S/4HANA Private Cloud, use the **azureprivatecloud** value. Follow these steps to configure the additional settings required for SAP S/4HANA running on [Azure Private Cloud](../Azure-Private-Cloud-PrivateLink/README.md).|
     |**BTP_LANDSCAPE**|The region of your subaccount in SAP BTP. For example, eu20.|
-    |**BTP_ACCOUNT_NAME**|The subdomain of your subaccount in SAP BTP. For example, trial-us-xjn2uwee9>|
+    |**BTP_ACCOUNT_NAME**|The subdomain of your subaccount in SAP BTP. For example, trial-us-xjn2uwee9|
     |**XSUAA_CS_URL_SUFFIX**|The audience value (For example, azure-live-eu20 or aws-live-eu10 or aws-live) which can be extracted from the SAML metadata of your subaccount in SAP BTP.|
-    |**BTP_SCOPES**|The full name of the custom scope created **Configure Microsoft Azure Platform and MS Teams** page from api:// to /access_as_user.For example,  api://appname.cfapps.eu20.hana.ondemand.com/botid-ef84483e-546c-414c-b75a-d1er58c095c7/access_as_user|
-    |**CONNECTION_NAME_GRAPH**|The name of the Microsoft Graph connection. For example, GraphConnection.|
-    |**CONNECTION_NAME_BTP**|The name of the SAP BTP connection created.For example, BTPConnection.|
-    |**MICROSOFT_BLOB_CONTAINER_NAME**|The Azure Storage Account container name.For example, botstorage.|
+    |**BTP_SCOPES**|The full name of the custom scope created **Configure Microsoft Azure Platform and MS Teams** page from api:// to /access_as_user. For example, api://appname.cfapps.eu20.hana.ondemand.com/botid-ef84483e-546c-414c-b75a-d1er58c095c7/access_as_user|
+    |**CONNECTION_NAME_GRAPH**|The name of the service provider connection settings in Azure Bot Service. For example, GraphConnection.|
+    |**CONNECTION_NAME_BTP**|The name of the service provider connection settings in Azure Bot Service. For example, BTPConnection.|
+    |**MICROSOFT_BLOB_CONTAINER_NAME**|The Azure Storage Account container name. For example, botstorage.|
     |**MICROSOFT_BLOB_CONNECTION_STRING**|The connection string in Azure Storage account. For example, DefaultEndpointsProtocol=https;AccountName=s4hanateams;AccountKey=vC2ZmmRSZ13jZeP/FZgZ6iHOT6OSgsAtL7cjYa8XcxmSMkimh3BtvRY9LgLvjfahauDim+w2jzGZ+AStEf+pfw==;EndpointSuffix=core.windows.net|
     |**DOMAIN**| The Cloud Foundry domain of your extension application. Copy the application name you updated in manifest.json file and append .cfapps.region.hana.ondemand.com. Check your SAP BTP subaccount region and update accordingly. For example,btp-extendworkflow-s4-msteams.cfapps.eu20.hana.ondemand.com|
     |**MICROSOFT_APP_ID**| The Application(client) ID of your Azure Active Directory Enterprise application. For example, ed84483e-546c-424c-b75a-d1ab58c095c7.|
     |**MICROSOFT_APP_PASSWORD**|A Client secret which you created for your Azure Active Directory Enterprise application. For example, afw8Q~Xxj4k0o6JMsWNBip7AQb5-mCCvykgp0agO.|
-    |**MICROSOFT_AD_TENANT_ID**|The unique Id of your Azure Active Directory.For example, a22b0962-0d9d-4b4e-aa99-we1b581f071w|
+    |**MICROSOFT_AD_TENANT_ID**|The unique ID of your Azure Active Directory. For example, a22b0962-0d9d-4b4e-aa99-we1b581f071w|
     |**SAP_CLIENT**|sap-client number of your SAP S/4HANA system. For example, 100.|
-    |**ACCEPT_SELF_SIGNED_CERT**|true for development environment and false for production environment|
-
-
-
+    |**ACCEPT_SELF_SIGNED_CERT**|true for development environment and false for production environment.|
 
 5. Build and deploy the application. Run the following commands:
 
