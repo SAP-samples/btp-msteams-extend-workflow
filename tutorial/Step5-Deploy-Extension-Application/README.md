@@ -71,15 +71,15 @@ In case you changed the name of your SAP Authorization and Trust Management serv
     |**CONNECTION_NAME_GRAPH**|The name of the service provider connection settings in Azure Bot Service. For example, GraphConnection.|
     |**CONNECTION_NAME_BTP**|The name of the service provider connection settings in Azure Bot Service. For example, BTPConnection.|
     |**MICROSOFT_BLOB_CONTAINER_NAME**|The Azure Storage Account container name. For example, botstorage.|
-    |**MICROSOFT_BLOB_CONNECTION_STRING**|The connection string in Azure Storage account. For example, DefaultEndpointsProtocol=https;AccountName=s4hanateams;AccountKey=vC2ZmmRSZ13jZeP/FZgZ6iHOT6OSgsAtL7cjYa8XcxmSMkimh3BtvRY9LgLvjfahauDim+w2jzGZ+AStEf+pfw==;EndpointSuffix=core.windows.net|
+    |**MICROSOFT_BLOB_CONNECTION_STRING**|The connection string in Azure Storage account. For example, DefaultEndpointsProtocol=https;AccountName=s4hanateams;AccountKey=fsagfss==;EndpointSuffix=core.windows.net|
     |**DOMAIN**| The Cloud Foundry domain of your extension application. Copy the application name you updated in manifest.json file and append .cfapps.region.hana.ondemand.com. Check your SAP BTP subaccount region and update accordingly. For example,btp-extendworkflow-s4-msteams.cfapps.eu20.hana.ondemand.com|
     |**MICROSOFT_APP_ID**| The Application(client) ID of your Azure Active Directory Enterprise application. For example, ed84483e-546c-424c-b75a-d1ab58c095c7.|
-    |**MICROSOFT_APP_PASSWORD**|A Client secret which you created for your Azure Active Directory Enterprise application. For example, afw8Q~Xxj4k0o6JMsWNBip7AQb5-mCCvykgp0agO.|
+    |**MICROSOFT_APP_PASSWORD**|A Client secret which you created for your Azure Active Directory Enterprise application. For example, ssafdssdfsk0o6JMsWNBip7AQb5-asdasfdsf.|
     |**MICROSOFT_AD_TENANT_ID**|The unique ID of your Azure Active Directory. For example, a22b0962-0d9d-4b4e-aa99-we1b581f071w|
     |**SAP_CLIENT**|sap-client number of your SAP S/4HANA system. For example, 100.|
     |**ACCEPT_SELF_SIGNED_CERT**|true for development environment and false for production environment.|
 
-5. Build and deploy the application. Run the following commands:
+6. Build and deploy the application. Run the following commands:
 
     1. Open the Cloud Foundry command line interface (cf CLI).
 
@@ -111,7 +111,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
 
         ![plot](./images/SAPBTPCockpit.png) 
 
-6. Update the application name in the Microsoft Azure App Registration.
+7. Update the application name in the Microsoft Azure App Registration.
 
     1. Log in to the Microsoft Azure Portal.
 
@@ -136,7 +136,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
     
     This application name needs to be updated in the **App Registration** configuration in Microsoft Azure Portal.
 
-7. Update the **manifest.json** file in Microsoft Teams.
+8. Update the **manifest.json** file in Microsoft Teams.
 
     1. Go to **/deploy/msteamsfiles** folder in your project directory. 
    
@@ -162,7 +162,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
         ![plot](./images/manifest2.png) 
 
 
-7. Upload the **manifest.json** file to Microsoft Teams.
+9. Upload the **manifest.json** file to Microsoft Teams.
 
     Before you upload the manifest.json file of your extension application to Microsoft Teams, make sure that you have updated all the parameters in the manifest.json file.
 
@@ -178,7 +178,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
         ![plot](./images/admincenter.png) 
 
         
-8. Log in to [Microsoft Teams](https://teams.microsoft.com) and choose **Apps** > **Built for your org**. You should have the **SAP S/4HANA Business Events** application.
+10. Log in to [Microsoft Teams](https://teams.microsoft.com) and choose **Apps** > **Built for your org**. You should have the **SAP S/4HANA Business Events** application.
 
     ![plot](./images/installapp.png) 
 

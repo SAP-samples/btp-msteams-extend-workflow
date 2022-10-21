@@ -259,7 +259,7 @@ Let's create a new purchase requisition and go to SAP Event Mesh to see the mess
 
 1. Repeat steps 1, 2, and 3 of the **2. Test The Purchase Requisition Workflow** section to create a new purchase requisition and initiate a new approval workflow. The background job will send the workitem information to SAP Event Mesh queue in a minute.
 
-2. Open the SAP Event Mesh application from the SAP BTP cockpit. <<refer to the other section TO-DO>>
+2. Open the SAP Event Mesh application from the SAP BTP cockpit. For more information, refer to the **2. Set Up SAP Event Mesh** section in [Step1-Configure-SAP-BTP](../Step1-Configure-SAP-BTP//README.md).
 ![Message Client](./images/s4/48.png)
 
 3. Choose **Message Clients**, select the message client you have created and go to the **Test** tab to consume the message.
