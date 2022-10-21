@@ -69,80 +69,80 @@ To configure Azure Private Link service for SAP S/4HANA system, follow
 
 ### 3. Create User ID
 
-    For registering an inbound OAuth client, you need to create an User ID in the system, which will be the Client ID.
+For registering an inbound OAuth client, you need to create an User ID in the system, which will be the Client ID.
 
-    1. In your SAP S/4HANA system, open **SU01** transaction,enter an unique value in the **User** field and choose **Create** icon.<br>
-    ![userid create](./images/UserID%20Create.png)
+1. In your SAP S/4HANA system, open **SU01** transaction,enter an unique value in the **User** field and choose **Create** icon.<br>
+![userid create](./images/UserID%20Create.png)
 
-    2. In the **Logon Data** tab, in the **User Type** field,choose **Sytem** from the dropdown menu.
-    ![user type](./images/System%20User%20Type.png)
+2. In the **Logon Data** tab, in the **User Type** field,choose **Sytem** from the dropdown menu.
+![user type](./images/System%20User%20Type.png)
 
-    3. Provide an initial password and choose **Save**.
+3. Provide an initial password and choose **Save**.
 
 ### 4. Provide read authorization to the user ID. 
 
-    You need to provide read authorization for the OData service 'API_PURCHASEREQ_PROCESS_SRV' to the newly created user.
-    >Note: Providing authorization here will help in setting up the SAP BTP destination in the upcoming steps.
+You need to provide read authorization for the OData service 'API_PURCHASEREQ_PROCESS_SRV' to the newly created user.
+>Note: Providing authorization here will help in setting up the SAP BTP destination in the upcoming steps.
 
-    1. In your SAP S/4HANA system, open **PFCG** transacation, enter a role name and choose **Create Single Role**.<br>
+1. In your SAP S/4HANA system, open **PFCG** transacation, enter a role name and choose **Create Single Role**.<br>
 
-        ![Single Role](./images/Create%20PFCG%20role.png)
+    ![Single Role](./images/Create%20PFCG%20role.png)
 
-    2. In the **Authorizations** tab, choose **Propose profile names** to create a profile.
+2. In the **Authorizations** tab, choose **Propose profile names** to create a profile.
 
-        ![Propose Profile](./images/Propose%20Profile%20name.png)
+    ![Propose Profile](./images/Propose%20Profile%20name.png)
 
-    3. Choose **Change Authorizatoin Data** icon to add the authorizations.
-    ![AUthorization data](./images/Change%20Authorization%20Data.png)<br>
+3. Choose **Change Authorizatoin Data** icon to add the authorizations.
+![AUthorization data](./images/Change%20Authorization%20Data.png)<br>
 
-        <br>**Note**: If a popup shows to save the role, click **Save** and if another popup opens to **Choose Template**, choose **Do not select templates**.<br>
+    <br>**Note**: If a popup shows to save the role, click **Save** and if another popup opens to **Choose Template**, choose **Do not select templates**.<br>
 
-    4. Choose **Manually** to add the Authorization object.<br>
-    ![Auth Object](./images/Manually%20add%20auth.png)<br>
+4. Choose **Manually** to add the Authorization object.<br>
+![Auth Object](./images/Manually%20add%20auth.png)<br>
 
-    5. In the **Authorization Object** field, enter **S_SERVICE** and chooose **Ok**.<br>
-    ![Auth Object](./images/Auth%20Object.png)<br>
+5. In the **Authorization Object** field, enter **S_SERVICE** and chooose **Ok**.<br>
+![Auth Object](./images/Auth%20Object.png)<br>
 
-    6. Choose **Edit** icon to provide the OData service details.<br>
-    ![Auth Object](./images/Add%20service.png)<br>
+6. Choose **Edit** icon to provide the OData service details.<br>
+![Auth Object](./images/Add%20service.png)<br>
 
-    7. In the popup, select **TADIR Service** from **Type** dropdown menu.<br>
-    ![Auth Object](./images/Tadir%20Service.png)<br>
+7. In the popup, select **TADIR Service** from **Type** dropdown menu.<br>
+![Auth Object](./images/Tadir%20Service.png)<br>
 
-    8. Provide the oData service details as shown below and choose **Save**.<br>
-    ![Auth Object](./images/Auth%20Objects%20adding.png)<br>
+8. Provide the oData service details as shown below and choose **Save**.<br>
+![Auth Object](./images/Auth%20Objects%20adding.png)<br>
 
-    9. Choose **Save** again.<br>
-    ![Auth Object](./images/Save%20Authorization.png)<br>
+9. Choose **Save** again.<br>
+![Auth Object](./images/Save%20Authorization.png)<br>
 
-    10. Choose **Generate** icon to generate the profile.<br>
-    ![Auth Object](./images/Generate%20Auth.png)<br>
+10. Choose **Generate** icon to generate the profile.<br>
+![Auth Object](./images/Generate%20Auth.png)<br>
 
-    11. Enter the user ID and choose **User Comparison**.<br>
+11. Enter the user ID and choose **User Comparison**.<br>
 ![Auth Object](./images/Add%20user%20to%20role.png)<br>
 
 ### 5. Create an Inbound OAuth Client
 
-    1. In your SAP S/4HANA system, open the **SOAUTH2** transaction  or use the below URL to configure the oAuth client and choose **Create**.<br>
-    **URL** - https://s4hanahostname:port/sap/bc/webdynpro/sap/oauth2_config?sap-client=clientnumber
-    ![Create OAuth](./images/Create%20OAuth%20Client.png)
+1. In your SAP S/4HANA system, open the **SOAUTH2** transaction  or use the below URL to configure the oAuth client and choose **Create**.<br>
+**URL** - https://s4hanahostname:port/sap/bc/webdynpro/sap/oauth2_config?sap-client=clientnumber
+![Create OAuth](./images/Create%20OAuth%20Client.png)
 
-    2. In the **OAuth 2.0 Client** field, enter the user id which you created in step 3 ,provide the description and choose **Next**.
-    ![Step 1 OAuth](./images/Oauth2.0%20step1.png)
+2. In the **OAuth 2.0 Client** field, enter the user id which you created in step 3 ,provide the description and choose **Next**.
+![Step 1 OAuth](./images/Oauth2.0%20step1.png)
 
-    3. Choose **Next** again.
+3. Choose **Next** again.
 
-    4. In the **Resource Owner Authentication** step, choose the **Trusted OAuth 2.0 Identity provider** that you created in **Step 2** and choose **Next**.
-    ![Step 3 OAuth](./images/Trusted%20OAuth%202.0%20Idp%20Step%203.png)
+4. In the **Resource Owner Authentication** step, choose the **Trusted OAuth 2.0 Identity provider** that you created in **Step 2** and choose **Next**.
+![Step 3 OAuth](./images/Trusted%20OAuth%202.0%20Idp%20Step%203.png)
 
-    5. In the **Scope Assignment**, add the Task Processing OData service **ZTASKPROCESSING_0002**, choose **Next** and then choose **Finish**.
-    ![Step 4 OAuth Scope](./images/Scope%20Oauth%20step4.png)
+5. In the **Scope Assignment**, add the Task Processing OData service **ZTASKPROCESSING_0002**, choose **Next** and then choose **Finish**.
+![Step 4 OAuth Scope](./images/Scope%20Oauth%20step4.png)
 
-        **Note**: If the OData service ZTASKPROCESSING_0002 is not listed in the **OAuth 2.0 Scope ID**, you need to manually enable OAuth for it as mentioned below:
+**Note**: If the OData service ZTASKPROCESSING_0002 is not listed in the **OAuth 2.0 Scope ID**, you need to manually enable OAuth for it as mentioned below:
 
-        1. Open the **/n/iwfnd/maint_service** transaction.
-        2. Select the service **ZTASKPROCESSING** and choose the **OAuth** button to enable OAuth scope for the service
-        ![Enable OAuth scope](./images/Enable%20OAuth.png)
+1. Open the **/n/iwfnd/maint_service** transaction.
+2. Select the service **ZTASKPROCESSING** and choose the **OAuth** button to enable OAuth scope for the service
+![Enable OAuth scope](./images/Enable%20OAuth.png)
 
 ### 6. Create Destinations in your subaccount in SAP BTP
 
