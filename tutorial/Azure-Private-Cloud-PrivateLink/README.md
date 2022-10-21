@@ -72,14 +72,14 @@ To configure Azure Private Link service for SAP S/4HANA system, follow
 For registering an inbound OAuth client, you need to create an User ID in the system, which will be the Client ID.
 
 1. In your SAP S/4HANA system, open **SU01** transaction,enter an unique value in the **User** field and choose **Create** icon.<br>
-![userid create](./images/UserID%20Create.png)
+    ![userid create](./images/UserID%20Create.png)
 
 2. In the **Logon Data** tab, in the **User Type** field,choose **Sytem** from the dropdown menu.
-![user type](./images/System%20User%20Type.png)
+        ![user type](./images/System%20User%20Type.png)
 
 3. Provide an initial password and choose **Save**.
 
-### 4. Provide read authorization to the user ID. 
+### 4. Provide Read Authorization to the User ID
 
 You need to provide read authorization for the OData service 'API_PURCHASEREQ_PROCESS_SRV' to the newly created user.
 >Note: Providing authorization here will help in setting up the SAP BTP destination in the upcoming steps.
