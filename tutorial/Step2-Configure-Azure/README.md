@@ -1,4 +1,4 @@
-## Configure Microsoft Azure Platform and MS Teams
+## Configure Microsoft Azure Platform and Microsoft Teams
 
 These are the Microsoft Azure services and components you will need for this scenario:
 
