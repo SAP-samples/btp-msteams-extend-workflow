@@ -151,35 +151,35 @@ Follow the steps to configure the following certificates in Cloud Connector:
 
 3. Create **User Certificate** in Cloud Connector.
 
-1. To create the User certificate, scroll down to Principal Propogation section in the **ON PREMISE** tab and choose **Edit** icon to edit the Subject Pattern.
+    1. To create the User certificate, scroll down to Principal Propogation section in the **ON PREMISE** tab and choose **Edit** icon to edit the Subject Pattern.
 
-    ![plot](./images/user_cert.png)
+        ![plot](./images/user_cert.png)
 
-2. In the **Common Name(CN)** field, selct ${email} from the drop down menu to assert the user IDs. For example, Select ${mail} to assert the user against the user’s e-mail address propagated from the cloud.
+    2. In the **Common Name(CN)** field, selct ${email} from the drop down menu to assert the user IDs. For example, Select ${mail} to assert the user against the user’s e-mail address propagated from the cloud.
 
-3. Make sure **Expiration Tolerance (h)** field have a value of **2** and **Certificate Validitity (min)** field has a value of **60**. If these values are empty, you can update the values as required. 
+    3. Make sure **Expiration Tolerance (h)** field have a value of **2** and **Certificate Validitity (min)** field has a value of **60**. If these values are empty, you can update the values as required. 
     ![plot](./images/edit_pp.png)
 
-    Note: You can select the Subject Pattern depending on the assertion attribute. You can also provide manual pattern if it is not listed in the dropdown. For example, ${email}.
+        Note: You can select the Subject Pattern depending on the assertion attribute. You can also provide manual pattern if it is not listed in the dropdown. For example, ${email}.
 
-3. Choose **Save**.
+    4. Choose **Save**.
 
-4. Once the certificate is created, choose **Create a sample certificate** icon.
+    5. Once the certificate is created, choose **Create a sample certificate** icon.
 
-    ![plot](./images/create_cert.png)
+        ![plot](./images/create_cert.png)
 
-    You will be asked for user credentials before downloading, enter the test user credentials that you created in Microsoft Active Directory.
+        You will be asked for user credentials before downloading, enter the test user credentials that you created in Microsoft Active Directory.
 
-    ![plot](./images/createsamplecert.png)
+        ![plot](./images/createsamplecert.png)
     
-5. This sample certificate is used to define the rules in the SAP S/4HANA system. Open **CERTRULE** transaction, enter the same email ID and choose **Generate**.
+    6. This sample certificate is used to define the rules in the SAP S/4HANA system. Open **CERTRULE** transaction, enter the same email ID and choose **Generate**.
 
-    ![plot](./images/cn_email.png)
+        ![plot](./images/cn_email.png)
 
-    This will download the sample certificate.
+        This will download the sample certificate.
 
 
-### 6. Synchronize the Cloud Subaccount IDP
+### 5. Synchronize the Cloud Subaccount IDP
 
    In your Cloud Connector Administration cockpit, choose **Cloud To On-Premise**. Go to the **PRINCIPAL PROPOGATION** tab and choose **Synchronise** icon to sync the trust configuration details of the connected subaccount in SAP BTP.
   
@@ -188,9 +188,9 @@ Follow the steps to configure the following certificates in Cloud Connector:
   ![plot](./images/update_pp.png)
 
 
-### 7. Configure SAP S/4HANA with Certificates for the Principal Propagation 
+### 6. Configure SAP S/4HANA with Certificates for the Principal Propagation 
 
-1. **Import the System Certificate**
+1. Import the System Certificate
 
     1. In your SAP S/4HANA system, go to **STRUST** transaction.
 
@@ -228,7 +228,7 @@ Follow the steps to configure the following certificates in Cloud Connector:
         ![plot](./images/cert_status.png)
 
 
-3. **Maintain Profile Parameters**
+3. Maintain Profile Parameters
 
     1. Go to the **RZ10** transaction in your SAP S/4HANA system.
 
@@ -258,7 +258,7 @@ Follow the steps to configure the following certificates in Cloud Connector:
 
         You can ignore the error check validations at this point.
 
-4. **Restart the ICM**<br/>
+4. Restart the ICM<br/>
 
     Open **SMICM** transaction.
 
@@ -267,9 +267,9 @@ Follow the steps to configure the following certificates in Cloud Connector:
     ![plot](./images/restart_icm.png)
 
 
-### 8. Create Destination in SAP BTP subaccount
+### 7. Create Destination in SAP BTP subaccount
 
-1. n the SAP BTP cockpit, log in with admin user credentials. 
+1. In the SAP BTP cockpit, log in with admin user credentials. 
 
 2. Navigate to you subaccount and choose **Connectivity** > **Destinations**. 
 
@@ -316,6 +316,6 @@ Follow the steps to configure the following certificates in Cloud Connector:
     | WebIDEEnabled | true |
     | WebIDEUsage | odata_abap |
 
-**Note:** The destination name is hardcoded in the application. If you change the name of the destination here, you have to change the code as well in S4HANAClient.js file.
+    **Note:** The destination name is hardcoded in the application. If you change the name of the destination here, you have to change the code as well in S4HANAClient.js file.
 
-Apart from this, there are a few changes required to be done in ApprovalDialog.js based on the type of Authentication method selected which is explained in the code.
+    Apart from this, there are a few changes required to be done in ApprovalDialog.js based on the type of Authentication method selected which is explained in the code.
