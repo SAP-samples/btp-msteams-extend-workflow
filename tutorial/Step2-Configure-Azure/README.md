@@ -244,11 +244,11 @@ Based on the blog post, follow these steps:
 
 3. Choose **Review + create** to create the storage account.
 
-4. Choose the created storage account and then choose **Containers**. Choose **Container** to create new container.
+4. Choose the created storage account and then choose **Containers**. Choose **Container** to create new container. Copy the value of the container name. This will be used later on in the environment variables configuration.
 
    ![plot](./images/containername.png)
 
-5. Choose **Access keys** and copy the value of the **Storage account name** and value of the **Connection string** field. This will be used later on in the environment variables configuration of the extension application deployed in SAP BTP.
+5. Choose **Access keys** and copy the value of the **Connection string** field. This will be used later on in the environment variables configuration of the extension application deployed in SAP BTP.
 
    ![plot](./images/accesskeys.png)
 

@@ -1,25 +1,4 @@
-# Connect SAP BTP and SAP S/4HANA on Azure using SAP BTP Private Link service and Azure Private Link service
-
-## Business Process Flow
-
-The target application will provide the SAP Business user to perform ERP operations via MS Teams. Below depicts the business process flow for purchase requisition approval.
-
-![plot](../../images/Processflow.png)
-
-1. User creates purchase requisition in SAP S/4HANA system and a workflow is started in the SAP S/4HANA system for the release of PR.
-2. A background job in SAP S/4HANA will pick the PR workflow instance and send the PR creation event to SAP Event Mesh.
-3. Extension app deployed on BTP receives this event by using web hook utility.
-4. Extension app fetches additional details of the purchase requisition by querying the SAP S/4HANA via SAP Destination service and Private Link service.
-5. Extension app sends the notification to the configured approver of the PR via MS Teams using the Azure Bot Service.
-6. The Approver can approve/reject the PR from MS Teams notification which inturn calls the extension app in SAP BTP.
-7. Extension app sends the approval/rejection status to SAP S/4HANA.
-
-## Solution Architecture
-
-Recommended architecture to connect to SAP S/4HANA on Azure using BTP Private Link Service and Azure Private Link service
-<br>
-
-![plot](../../images/Architecture-PL.png)
+## Set Up Connectivity between SAP BTP and SAP S/4HANA using SAP Private Link Service
 
 ## Prerequisites
 
@@ -50,17 +29,17 @@ Recommended architecture to connect to SAP S/4HANA on Azure using BTP Private Li
     
     - Required to connect to SAP S/4HANA instance from SAP BTP subaccount
 
-## Setup and configure SAP Private Link service and Azure Private Link service 
+### 1. Set Up and configure SAP Private Link service and Azure Private Link service 
 
 ![plot](./images/PL.png)
 
-**1. Create Azure Private Link service for SAP S/4HANA system**
+1. Create Azure Private Link service for SAP S/4HANA system**
 
 Please check the following tutorial on [how to create Azure Private Link service for SAP S/4HANA system on Azure and link it with BTP Private Link service](https://github.com/SAP-samples/btp-build-resilient-apps/tree/extension-privatelink/tutorials/05-PrivateLink)
 
 Complete the steps till "Prepare Extension Application" section using the above blog.
 
-**2. Create Destination in SAP BTP**
+2. Create Destination in SAP BTP
 
 Open the SAP BTP Cockpit. You should have subaccount administrator role assigned to your user-id.
 Navigate to your subaccount account and select **Connectivity** –  **Destinations** from the left-side panel.
