@@ -132,6 +132,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
             https://[deployed appname].cfapps.region.hana.ondemand.com/botid-[Application(client)ID]
 
         Your configuration should look like this:
+
         ![plot](./images/updateuri.png) 
     
     This application name needs to be updated in the **App Registration** configuration in Microsoft Azure Portal.
@@ -158,6 +159,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
         |**domain-placeholder:**|This is the runtime URL of your extension application in the SAP BTP.For example, sap-dev-teams.cfapps.eu20.hana.ondemand.com |
 
         Your **manifest.json** file should look like this:
+
         ![plot](./images/manifest1.png) 
         ![plot](./images/manifest2.png) 
 
@@ -220,6 +222,7 @@ Follow these steps to configure the webhook subscription to receive notification
     9. Choose **Create**.
 
         Your Webhook subscription should look like this:
+        
         ![plot](./images/webhook.png)
 
 6. If the **Subscription Status** is paused, then choose the **Resume** icon from the **Actions** column. 
