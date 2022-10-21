@@ -45,7 +45,7 @@ The key pillar of the principal propagation is to establish the trust between yo
 
 3. Choose **Edit** to change the Trust Configuration parameters. 
 
-4. Deselect the **Available for User Logon** checkbox. The Azure Active Directory trust configuration is required for  for principal propogation.
+4. Deselect the **Available for User Logon** checkbox. The Azure Active Directory trust configuration is required for principal propogation.
 
 5. Select the **Create Shadow Users on User Logon** checkbox.
 
@@ -136,11 +136,11 @@ Based on the blog post, follow these steps:
     
     - In the **Supported account types** section, select **Accounts in any organizational directory(Any Azure AD directory - Multitenant)**.
 
-    - In the **Redirect URI(optional)** section, select **Web** from the dropdown menu and then enter **https://localhost**.
+    - In the **Redirect URI(optional)** section, select **Web** from the dropdown menu and then enter **https://localhost**.This value will be changed at a later step.
     
     ![plot](./images/newappcreation.png)
 
-3. Once the application registration is created, choose **Overview** and then copy  the values of the **Application(client) ID** and **Directory(tenant) ID** fields.
+3. Once the application registration is created, choose **Overview** and then copy  the values of the **Application(client) ID** and **Directory(tenant) ID** fields. It will later be used as <msappid-placeholder> in the environement variables.
 
     ![plot](./images/appregistrationdetails.png)
 
@@ -244,11 +244,11 @@ Based on the blog post, follow these steps:
 
 3. Choose **Review + create** to create the storage account.
 
-3. Choose the created storage account and then choose **Containers**.
+4. Choose the created storage account and then choose **Containers**. Choose **Container** to create new container.
 
    ![plot](./images/containername.png)
 
-4. Choose **Access keys** and copy the value of the **Storage account name** and value of the **Connection string** field. This will be used later on in the environment variables configuration of the extension application deployed in SAP BTP.
+5. Choose **Access keys** and copy the value of the **Storage account name** and value of the **Connection string** field. This will be used later on in the environment variables configuration of the extension application deployed in SAP BTP.
 
    ![plot](./images/accesskeys.png)
 
