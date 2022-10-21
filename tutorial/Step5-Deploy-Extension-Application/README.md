@@ -74,7 +74,7 @@ In case you changed the name of your SAP Authorization and Trust Management serv
     |**MICROSOFT_BLOB_CONNECTION_STRING**|The connection string in Azure Storage account. For example, DefaultEndpointsProtocol=https;AccountName=s4hanateams;AccountKey=fsagfss==;EndpointSuffix=core.windows.net|
     |**DOMAIN**| The Cloud Foundry domain of your extension application. Copy the application name you updated in manifest.json file and append .cfapps.region.hana.ondemand.com. Check your SAP BTP subaccount region and update accordingly. For example,btp-extendworkflow-s4-msteams.cfapps.eu20.hana.ondemand.com|
     |**MICROSOFT_APP_ID**| The Application(client) ID of your Azure Active Directory Enterprise application. For example, ed84483e-546c-424c-b75a-d1ab58c095c7.|
-    |**MICROSOFT_APP_PASSWORD**|A Client secret which you created for your Azure Active Directory Enterprise application. For example, afwdaddsj4k0o6JMsWNBip7AQb5-mCCvykgp0agO.|
+    |**MICROSOFT_APP_PASSWORD**|A Client secret which you created for your Azure Active Directory Enterprise application. For example, ssafdssdfsk0o6JMsWNBip7AQb5-asdasfdsf.|
     |**MICROSOFT_AD_TENANT_ID**|The unique ID of your Azure Active Directory. For example, a22b0962-0d9d-4b4e-aa99-we1b581f071w|
     |**SAP_CLIENT**|sap-client number of your SAP S/4HANA system. For example, 100.|
     |**ACCEPT_SELF_SIGNED_CERT**|true for development environment and false for production environment.|
