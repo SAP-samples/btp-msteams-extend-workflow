@@ -1,257 +1,225 @@
-# Connect SAP BTP and SAP S/4HANA on Azure using SAP BTP Private Link service and Azure Private Link service
+## Set Up Connectivity Between SAP BTP and SAP S/4HANA Using SAP Private Link Service
 
-## Business Process Flow
+### Prerequisites
+These are the prerequisities that you need to consider.
 
-The target application will provide the SAP Business user to perform ERP operations via MS Teams. Below depicts the business process flow for purchase requisition approval.
+- SAP S/4HANA system running on Microsoft Azure
 
-![plot](../../images/Processflow.png)
-
-1. User creates purchase requisition in SAP S/4HANA system and a workflow is started in the SAP S/4HANA system for the release of PR.
-2. A background job in SAP S/4HANA will pick the PR workflow instance and send the PR creation event to SAP Event Mesh.
-3. Extension app deployed on BTP receives this event by using web hook utility.
-4. Extension app fetches additional details of the purchase requisition by querying the SAP S/4HANA via SAP Destination service and Private Link service.
-5. Extension app sends the notification to the configured approver of the PR via MS Teams using the Azure Bot Service.
-6. The Approver can approve/reject the PR from MS Teams notification which inturn calls the extension app in SAP BTP.
-7. Extension app sends the approval/rejection status to SAP S/4HANA.
-
-## Solution Architecture
-
-Recommended architecture to connect to SAP S/4HANA on Azure using BTP Private Link Service and Azure Private Link service
-<br>
-
-![plot](../../images/Architecture-PL.png)
-
-## Prerequisites
-
-**SAP S/4HANA instance running on Azure**
-
-**SAP Business Technology Platform Services**
-
-- Cloud Foundry Subaccount
-    
-    - Foundation for running the MS Teams extension application.
-    - Required for Azure AD - SAP BTP trust
-    - Create and manage destinations 
-    - Required to connect to SAP S/4HANA instance using SAP Private Link service 
-    
 - SAP Private Link service
-    
-    - Required to connect to SAP S/4HANA instance using Azure Private Link service 
-    - SAP BTP Private Link service is currently only available on SAP BTP Enterprise Accounts and not available with SAP BTP trial account or as Free Tier service.
+    Required to connect SAP BTP and Microsoft Azure.
+
+    >Note: The SAP BTP Private Link service is currently available only for enterprise accounts in SAP BTP.
+
+- Microsoft Azure Private Link service
+    Required to connect Microsoft Azure and SAP S/4HANA.
 
 
-- Destination Service
-    
-    - Required to connect to SAP S/4HANA instance using SAP BTP Private Link service
+### 1. Set Up the SAP Private Link Service and Microsoft Azure Private Link Service 
 
-**Microsoft Azure**
+To configure these services for the SAP S/4HANA system, follow the 
+ [Enhance core ERP business processes with resilient applications on SAP BTP - SAP Private Link Service](https://github.com/SAP-samples/btp-build-resilient-apps/tree/extension-privatelink/tutorials/05-PrivateLink) tutorial and complete the steps until the **Prepare Extension Application** section.
 
-- Azure Private Link service
-    
-    - Required to connect to SAP S/4HANA instance from SAP BTP subaccount
 
-## Setup and configure SAP Private Link service and Azure Private Link service 
+### 2. Set Up OAuth Configuration for SAP S/4HANA and SAP BTP
 
-![plot](./images/PL.png)
 
-**1. Create Azure Private Link service for SAP S/4HANA system**
+1. To download the identity provider metadata:
 
-Please check the following tutorial on [how to create Azure Private Link service for SAP S/4HANA system on Azure and link it with BTP Private Link service](https://github.com/SAP-samples/btp-build-resilient-apps/tree/extension-privatelink/tutorials/05-PrivateLink)
+    1. Log in to SAP BTP cockpit, navigate to your subaccount and choose **Connectivity** > **Destinations**.
 
-Complete the steps till "Prepare Extension Application" section using the above blog.
+    2. Choose **Download IDP Metadata**.
 
-**2. Create Destination in SAP BTP**
+        ![plot](./images/btp-dest-idp-metadata.png)
 
-Open the SAP BTP Cockpit. You should have subaccount administrator role assigned to your user-id.
-Navigate to your subaccount account and select **Connectivity** –  **Destinations** from the left-side panel.
-Click New **Destination**.
+2. To add a trusted provider in the SAP S/4HANA system:
 
-    key | value |
-    --- | --- |
-    Name | S4HANA_PL_NP |
-    Type | HTTP |
-    URL | https://your private hostname  |
-    Proxy Type | PrivateLink |
-    Authentication | BasicAuthentication |
-    User| Technical User |
-    Password| Technical User Password | 
+    1. Log in to the SAP S/4HANA system and open the **SAML2** transaction or open the 
+    ABAP WebDynpro Application - **https://s4hanahostname:port/sap/bc/webdynpro/sap/saml2?sap-client=clientnumber** and navigate to the **Trusted Providers** tab.
 
-    ### Additional Properties
+        ![Trusted Providers](./images/Trusted%20Providers%20Tab.png)
 
-    key | value |
-    --- | --- |
-    sap-client | your client no |
-    TrustAll | true |
-    HTML5.DynamicDestination | true |
-    WebIDEEnabled | true |
-    WebIDEUsage | odata_abap |
+    2. Choose **OAuth 2.0 Identity Providers** from the **Show** dropdown menu.
 
-The below steps are needed only if you want to do Principal Propagation from Microsoft Teams and SAP BTP to SAP S/4HANA on Azure.
+        ![Oauth provider](./images/OAuth%202.0%20Identity%20Providers.png)
 
-### oAuth Configuration for SAP S/4HANA and SAP BTP
+    3. Choose **Add** and then select **Upload Metadata File** from the dropdown menu.
+        ![Add Upload Metadata](./images/upload%20Metadata%20file.png)
 
-Steps:
+    4. In the **Metadata File** field, upload the metadata file that you downloaded in **Step 1**, and choose **Next**.
+        ![Upload MetadataFile Click NExt](./images/MetadataFile%20Click%20Next.png)
 
-1. Navigate to your BTP Subaccount
-2. Click on Connectivity -> Destinations
-3. Click on "Download IDP Metadata" button to download IDP metadata.<br>
-![plot](./images/btp-dest-idp-metadata.png)
-4. In SAP S/4HANA (Azure Private Cloud service) system, open the transaction "SAML2" or use the below url.<br>
-   **URL** - https://s4hanahostname:port/sap/bc/webdynpro/sap/saml2?sap-client=clientnumber
-5. Navigate to the **Trusted Providers** tab.<br>
-![Trusted Providers](./images/Trusted%20Providers%20Tab.png)
-6. In the table **List of Trusted Providers**, choose the value **OAuth 2.0 Identity Providers** from the dropdown as shown below:<br>
-![Oauth provider](./images/OAuth%202.0%20Identity%20Providers.png)
-7. Click the **Add** button and choose **Upload Metadata File**.<br>
-![Add Upload Metadata](./images/upload%20Metadata%20file.png)
-8. Click **Metadata File** input box, select the metadata file that you downloaded in **Step 3**, and click the **Next** button.<br>
-![Upload MetadataFile Click NExt](./images/MetadataFile%20Click%20Next.png)
-9. Click **Next** again and click **Finish**.<br>
-10. Select the added **Trusted Provider** and click the **Edit** button.<br>
-![Edit Trusted Provider](./images/Trusted%20Provider%20Added.png)
-11. Scroll down and navigate to the **Identity Federation** tab and click the **Add** button to add the NameID format.<br>
-![NameID add](./images/Add%20Supported%20NameID%20Format.png)
-12. Select **Email ID** and click **Ok**.<br>
-![NameID add](./images/Email%20NameID%20Format.png)
-13. Scroll up and click **Save**.<br>
-14. Click **enable** to enable to Trusted Provider.<br>
+    5. Choose **Next** and then choose **Finish**.
 
-    ![Enable Trusted Provider](./images/Enable%20Trusted%20Provider.png)
+    6. Select the added trusted provider and choose **Edit**.
+        ![Edit Trusted Provider](./images/Trusted%20Provider%20Added.png)
 
-    For registering an inbound OAuth client, you need to create an User ID in the system, which will be the Client ID.
-15. Open transaction **SU01**, provide an unique **User** id and click Create icon as shown below:<br>
-![userid create](./images/UserID%20Create.png)
-16. In the **Logon Data** tab, choose **Sytem** as the **User Type**.
-![user type](./images/System%20User%20Type.png)
-17. Provide an initial password and click **Save**.
-Now you will use the newly created system userid & the Trusted Provider to register an OAuth 2.0 client.
+    7. Scroll down and navigate to the **Identity Federation** tab and choosee **Add**.
+        ![NameID add](./images/Add%20Supported%20NameID%20Format.png)
 
-    You also need to provide read authorization for the OData service 'API_PURCHASEREQ_PROCESS_SRV' to the newly created user.
-    >Note: Providing authorization here will help in setting up the SAP BTP destination in the upcoming steps.
+    8. Select **E-mail** from the list and choose **OK**.
+        ![NameID add](./images/Email%20NameID%20Format.png)
 
-    a. Open **PFCG** transacation, provide a role name and click **Create Single Role**.<br>
+    9. Choose **Save**.
+
+    10. Choose **Enable** to enable the trusted provider.
+
+        ![Enable Trusted Provider](./images/Enable%20Trusted%20Provider.png)
+
+### 3. Create User ID
+
+For registering an inbound OAuth client, you need to create a user ID in the system, which will be the client ID for the OAuth client.
+
+1. In your SAP S/4HANA system, open the **SU01** transaction, enter a unique value in the **User** field and choose the **Create** icon.
+    ![userid create](./images/UserID%20Create.png)
+
+2. In the **Logon Data** tab, in the **User Type** field,choose **System** from the dropdown menu.
+        ![user type](./images/System%20User%20Type.png)
+
+3. Provide an initial password and choose **Save**.
+
+### 4. Provide Read Authorization to the User ID
+
+You need to provide read authorization for the **API_PURCHASEREQ_PROCESS_SRV** OData service to the newly created user.
+>**Note:** Providing authorization here will help to set up the destination in the SAP BTP cockpit.
+
+1. In your SAP S/4HANA system, open the **PFCG** transacation, enter a unique role name and choose **Single Role**.
 
     ![Single Role](./images/Create%20PFCG%20role.png)
 
-    b. In the **Authorizations** tab, click **Propose profile names** button to create a profile.
+2. In the **Authorizations** tab, choose the **Propose profile names** icon.
 
     ![Propose Profile](./images/Propose%20Profile%20name.png)
 
-    c. Click **Change Authorizatoin Data** button to add the authorizations.
-![AUthorization data](./images/Change%20Authorization%20Data.png)<br>
-    <br>**Note**: If a popup shows to save the role, click **Save** and if another popup opens to **Choose Template**, click **Do not select templates**.<br>
-    d. Click **Manually** to add the Authorization object.<br>
+3. Choose the **Change Authorizatoin Data** icon to add the authorizations.
+    ![AUthorization data](./images/Change%20Authorization%20Data.png)<br>
+
+    >**Note**: If a pop-up shows to ask you to save the role, choose **Save**. If another pop-up opens to ask you to choose a template, do not select any templates.
+
+4. Choose **Manually** to add the Authorization object.
 ![Auth Object](./images/Manually%20add%20auth.png)<br>
-    e. Enter the Authorization object **S_SERVICE** and click **Ok** button.<br>
-![Auth Object](./images/Auth%20Object.png)<br>
-    f. Click on **Edit** icon to provide the OData service details.<br>
-![Auth Object](./images/Add%20service.png)<br>
-    g. In the popup, select **TADIR Service**.<br>
-![Auth Object](./images/Tadir%20Service.png)<br>
-    h. Provide the oData service details as shown below and click save.<br>
-![Auth Object](./images/Auth%20Objects%20adding.png)<br>
-    i. Click **Save** again.<br>
-![Auth Object](./images/Save%20Authorization.png)<br>
-    j. Click **Generate** icon to generate the profile.<br>
-![Auth Object](./images/Generate%20Auth.png)<br>
-    k. Provide the user id and click **User Comparision**.<br>
-![Auth Object](./images/Add%20user%20to%20role.png)<br>
 
+5. In the **Authorization Object** field, enter **S_SERVICE** and chooose the **Ok** icon.
+    ![Auth Object](./images/Auth%20Object.png)
 
+6. Choose the **Edit** icon to provide the OData service details.
+    ![Auth Object](./images/Add%20service.png)<br>
 
-18. Open the Transaction **SOAUTH2** or use the below URL to configure the oAuth and click **Create**.<br>
-**URL** - https://s4hanahostname:port/sap/bc/webdynpro/sap/oauth2_config?sap-client=clientnumber
-![Create OAuth](./images/Create%20OAuth%20Client.png)
-19. Enter the **User ID** from **Step 15** in the **OAuth 2.0 Client** input box, provide the description and click **Next**.
-![Step 1 OAuth](./images/Oauth2.0%20step1.png)
-20. Click **Next** again.
-21. In the **Resource Owner Authentication** step, choose the **Trusted OAuth 2.0 Identity provider** that you created in **Step 14** and click **Next**
-![Step 3 OAuth](./images/Trusted%20OAuth%202.0%20Idp%20Step%203.png)
-22. In the **Scope Assignment**, add the Task Processing OData service **ZTASKPROCESSING_0002**, click **Next** and click **Finish**
-![Step 4 OAuth Scope](./images/Scope%20Oauth%20step4.png)
+7. In the pop-up, select **TADIR Service** from the **Type** dropdown menu.
+    ![Auth Object](./images/Tadir%20Service.png)
 
-**Optional**: If the OData service is not visible in **Step 22**, you need to manually enable OAuth for it.
-23. Open the transaction **/n/iwfnd/maint_service**
-24. Select the service **ZTASKPROCESSING** and click the **OAuth** button to enable OAuth scope for the service
-![Enable OAuth scope](./images/Enable%20OAuth.png)
+8. Provide the oData service details as shown in the screenshot and choose **Save**.
+    ![Auth Object](./images/Auth%20Objects%20adding.png)
 
-### BTP Configuration
+9. Choose **Save** again.
+    ![Auth Object](./images/Save%20Authorization.png)
 
-***Create Destinations***<br>
-We describe a set of Destinations, whereas the first one refers to the initial simple setup discussed in part 1 of the blog series. The next two are required to realize the SAMLAssertion flow. This additional complexity is due to the fact that the SAML2BearerAssertion flow cannot be used, because the BTP Private Link Service operates isolated from all other BTP services by design. As part of the flow the connectivity service would need to reach the OAuth2 server on the SAP backend but can't because it has no visibility of the private endpoint.
+10. Choose the **Generate** icon to generate the profile.
+    ![Auth Object](./images/Generate%20Auth.png)
 
-We could get away with 2 destinations, because the target configuration is the same except the authorization header. For a cleaner approach and better separation use a separate instance to avoid overriding authentication.
+11. Enter the user ID from step 1 and choose **User Comparison**.
+    ![Auth Object](./images/Add%20user%20to%20role.png)
 
-Open the BTP Cockpit in your browser and log in with your account admin.
-Navigate to your BTP Subaccount and select **Connectivity** –  **Destinations** from the left side navigation menu.
+### 5. Create an Inbound OAuth Client
 
-1. Create a destination with name "s4BasicAuth"
+1. In your SAP S/4HANA system, open the **SOAUTH2** transaction  or use the following URL to configure the oAuth client. Then, choose **Create**.
+**URL** - **https://s4hanahostname:port/sap/bc/webdynpro/sap/oauth2_config?sap-client=clientnumber**
+    ![Create OAuth](./images/Create%20OAuth%20Client.png)
 
-Click New **Destination** and enter the following configuration values
+2. In the **OAuth 2.0 Client** field, enter the user ID which you have created in step 1. Then, provide the description and choose **Next**.
+    ![Step 1 OAuth](./images/Oauth2.0%20step1.png)
 
-key | value |
---- | --- |
-Name | s4BasicAuth |
-Type | HTTP |
-URL | https://your private hostname |
-Proxy Type | PrivateLink |
-Authentication | Basic Authentication (TEAMSCLIENT) |
-scope | ZTASKPROCESSING_0002 |
->Note: **TEAMSCLIENT** is the user that you created in the previous steps for the OAuth Client.
-### Additional Properties
+3. Choose **Next** again.
 
-key | value |
---- | --- |
-sap-client | your client no |
-TrustAll | true |
-HTML5.DynamicDestination | true |
-WebIDEEnabled | true |
-WebIDEUsage | odata_abap |
+4. In the **Resource Owner Authentication** step, in the **Trusted OAuth 2.0 Identity provider** field, select the trusted provider that you have created in step 2 in the **### 2. Set Up OAuth Configuration for SAP S/4HANA and SAP BTP** section and choose **Next**.
+    ![Step 3 OAuth](./images/Trusted%20OAuth%202.0%20Idp%20Step%203.png)
 
-2. Create a destination with name "s4oauth" ( This is used to request SAMLAssertion from SAP backend (OAuth server))
+5. In the **Scope Assignment** step, choose **Add** and in the pop-up that appears, enter **ZTASKPROCESSING_0002** OData service, Choose **Next** and then choose **Finish**.
+    ![Step 4 OAuth Scope](./images/Scope%20Oauth%20step4.png)
 
-key | value |
---- | --- |
-Name | s4oauth |
-Type | HTTP |
-URL | https://your private hostname/sap/bc/sec/oauth2/token?sap-client=[your client no] |
-Proxy Type | PrivateLink |
-Authentication | SAMLAssertion |
-Audience | check Provider Name on **SAML2 backend transaction** |
-AuthnContextClassRef | urn:oasis:names:tc:SAML:2.0:ac:classes:x509 |
+    >**Note**: If the **ZTASKPROCESSING_0002** OData service is not listed, you need to manually enable OAuth for it as mentioned below:
+    >1. Open the **/n/iwfnd/maint_service** transaction.
+    >2. Select the **ZTASKPROCESSING** OData service and choose **OAuth** to enable the OAuth scope for the service.
+    ![Enable OAuth scope](./images/Enable%20OAuth.png)
 
-### Additional Properties
+### 6. Create Destinations in Your Subaccount in SAP BTP
 
-key | value |
---- | --- |
-sap-client | your client no |
-TrustAll | true |
-HTML5.DynamicDestination | true |
-WebIDEEnabled | true |
-WebIDEUsage | odata_abap |
-nameIdFormat | urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress |
-tokenServiceURL  | https://your private hostname/sap/bc/sec/oauth2/token |
-assertionRecipient  | https://your private hostname/sap/bc/sec/oauth2/token |
-userSourceId  | email
+Follow these steps to create the destinations for the principal propogation between Microsoft Teams and the SAP S/4HANA system.
 
-3. Create destination "s4NoAuth" (This is used for final call to OData without Authentication, we inject the Bearer token from preceeding calls)
+1. In the SAP BTP cockpit, navigate to you subaccount and choose **Connectivity** > **Destinations**.
 
-key | value |
---- | --- |
-Name | s4NoAuth |
-Type | HTTP |
-URL | identical to first destination |
-Proxy Type | PrivateLink |
-Authentication | No Authentication |
+2. Create a destination with the name **s4BasicAuth**.
 
-### Additional Properties
+    1. Choose **New Destination** and enter the following configuration values:
 
-key | value |
---- | --- |
-sap-client | your client no |
-TrustAll | true |
-HTML5.DynamicDestination | true |
-WebIDEEnabled | true |
-WebIDEUsage | odata_abap |
+        key | value |
+        --- | --- |
+        Name | s4BasicAuth |
+        Type | HTTP |
+        URL | http://your-private-hostname |
+        Proxy Type | PrivateLink |
+        Authentication | Basic Authentication |
+        User ID | **TEAMSCLIENT** |
+        Password | password for the **TEAMSCLIENT** that you created in the previous steps |
+        scope | ZTASKPROCESSING_0002 |
+        
+    2. Add the additional properties:  
 
-For further details on Private Link service , please refer to the GitHub repository [az-private-linky](https://github.com/MartinPankraz/az-private-linky) by Martin Pankraz.
+        key | value |
+        --- | --- |
+        sap-client | your SAP Client no |
+        TrustAll | true |
+        HTML5.DynamicDestination | true |
+        WebIDEEnabled | true |
+        WebIDEUsage | odata_abap |
+
+2. Create another destination with the name **s4oauth**. This is used to request SAMLAssertion from the SAP S/4HANA.
+
+    1. Choose **New Destination** and enter the following configuration values:
+
+        key | value |
+        --- | --- |
+        Name | s4oauth |
+        Type | HTTP |
+        URL | https://your-private-hostname/sap/bc/sec/oauth2/token?sap-client=[your-client-id] |
+        Proxy Type | PrivateLink |
+        Authentication | SAMLAssertion |
+        Audience | check the provider name on **SAML2 backend transaction** |
+        AuthnContextClassRef | urn:oasis:names:tc:SAML:2.0:ac:classes:x509 |
+
+    2. Add the additional properties: 
+
+        key | value |
+        --- | --- |
+        sap-client | your client no |
+        TrustAll | true |
+        HTML5.DynamicDestination | true |
+        WebIDEEnabled | true |
+        WebIDEUsage | odata_abap |
+        nameIdFormat | urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress |
+        tokenServiceURL  | https://your-private-hostname/sap/bc/sec/oauth2/token |
+        assertionRecipient  | https://your-private-hostname/sap/bc/sec/oauth2/token |
+        userSourceId  | email
+
+3. Create another destination with the name **s4NoAuth**. This is used for the final call to the OData service without any authentication. We inject the token for the OAuth SAML Bearer Assertion from the preceeding calls.
+
+    1. Choose **New Destination** and enter the following configuration values:
+
+        key | value |
+        --- | --- |
+        Name | s4NoAuth |
+        Type | HTTP |
+        URL | identical to first destination |
+        Proxy Type | PrivateLink |
+        Authentication | No Authentication |
+
+    2. Add the additional properties: 
+
+        key | value |
+        --- | --- |
+        sap-client | your client no |
+        TrustAll | true |
+        HTML5.DynamicDestination | true |
+        WebIDEEnabled | true |
+        WebIDEUsage | odata_abap |
+
+For additional details about the SAP Private Link service and the Microsoft Azure Private Link service, refer to the [az-private-linky](https://github.com/MartinPankraz/az-private-linky) GitHub repository.
