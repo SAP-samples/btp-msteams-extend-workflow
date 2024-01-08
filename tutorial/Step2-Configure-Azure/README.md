@@ -29,7 +29,7 @@ Once you have access to Microsoft Azure account, you will be able to see the fol
 ### 2. Establish Trust Between Azure Active Directory and SAP BTP
 The key pillar of the principal propagation is to establish the trust between your Azure Active Directory and your subaccount in SAP BTP. 
 
-1. Follow step 7 of the [Integrate Microsoft Azure AD with SAP BTP, Cloud Foundry Environment](https://developers.sap.com/tutorials/cp-azure-ad-saml.html#716a684a-b8fd-4d5b-9472-ba0cc82c01e3) tutorial.
+1. Follow [Integrate Microsoft Azure AD with SAP BTP, Cloud Foundry Environment](https://developers.sap.com/tutorials/cp-ias-azure-ad.html) tutorial to connect Azure Active Directory to Identity Authentication Service. 
 
     > Important: Check the Basic SAML configuration in Azure Active Directory again. Make sure you have changed the **Reply URL** from SAML/SSO to **OAuth/token**. It is mandatory to set the correct **Reply URL** in the SAML assertion.
 
